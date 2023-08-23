@@ -1,6 +1,10 @@
-# Flask React Project
+# Apple Music
 
-This is the starter for the Flask React project.
+Welcome to our Apple Music clone! Check out our live version here: [https://apple-music.onrender.com/](https://apple-music.onrender.com/)
+
+Apple Music, according to [Google](https://google.com), is a music, audio and video streaming service developed by Apple Inc. Users select music to stream to their device on-demand, or they can listen to existing playlists. 
+
+The backend of our Apple Music clone is built using Python and Flask with a PostgreSQL database. The frontend is handled with React. 
 
 ## Getting started
 1. Clone this repository (only this branch)
