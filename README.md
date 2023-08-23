@@ -59,13 +59,13 @@ The backend of our Apple Music clone is built using Python and Flask with a Post
 
 ## To Dos / Future Features
 1. **Likes**
-- Users should be able to view the likes on a song.
-- Users should be able to like a song.
-- Users should be able to unlike a song.
+	- Users should be able to view the likes on a song.
+	- Users should be able to like a song.
+	- Users should be able to unlike a song.
 
  2. **WaveForms**
-- Users should be able to see the wave forms for a song.
+	- Users should be able to see the wave forms for a song.
 
 3. **Search**
-- Users should be able to search for songs by artist or song name.
-- Users should be able to view the results of their search.
+	- Users should be able to search for songs by artist or song name.
+	- Users should be able to view the results of their search.
