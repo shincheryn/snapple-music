@@ -7,11 +7,11 @@ Apple Music, according to [Google](https://google.com), is a music, audio and vi
 The backend of our Apple Music clone is built using Python and Flask with a PostgreSQL database. The frontend is handled with React. 
 
 ## Screenshots
-**Log in / Sign up**
-**Homepage**
-**Songs**
-**Albums**
-**Playlists**
+- **Log in / Sign up**
+- **Homepage**
+- **Songs**
+- **Albums**
+- **Playlists**
 
 ## Getting started
 1. Clone this repository (only this branch)
