@@ -2,10 +2,16 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
-# join tables here?
-album_songs = db.Table()
+# join tables
+album_songs = db.Table("album_songs",
+                       db.Column("albumId", db.Integer, db.ForeignKey('albums.id'), primary_key=True),
+                       db.Column("songId", db.Integer, db.ForeignKey('a_songs.id'), primary_key=True)
+                       )
 
-playlist_songs = db.Table()
+playlist_songs = db.Table("play_songs",
+                       db.Column("playlistId", db.Integer, db.ForeignKey('playlists.id'), primary_key=True),
+                       db.Column("songId", db.Integer, db.ForeignKey('p_songs.id'), primary_key=True)
+                       )
 
 # Users Model
 class User(db.Model, UserMixin):
@@ -44,12 +50,14 @@ class User(db.Model, UserMixin):
     # relationships
     # Users.id has one to many relationships with:
     # 1. Albums.userId
+    albums_user = db.relationship("Album", back_populates="user_albums")
     # 2. Songs.userId
+    songs_user = db.relationship("Song", back_populates="user_songs")
     # 3. Playlists.userId
-
+    playlists_user = db.relationship("Playlist", back_populates="user_playlists")
 
 # Albums Model
-class Album(db.Model, UserMixin):
+class Album(db.Model):
     __tablename__ = 'albums'
 
     if environment == "production":
@@ -66,10 +74,14 @@ class Album(db.Model, UserMixin):
 
     # relationships
     # id has a one to many relationship with Albums_Songs.albumId
+    a_songs = db.relationship("Song",
+                            secondary=album_songs,
+                            back_populates="albums")
     # userId has a many to one relationship with Users.id
+    user_albums = db.relationship("User", back_populates="albums_user")
 
 # Songs Model
-class Song(db.Model, UserMixin):
+class Song(db.Model):
     __tablename__ = 'songs'
 
     if environment == "production":
@@ -86,12 +98,19 @@ class Song(db.Model, UserMixin):
 
     # relationships
     # id has a one to many relationship with Albums_Songs.songId
+    albums = db.relationship("Album",
+                            secondary=album_songs,
+                            back_populates="a_songs")
     # id has a one to many relationship with Playlist_Songs.songId
+    playlists = db.relationship("Playlist",
+                            secondary=playlist_songs,
+                            back_populates="p_songs")
     # userId has a many to one relationship with Users.id
+    user_songs = db.relationship("User", back_populates="songs_user")
 
 
 # Playlists Model
-class Playlist(db.Model, UserMixin):
+class Playlist(db.Model):
     __tablename__ = 'playlists'
 
     if environment == "production":
@@ -105,4 +124,8 @@ class Playlist(db.Model, UserMixin):
 
     # relationships
     # id has a one to many relationship with Playlist_Songs.playlistId
+    p_songs = db.relationship("Song",
+                            secondary=playlist_songs,
+                            back_populates="playlists")
     # userId has a many to one relationship with Users.
+    user_playlists = db.relationship("User", back_populates="playlists_user")
