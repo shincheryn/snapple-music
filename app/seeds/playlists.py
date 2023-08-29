@@ -1,4 +1,4 @@
-from app.models import db, playlists_data, environment, SCHEMA
+from app.models import db, Playlist, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_playlists():
@@ -13,7 +13,7 @@ def seed_playlists():
             {'userId': 3, 'playlist_name': 'New Music Friday'},
             {'userId': 3, 'playlist_name': 'K-Pop ON!'},
             {'userId': 3, 'playlist_name': 'Indie Pop'},
-            {'userId': 3, 'playlist_name': 'Pollen'},
+            {'userId': 3, 'playlist_name': 'Pollen'}
         ]
     for playlist in playlists_data:
         db.session.add(**playlist)

@@ -1,4 +1,4 @@
-from app.models import db, songs_data, environment, SCHEMA
+from app.models import db, Song, environment, SCHEMA
 from sqlalchemy.sql import text
 
 # Adds a demo user, you can add other users here if you want
