@@ -4,13 +4,13 @@ from flask_login import UserMixin
 
 # join tables
 album_songs = db.Table("album_songs",
-                       db.Column("albumId", db.Integer, db.ForeignKey('albums.id'), primary_key=True),
-                       db.Column("songId", db.Integer, db.ForeignKey('a_songs.id'), primary_key=True)
+                       db.Column("albumId", db.Integer, db.ForeignKey(add_prefix_for_prod('albums.id')), primary_key=True),
+                       db.Column("songId", db.Integer, db.ForeignKey(add_prefix_for_prod('a_songs.id')), primary_key=True)
                        )
 
 playlist_songs = db.Table("play_songs",
-                       db.Column("playlistId", db.Integer, db.ForeignKey('playlists.id'), primary_key=True),
-                       db.Column("songId", db.Integer, db.ForeignKey('p_songs.id'), primary_key=True)
+                       db.Column("playlistId", db.Integer, db.ForeignKey(add_prefix_for_prod('playlists.id')), primary_key=True),
+                       db.Column("songId", db.Integer, db.ForeignKey(add_prefix_for_prod('p_songs.id')), primary_key=True)
                        )
 
 # Users Model
