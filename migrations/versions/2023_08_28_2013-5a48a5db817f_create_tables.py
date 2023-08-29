@@ -30,8 +30,50 @@ def upgrade() -> None:
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+    op.create_table('playlists',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('userid', sa.Integer(), nullable=False),
+    sa.Column('playlist_name', sa.String(length=255), nullable=False),
+    sa.Column('createdAt', sa.DateTime(), nullable=False),
+    sa.Column('updatedAt', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    )
+    op.create_table('songs',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('song_name', sa.String(length=255), nullable=False),
+    sa.Column('userId', sa.Integer(), nullable=False),
+    sa.Column('genre', sa.String(length=255), nullable=False),
+    sa.Column('createdAt', sa.DateTime(), nullable=False),
+    sa.Column('updatedAt', sa.DateTime(), nullable=False),
+    sa.Column('image_url', sa.String(length=255), nullable=False),
+    sa.Column('song_url', sa.String(length=255), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    )
+    op.create_table('albums',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('album_name', sa.String(length=255), nullable=False),
+    sa.Column('userId', sa.Integer(), nullable=False),
+    sa.Column('release_year', sa.Integer(), nullable=False),
+    sa.Column('genre', sa.String(length=255), nullable=False),
+    sa.Column('description', sa.String(length=255), nullable=False),
+    sa.Column('createdAt', sa.DateTime(), nullable=False),
+    sa.Column('updatedAt', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    )
+    op.create_table('album_songs',
+    sa.Column("albumId", sa.Integer, primary_key=True),
+    sa.Column("songId", sa.Integer, primary_key=True),
+    sa.ForeignKeyConstraint('albums.id'),
+    sa.ForeignKeyConstraint('a_songs.id')
+    )
+    op.create_table('play_songs',
+    sa.Column("playlistId", sa.Integer, primary_key=True),
+    sa.Column("songId", sa.Integer, primary_key=True),
+    sa.ForeignKeyConstraint('playlists.id'),
+    sa.ForeignKeyConstraint('p_songs.id')
+    )
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
 
 def downgrade() -> None:
-    op.drop_table('users')
+    op.drop_table('users', 'playlists', 'albums', 'songs', 'play_songs', 'album_songs')
