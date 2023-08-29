@@ -1,6 +1,6 @@
 # Snapple Music
 
-Welcome to Snapple Music! Check out our live version here: [https://snapple-music.onrender.com/](https://apple-music.onrender.com/)
+Welcome to Snapple Music! Check out our live version here: [https://snapple-music.onrender.com/](https://snapple-music.onrender.com/)
 
 Snapple Music is based off Apple Music, which according to [Google](https://google.com), is a music, audio and video streaming service developed by Apple Inc. Users select music to stream to their device on-demand, or they can listen to existing playlists. 
 
