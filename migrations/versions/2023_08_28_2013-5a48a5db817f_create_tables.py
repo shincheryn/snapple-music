@@ -64,13 +64,13 @@ def upgrade() -> None:
     sa.Column("albumId", sa.Integer(), primary_key=True),
     sa.Column("songId", sa.Integer(), primary_key=True),
     sa.ForeignKeyConstraint(["albumId"], ['albums.id']),
-    sa.ForeignKeyConstraint(["songId"], ['a_songs.id'])
+    sa.ForeignKeyConstraint(["songId"], ['songs.id'])
     )
     op.create_table('play_songs',
     sa.Column("playlistId", sa.Integer(), primary_key=True),
     sa.Column("songId", sa.Integer(), primary_key=True),
     sa.ForeignKeyConstraint(["playlistId"], ['playlists.id']),
-    sa.ForeignKeyConstraint(["songId"], ['p_songs.id'])
+    sa.ForeignKeyConstraint(["songId"], ['songs.id'])
     )
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
