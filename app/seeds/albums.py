@@ -14,7 +14,7 @@ def seed_albums():
             {'album_name': 'Song 9', 'userId': 3, 'genre': 'K-pop', 'release_year': 1998, 'description': 'description9'},
             {'album_name': 'Song 10', 'userId': 3, 'genre': 'Alternative rock', 'release_year': 1999, 'description': 'description10'},
             {'album_name': 'Song 11', 'userId': 3, 'genre': 'Synth-pop', 'release_year': 2000, 'description': 'description11'},
-            {'album_name': 'Song 12', 'userId': 3, 'genre': 'Pop rock', 'release_year': 2023 'description': 'description12'}
+            {'album_name': 'Song 12', 'userId': 3, 'genre': 'Pop rock', 'release_year': 2023, 'description': 'description12'}
         ]
     for album in albums_data:
         db.session.add(**album)
