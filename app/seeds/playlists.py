@@ -14,7 +14,7 @@ def seed_playlists():
             {'userId': 3, 'playlist_name': 'K-Pop ON!'},
             {'userId': 3, 'playlist_name': 'Indie Pop'},
             {'userId': 3, 'playlist_name': 'Pollen'}
-        ]
+    ]
     for playlist in playlists_data:
         db.session.add(**playlist)
     db.session.commit()
