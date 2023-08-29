@@ -63,17 +63,23 @@ def upgrade() -> None:
     op.create_table('album_songs',
     sa.Column("albumId", sa.Integer(), primary_key=True),
     sa.Column("songId", sa.Integer(), primary_key=True),
-    sa.ForeignKeyConstraint(("albumId"), ['albums.id']),
-    sa.ForeignKeyConstraint(("songId"), ['a_songs.id'])
+    sa.ForeignKeyConstraint(["albumId"], ['albums.id']),
+    sa.ForeignKeyConstraint(["songId"], ['a_songs.id'])
     )
     op.create_table('play_songs',
     sa.Column("playlistId", sa.Integer(), primary_key=True),
     sa.Column("songId", sa.Integer(), primary_key=True),
-    sa.ForeignKeyConstraint(("playlistId"), ['playlists.id']),
-    sa.ForeignKeyConstraint(("songId"), ['p_songs.id'])
+    sa.ForeignKeyConstraint(["playlistId"], ['playlists.id']),
+    sa.ForeignKeyConstraint(["songId"], ['p_songs.id'])
     )
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE songs SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE playlists SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE albums SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE album_songs SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE play_songs SET SCHEMA {SCHEMA};")
+
 
 def downgrade() -> None:
     op.drop_table('users', 'playlists', 'albums', 'songs', 'play_songs', 'album_songs')
