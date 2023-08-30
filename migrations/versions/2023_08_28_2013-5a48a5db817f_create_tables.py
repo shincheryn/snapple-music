@@ -32,7 +32,7 @@ def upgrade() -> None:
     )
     op.create_table('playlists',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('userid', sa.Integer(), nullable=False),
+    sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('playlist_name', sa.String(length=255), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=False),
     sa.Column('updatedAt', sa.DateTime(), nullable=False),
