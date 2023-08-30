@@ -7,12 +7,16 @@ album_songs = db.Table("album_songs",
                        db.Column("albumId", db.Integer, db.ForeignKey(add_prefix_for_prod('albums.id')), primary_key=True),
                        db.Column("songId", db.Integer, db.ForeignKey(add_prefix_for_prod('a_songs.id')), primary_key=True)
                        )
+if environment == "production":
+        album_songs.schema = SCHEMA
 
 playlist_songs = db.Table("play_songs",
                        db.Column("playlistId", db.Integer, db.ForeignKey(add_prefix_for_prod('playlists.id')), primary_key=True),
                        db.Column("songId", db.Integer, db.ForeignKey(add_prefix_for_prod('p_songs.id')), primary_key=True)
                        )
-
+if environment == "production":
+        playlist_songs.schema = SCHEMA
+        
 # Users Model
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -65,7 +69,7 @@ class Album(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     album_name = db.Column(db.String(255), nullable=False)
-    userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     release_year = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=False)
@@ -89,7 +93,7 @@ class Song(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     song_name = db.Column(db.String(255), nullable=False)
-    userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     genre = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.Date, nullable=False)
     updatedAt = db.Column(db.Date, nullable=False)
@@ -117,7 +121,7 @@ class Playlist(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     playlist_name = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.Date, nullable=False)
     updatedAt = db.Column(db.Date, nullable=False)
