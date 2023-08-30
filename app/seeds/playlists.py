@@ -5,15 +5,10 @@ def seed_playlists():
     playlists_data = [
             {'userId': 1, 'playlist_name': 'Favorites'},
             {'userId': 1, 'playlist_name': 'Rock Hits'},
-            {'userId': 1, 'playlist_name': 'Discover Weekly'},
             {'userId': 2, 'playlist_name': 'Daily Mix'},
             {'userId': 2, 'playlist_name': 'Viral Hits'},
-            {'userId': 2, 'playlist_name': 'Hot Hits USA'},
-            {'userId': 2, 'playlist_name': 'teen beats'},
             {'userId': 3, 'playlist_name': 'New Music Friday'},
             {'userId': 3, 'playlist_name': 'K-Pop ON!'},
-            {'userId': 3, 'playlist_name': 'Indie Pop'},
-            {'userId': 3, 'playlist_name': 'Pollen'}
     ]
     for playlist in playlists_data:
         db.session.add(**playlist)
