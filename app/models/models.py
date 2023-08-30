@@ -5,18 +5,18 @@ from flask_login import UserMixin
 # join tables
 album_songs = db.Table("album_songs",
                        db.Column("albumId", db.Integer, db.ForeignKey(add_prefix_for_prod('albums.id')), primary_key=True),
-                       db.Column("songId", db.Integer, db.ForeignKey(add_prefix_for_prod('a_songs.id')), primary_key=True)
+                       db.Column("songId", db.Integer, db.ForeignKey(add_prefix_for_prod('songs.id')), primary_key=True)
                        )
 if environment == "production":
         album_songs.schema = SCHEMA
 
 playlist_songs = db.Table("play_songs",
                        db.Column("playlistId", db.Integer, db.ForeignKey(add_prefix_for_prod('playlists.id')), primary_key=True),
-                       db.Column("songId", db.Integer, db.ForeignKey(add_prefix_for_prod('p_songs.id')), primary_key=True)
+                       db.Column("songId", db.Integer, db.ForeignKey(add_prefix_for_prod('songs.id')), primary_key=True)
                        )
 if environment == "production":
         playlist_songs.schema = SCHEMA
-        
+
 # Users Model
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -78,7 +78,7 @@ class Album(db.Model):
 
     # relationships
     # id has a one to many relationship with Albums_Songs.albumId
-    a_songs = db.relationship("Song",
+    songs = db.relationship("Song",
                             secondary=album_songs,
                             back_populates="albums")
     # userId has a many to one relationship with Users.id
@@ -104,11 +104,11 @@ class Song(db.Model):
     # id has a one to many relationship with Albums_Songs.songId
     albums = db.relationship("Album",
                             secondary=album_songs,
-                            back_populates="a_songs")
+                            back_populates="songs")
     # id has a one to many relationship with Playlist_Songs.songId
     playlists = db.relationship("Playlist",
                             secondary=playlist_songs,
-                            back_populates="p_songs")
+                            back_populates="songs")
     # userId has a many to one relationship with Users.id
     user_songs = db.relationship("User", back_populates="songs_user")
 
@@ -128,7 +128,7 @@ class Playlist(db.Model):
 
     # relationships
     # id has a one to many relationship with Playlist_Songs.playlistId
-    p_songs = db.relationship("Song",
+    songs = db.relationship("Song",
                             secondary=playlist_songs,
                             back_populates="playlists")
     # userId has a many to one relationship with Users.
