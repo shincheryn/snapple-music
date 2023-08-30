@@ -65,7 +65,7 @@ class Album(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     album_name = db.Column(db.String(255), nullable=False)
-    userId = db.Column(db.Integer, nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     release_year = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=False)
@@ -89,7 +89,7 @@ class Song(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     song_name = db.Column(db.String(255), nullable=False)
-    userId = db.Column(db.Integer, nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     genre = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.Date, nullable=False)
     updatedAt = db.Column(db.Date, nullable=False)
@@ -117,7 +117,7 @@ class Playlist(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     playlist_name = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.Date, nullable=False)
     updatedAt = db.Column(db.Date, nullable=False)
