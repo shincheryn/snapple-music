@@ -20,7 +20,7 @@ depends_on = None
 
 def upgrade() -> None:
     op.create_table('users',
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
     sa.Column('username', sa.String(length=40), nullable=False),
     sa.Column('firstName', sa.String(length=40), nullable=False),
     sa.Column('lastName', sa.String(length=40), nullable=False),
@@ -31,7 +31,7 @@ def upgrade() -> None:
     sa.UniqueConstraint('username')
     )
     op.create_table('playlists',
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
     sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('playlist_name', sa.String(length=255), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=False),
@@ -39,7 +39,7 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id'),
     )
     op.create_table('songs',
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
     sa.Column('song_name', sa.String(length=255), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('genre', sa.String(length=255), nullable=False),
@@ -50,7 +50,7 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id'),
     )
     op.create_table('albums',
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
     sa.Column('album_name', sa.String(length=255), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('release_year', sa.Integer(), nullable=False),
