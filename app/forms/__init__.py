@@ -1,10 +1,3 @@
 from .login_form import LoginForm
 from .signup_form import SignUpForm
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import SubmitField
-from app.api.helper import ALLOWED_EXTENSIONS
-
-class ImageForm(FlaskForm):
-    image = FileField("Image File", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
-    submit = SubmitField("Create Post")
+from .songs_form import ImageForm
