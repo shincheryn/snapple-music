@@ -7,7 +7,7 @@ from app.api.helper import (
     upload_file_to_s3, get_unique_filename)
 
 image_routes = Blueprint("images", __name__)
-song_routes = Blueprint('songs', __name__)
+# song_routes = Blueprint('songs', __name__)
 
 @image_routes.route("", methods=["POST"])
 @login_required
