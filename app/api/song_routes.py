@@ -7,18 +7,18 @@ song_routes = Blueprint('songs', __name__)
 # DB_FILE = os.environ.get("DB_FILE")
 
 #get all songs
-@song_routes.route('/')
+@song_routes.route('/songs')
 def songs():
     songs = Song.query.all()
     return {'songs': songs}
 
 #return one song by id
-@song_routes.route('/<int:id>')
-def oneSong(id):
-    print(id)
-    return
+# @song_routes.route('/<int:id>')
+# def oneSong(id):
+#     print(id)
+#     return
 
 #create new song
-@song_routes.route('/new')
-def createSong():
-    form = SongForm()
+# @song_routes.route('/new')
+# def createSong():
+#     form = SongForm()
