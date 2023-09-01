@@ -76,6 +76,18 @@ class Album(db.Model):
     createdAt = db.Column(db.Date, nullable=False)
     updatedAt = db.Column(db.Date, nullable=False)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'album_name': self.album_name,
+            'userId': self.userId,
+            'release_year': self.release_year,
+            'description': self.description,
+            'genre': self.genre,
+            'createdAt': self.createdAt,
+            'updatedAt': self.updatedAt,
+        }
+
     # relationships
     # id has a one to many relationship with Albums_Songs.albumId
     songs = db.relationship("Song",
