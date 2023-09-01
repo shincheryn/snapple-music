@@ -1,11 +1,13 @@
 from flask import Blueprint, request, render_template, redirect
-from app.models import db, Image
+#we have no Image model . . .
+from app.models import db, Song, Image
+from app.forms.image_form import ImageForm
 from flask_login import current_user, login_required
 from app.api.helper import (
     upload_file_to_s3, get_unique_filename)
 
 image_routes = Blueprint("images", __name__)
-
+song_routes = Blueprint('songs', __name__)
 
 @image_routes.route("", methods=["POST"])
 @login_required
