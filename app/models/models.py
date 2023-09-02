@@ -107,21 +107,21 @@ class Song(db.Model):
     song_name = db.Column(db.String(255), nullable=False)
     userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     genre = db.Column(db.String(255), nullable=False)
-    createdAt = db.Column(db.Date, nullable=False)
-    updatedAt = db.Column(db.Date, nullable=False)
     image_url = db.Column(db.String(255), nullable=False)
     song_url = db.Column(db.String(255), nullable=False)
+    createdAt = db.Column(db.Date, nullable=False)
+    updatedAt = db.Column(db.Date, nullable=False)
 
     def to_dict(self):
         return {
             'id': self.id,
-            'song_name': self.song_name,
             'userId': self.userId,
+            'song_name': self.song_name,
             'genre': self.genre,
+            'image_url': self.image_url,
+            'song_url': self.song_url,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
-            'image_url': self.image_url,
-            'song_url': self.song_url
         }
 
     # relationships

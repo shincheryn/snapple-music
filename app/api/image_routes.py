@@ -28,8 +28,8 @@ def upload_image():
             return render_template("post_form.html", form=form, errors=[upload])
 
         url = upload["url"]
-        new_image = Post(image= url)
-        db.session.add(new_image)
+        # new_image = Post(image= url)
+        # db.session.add(new_image)
         db.session.commit()
         return redirect("/posts/all")
 
