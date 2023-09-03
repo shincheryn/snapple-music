@@ -67,14 +67,14 @@ class Album(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     album_name = db.Column(db.String(255), nullable=False)
     userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     release_year = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    createdAt = db.Column(db.Date, nullable=False)
-    updatedAt = db.Column(db.Date, nullable=False)
+    createdAt = db.Column(db.DateTime, server_default=db.func.now())
+    updatedAt = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
     def to_dict(self):
         return {
