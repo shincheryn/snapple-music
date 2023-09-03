@@ -7,8 +7,7 @@ from app.models import Song
 
 class SongForm (FlaskForm):
     song_name = StringField('Song', validators=[DataRequired()])
-    userId = IntegerField('User Id', validators=[DataRequired()])
     genre = StringField('Genre', validators=[DataRequired()])
     image_url = StringField('Image', validators=[DataRequired()])
     song_url = StringField('Song URL', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+

@@ -73,8 +73,8 @@ class Album(db.Model):
     release_year = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    createdAt = db.Column(db.Date, nullable=False)
-    updatedAt = db.Column(db.Date, nullable=False)
+    createdAt = db.Column(db.Date)
+    updatedAt = db.Column(db.Date)
 
     def to_dict(self):
         return {

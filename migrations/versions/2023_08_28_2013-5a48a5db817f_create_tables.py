@@ -45,8 +45,8 @@ def upgrade() -> None:
     sa.Column('genre', sa.String(length=255), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=False),
     sa.Column('updatedAt', sa.DateTime(), nullable=False),
-    sa.Column('image_url', sa.String(length=255), nullable=False),
-    sa.Column('song_url', sa.String(length=255), nullable=False),
+    sa.Column('image_url', sa.String(length=255)),
+    sa.Column('song_url', sa.String(length=255)),
     sa.PrimaryKeyConstraint('id'),
     )
     op.create_table('albums',
