@@ -109,8 +109,8 @@ class Song(db.Model):
     genre = db.Column(db.String(255), nullable=False)
     image_url = db.Column(db.String(255), nullable=False)
     song_url = db.Column(db.String(255), nullable=False)
-    createdAt = db.Column(db.Date, nullable=False)
-    updatedAt = db.Column(db.Date, nullable=False)
+    createdAt = db.Column(db.DateTime, default=db.func.now())
+    updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
     def to_dict(self):
         return {

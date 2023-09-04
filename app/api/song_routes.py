@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from app.models import db, Song, User
 from app.forms.song_form import SongForm
 from flask_login import current_user, login_required, login_user
-from datetime import datetime
+import datetime
 import os
 
 song_routes = Blueprint('songs', __name__)
@@ -23,6 +23,10 @@ Returns all songs owned by the current user.
 @song_routes.route('/currentuser', methods=['GET'])
 @login_required
 def currentUserSongs():
+
+    if song.userId != current_user.id:
+        return {'errors': ['Forbidden: You dont have permission']}, 403
+
     user_songs = Song.query.filter_by(userId = current_user.id).all()
 
     user_info = User.query.get(current_user.id)
@@ -84,11 +88,63 @@ def createSong():
         )
         db.session.add(song)
         db.session.commit()
-        login_user(song)
         return song.to_dict()
 
-    # if form.errors:
-    #     return form.errors
+    if form.errors:
+        return form.errors
 
     return {'errors': ['Song wasn\'t posted :(']}, 401
     # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+"""
+Updates and returns an existing song.
+"""
+@song_routes.route('/<int:id>/edit', methods=['POST'])
+@login_required
+def update(id):
+    song = Song.query.get(id)
+
+    #error response:
+    if song is None:
+        return {'errors': ['Song does not exist with the provided Id']}, 404
+
+    if song.userId != current_user.id:
+        return {'errors': ['Forbidden: You dont have permission']}, 403
+
+    form = SongForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        song.song_name=form.data['song_name']
+        song.genre=form.data['genre']
+        song.image_url=form.data['image_url']
+        song.song_url=form.data['song_url']
+
+        db.session.commit()
+        return song.to_dict()
+
+    return {'errors': ['Update was not successful']}, 400
+
+
+"""
+Delete an existing song.
+"""
+@song_routes.route('/<int:id>/delete', methods=['DELETE'])
+@login_required
+def delete(id):
+    song = Song.query.get(id)
+
+    if song.userId != current_user.id:
+        return {'errors': ['Forbidden: You dont have permission']}, 403
+
+    print("!!!!!Debugging: Song found!!!!1:", song)
+    print("!!!!!!Debugging: User ID !!!!!:", current_user.id)
+    
+    #error response:
+    if song is None:
+        return {'errors': ['Song does not exist with the provided Id']}, 404
+
+    db.session.delete(song)
+    db.session.commit()
+
+    return { "message": 'Successfully deleted' }, 200
