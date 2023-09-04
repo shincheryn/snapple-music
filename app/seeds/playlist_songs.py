@@ -17,7 +17,7 @@ def seed_playlist_songs():
             {'playlistId': 4, 'songId': 12}
     ]
     for playlist_song in playlist_songs_data:
-        db.session.add(*playlist_song)
+        db.session.add(**playlist_song)
     db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
