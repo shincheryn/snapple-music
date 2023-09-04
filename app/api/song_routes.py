@@ -2,8 +2,7 @@ from flask import Blueprint, jsonify, request
 from app.models import db, Song, User
 from app.forms.song_form import SongForm
 from flask_login import current_user, login_required, login_user
-import datetime
-import os
+from app.api.auth_routes import validation_errors_to_error_messages
 
 song_routes = Blueprint('songs', __name__)
 
@@ -11,7 +10,7 @@ song_routes = Blueprint('songs', __name__)
 """
 Returns all the songs
 """
-@song_routes.route('/main', methods=['GET'])
+@song_routes.route('/', methods=['GET'])
 def getAllSongs():
     songs = Song.query.all()
     return {'songs': [song.to_dict() for song in songs]}
@@ -20,12 +19,9 @@ def getAllSongs():
 """
 Returns all songs owned by the current user.
 """
-@song_routes.route('/currentuser', methods=['GET'])
+@song_routes.route('/owned', methods=['GET'])
 @login_required
 def currentUserSongs():
-
-    if song.userId != current_user.id:
-        return {'errors': ['Forbidden: You dont have permission']}, 403
 
     user_songs = Song.query.filter_by(userId = current_user.id).all()
 
@@ -39,7 +35,6 @@ def currentUserSongs():
 
     song = [{'song': song.to_dict(), 'user': user} for song in user_songs]
 
-    # return {'songs': [song.to_dict() for song in user_songs]}
     return {'songs': song}
 
 
@@ -49,9 +44,12 @@ Returns the details of a song specified by its id.
 @song_routes.route('/<int:id>', methods=['GET'])
 def songId(id):
 
-    user_song = Song.query.filter_by(userId = current_user.id)
-
     song = Song.query.get(id)
+
+    #error response:
+    if song is None:
+        return {'message': "Song couldn\'t be found", "statusCode": 404}, 404
+        # return {'errors': ['Song couldn\'t be found']}, 404
 
     user_info = User.query.get(current_user.id)
 
@@ -61,11 +59,7 @@ def songId(id):
         'lastName': user_info.lastName
     }
 
-    song_info = [{'song': song.to_dict(), 'user': user} for song in user_song]
-
-    #error response:
-    if song_info is None:
-        return {'errors': ['Song does not exist with the provided Id']}, 404
+    song_info = [{'song': song.to_dict(), 'Owner': user}]
 
     return song_info
 
@@ -76,6 +70,7 @@ Creates and returns a new song
 @song_routes.route('/newsong', methods=['POST'])
 @login_required
 def createSong():
+
     form = SongForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -90,15 +85,15 @@ def createSong():
         db.session.commit()
         return song.to_dict()
 
-    if form.errors:
-        return form.errors
+    # if form.errors:
+    #     return form.errors
 
-    return {'errors': ['Song wasn\'t posted :(']}, 401
-    # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    # return {'errors': ['Song wasn\'t posted :(']}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 """
-Updates and returns an existing song.
+Updates/Edit and returns an existing song.
 """
 @song_routes.route('/<int:id>/edit', methods=['POST'])
 @login_required
@@ -107,7 +102,8 @@ def update(id):
 
     #error response:
     if song is None:
-        return {'errors': ['Song does not exist with the provided Id']}, 404
+        return {'message': "Song couldn\'t be found", "statusCode": 404}, 404
+        # return {'errors': ['Song does not exist with the provided Id']}, 404
 
     if song.userId != current_user.id:
         return {'errors': ['Forbidden: You dont have permission']}, 403
@@ -123,7 +119,8 @@ def update(id):
         db.session.commit()
         return song.to_dict()
 
-    return {'errors': ['Update was not successful']}, 400
+    # return {'errors': ['Update was not successful']}, 400
+    return {"message": "Validation Error","statusCode": 400,'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 """
@@ -134,17 +131,14 @@ Delete an existing song.
 def delete(id):
     song = Song.query.get(id)
 
-    if song.userId != current_user.id:
-        return {'errors': ['Forbidden: You dont have permission']}, 403
-
-    print("!!!!!Debugging: Song found!!!!1:", song)
-    print("!!!!!!Debugging: User ID !!!!!:", current_user.id)
-    
     #error response:
     if song is None:
-        return {'errors': ['Song does not exist with the provided Id']}, 404
+        return {'message': "Song couldn\'t be found", "statusCode": 404}, 404
+
+    if song.userId != current_user.id:
+        return {'errors': ['Forbidden: You dont have permission']}, 403
 
     db.session.delete(song)
     db.session.commit()
 
-    return { "message": 'Successfully deleted' }, 200
+    return { "message": 'Successfully deleted', "statusCode": 200}
