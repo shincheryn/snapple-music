@@ -16,7 +16,7 @@ DB_FILE = os.environ.get("DB_FILE")
 """
 
 #Route 1: Get Current User's Playlists
-@playlist_routes.route('/user', methods=['GET'])
+@playlist_routes.route('/playlists/owned', methods=['GET'])
 @login_required
 def get_user_playlists_by_id():
     user_playlists = Playlist.query.filter_by(userId=current_user.id).all()
@@ -24,7 +24,7 @@ def get_user_playlists_by_id():
     return jsonify(playlists_data)
 
 # Route 2: Get User Playlist by Id
-@playlist_routes.route('/user/<int:id>', methods=['GET'])
+@playlist_routes.route('/playlists/owned/<int:id>', methods=['GET'])
 def get_user_playlists(id):
     user_playlists = Playlist.query.filter_by(userId=id).all()
     playlists_data = all_playlists(user_playlists)
@@ -54,7 +54,7 @@ def all_playlists(playlists):
 # ------------------------------------------------------------------------------ #
 
 #GET DETAILS OF A PLAYLIST FROM ID
-@playlist_routes.route('/<int:playlist_id>', methods=['GET'])
+@playlist_routes.route('/playlists/<int:playlist_id>', methods=['GET'])
 @login_required
 def get_playlist_details(playlist_id):
     """
@@ -92,3 +92,4 @@ def get_playlist_details(playlist_id):
 # ------------------------------------------------------------------------------ #
 
 # CREATE A PLAYLIST
+@playlist_routes.route('/playlist/create')
