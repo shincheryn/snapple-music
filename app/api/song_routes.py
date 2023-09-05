@@ -13,7 +13,24 @@ Returns all the songs
 @song_routes.route('/', methods=['GET'])
 def getAllSongs():
     songs = Song.query.all()
-    return {'songs': [song.to_dict() for song in songs]}
+
+    song_info = []
+
+    for song in songs:
+        user_info = song.user_songs
+
+        song_info.append({
+            'id': song.id,
+            'song_name': song.song_name,
+            'username': user_info.username,
+            'genre': song.genre,
+            'image_url': song.image_url,
+            'song_url': song.song_url,
+            'createdAt': song.createdAt,
+            'updatedAt': song.updatedAt,
+        })
+
+    return {'songs': song_info}
 
 
 """
@@ -23,19 +40,27 @@ Returns all songs owned by the current user.
 @login_required
 def currentUserSongs():
 
-    user_songs = Song.query.filter_by(userId = current_user.id).all()
+    currentuser_songs = Song.query.filter_by(userId = current_user.id).all()
 
     user_info = User.query.get(current_user.id)
 
-    user = {
-        'id': user_info.id,
-        'firstName': user_info.firstName,
-        'lastName': user_info.lastName
-    }
+    song_info = []
 
-    song = [{'song': song.to_dict(), 'user': user} for song in user_songs]
+    for song in currentuser_songs:
+        user_info = song.user_songs
+        song_info.append({
+                'id': song.id,
+                'song_name': song.song_name,
+                'username': user_info.username,
+                'genre': song.genre,
+                'image_url': song.image_url,
+                'song_url': song.song_url,
+                'createdAt': song.createdAt,
+                'updatedAt': song.updatedAt,
+            })
 
-    return {'songs': song}
+
+    return {'songs': song_info}
 
 
 """
@@ -51,14 +76,6 @@ def songId(id):
         return {'message': "Song couldn\'t be found", "statusCode": 404}, 404
 
     user_info = song.user_songs
-    
-    # user = {
-    #     'id': user_info.id,
-    #     'firstName': user_info.firstName,
-    #     'lastName': user_info.lastName
-    # }
-
-    # song_info = [{'song': song.to_dict(), 'Owner': user}]
 
     song_info = {
         'id': song.id,
@@ -103,7 +120,6 @@ def createSong():
     # if form.errors:
     #     return form.errors
 
-    # return {'errors': ['Song wasn\'t posted :(']}, 401
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
@@ -117,11 +133,10 @@ def update(id):
 
     #error response:
     if song is None:
-        return {'message': "Song couldn\'t be found", "statusCode": 404}, 404
-        # return {'errors': ['Song does not exist with the provided Id']}, 404
+        return {'message': "Song couldn\'t be found", "statusCode": 404}
 
     if song.userId != current_user.id:
-        return {'errors': ['Forbidden: You dont have permission']}, 403
+        return {'errors': ['Forbidden: You don\'t have permission']}, 403
 
     form = SongForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -134,7 +149,6 @@ def update(id):
         db.session.commit()
         return song.to_dict()
 
-    # return {'errors': ['Update was not successful']}, 400
     return {"message": "Validation Error","statusCode": 400,'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
@@ -148,10 +162,10 @@ def delete(id):
 
     #error response:
     if song is None:
-        return {'message': "Song couldn\'t be found", "statusCode": 404}, 404
+        return {'message': "Song couldn\'t be found", "statusCode": 404}
 
     if song.userId != current_user.id:
-        return {'errors': ['Forbidden: You dont have permission']}, 403
+        return {'errors': ['Forbidden: You don\'t have permission']}, 403
 
     db.session.delete(song)
     db.session.commit()
