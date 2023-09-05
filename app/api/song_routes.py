@@ -49,17 +49,32 @@ def songId(id):
     #error response:
     if song is None:
         return {'message': "Song couldn\'t be found", "statusCode": 404}, 404
-        # return {'errors': ['Song couldn\'t be found']}, 404
 
-    user_info = User.query.get(current_user.id)
+    user_info = song.user_songs
+    
+    # user = {
+    #     'id': user_info.id,
+    #     'firstName': user_info.firstName,
+    #     'lastName': user_info.lastName
+    # }
 
-    user = {
-        'id': user_info.id,
-        'firstName': user_info.firstName,
-        'lastName': user_info.lastName
+    # song_info = [{'song': song.to_dict(), 'Owner': user}]
+
+    song_info = {
+        'id': song.id,
+        'song_name': song.song_name,
+        'username': user_info.username,
+        'genre': song.genre,
+        'image_url': song.image_url,
+        'song_url': song.song_url,
+        'createdAt': song.createdAt,
+        'updatedAt': song.updatedAt,
+        'Owner': {
+            'id': user_info.id,
+            'firstName': user_info.firstName,
+            'lastName': user_info.lastName
+        }
     }
-
-    song_info = [{'song': song.to_dict(), 'Owner': user}]
 
     return song_info
 
