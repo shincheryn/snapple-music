@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
-from app.models import Playlist
+from app.models import Playlist, Song
 
 playlist_routes = Blueprint('playlist', __name__)
 DB_FILE = os.environ.get("DB_FILE")
@@ -16,7 +16,7 @@ DB_FILE = os.environ.get("DB_FILE")
 """
 
 #Route 1: Get Current User's Playlists
-@playlist_routes.route('/playlists/owned', methods=['GET'])
+@playlist_routes.route('/owned', methods=['GET'])
 @login_required
 def get_user_playlists_by_id():
     user_playlists = Playlist.query.filter_by(userId=current_user.id).all()
@@ -24,7 +24,7 @@ def get_user_playlists_by_id():
     return jsonify(playlists_data)
 
 # Route 2: Get User Playlist by Id
-@playlist_routes.route('/playlists/owned/<int:id>', methods=['GET'])
+@playlist_routes.route('/owned/<int:id>', methods=['GET'])
 def get_user_playlists(id):
     user_playlists = Playlist.query.filter_by(userId=id).all()
     playlists_data = all_playlists(user_playlists)
@@ -54,7 +54,7 @@ def all_playlists(playlists):
 # ------------------------------------------------------------------------------ #
 
 #GET DETAILS OF A PLAYLIST FROM ID
-@playlist_routes.route('/playlists/<int:playlist_id>', methods=['GET'])
+@playlist_routes.route('/<int:playlist_id>', methods=['GET'])
 @login_required
 def get_playlist_details(playlist_id):
     """
@@ -92,7 +92,7 @@ def get_playlist_details(playlist_id):
 # ------------------------------------------------------------------------------ #
 
 # CREATE A PLAYLIST
-@playlist_routes.route('/playlists/create', methods=['POST'])
+@playlist_routes.route('/create', methods=['POST'])
 @login_required
 def create_playlist():
     """
@@ -131,6 +131,75 @@ def create_playlist():
     }
 
     return jsonify(playlist_data), 201
+
+except Exception as e:
+    return jsonify({'error':str(e)}), 400
+
+# ------------------------------------------------------------------------------ #
+
+# POST A SONG TO PLAYLIST BASED ON PLAYLIST ID
+@playlist_routes.route('/<int:playlist_id>', methods=['POST'])
+@login_required
+def add_song_to_playlist(playlist_id):
+    """
+    a. Add and return song to a playlist specified by playlist id
+    b. Authenticated user required for successful response.
+    """
+    try:
+        # Find playlist by id
+        playlist = Playlist.query.get(playlist_id)
+
+        if not playlist:
+            return jsonify({'message': 'Playlist not found', 'statusCode': 404}), 404
+
+        # Check that requested playlist belongs to current user
+        if playlist.userId != current_user.id:
+            return jsonify({'message': 'Access denied', 'statusCode': 403}), 403
+
+        # Parse JSON data request to check for necessary information
+        data = request.get_json()
+
+        if 'songId' not in data:
+            return jsonify({'message': 'songId is required', 'statusCode': 400}), 400
+
+        song_id = data['songId']
+
+        # Check if song is already in playlist
+        if any(song.id == song_id for song in playlist.songs):
+            return jsonify({'message': 'Playlist aready has this song', 'statusCode': 403}), 403
+
+        # Find song by id
+        song = Song.query.get(song_id)
+
+        if not song:
+            return jsonify({'message': 'Song not found', 'statusCode': 404}), 404
+
+        # Add song to playlist
+        playlist.songs.append(song)
+        db.session.commit()
+
+        # Format and return playlist with newly added song
+        playlist_data = {
+            'id': playlist.id,
+            'playlist_name': playlist.playlist_name,
+            'username': current_user.username,
+            'createdAt': playlist.createdAt,
+            'updatedAt': playlist.updatedAt,
+            'Songs': [
+                {
+                    'id': song.id,
+                    'song_name': song.song_name,
+                    'username': song.username,
+                    'genre': song.genre,
+                    'createdAt': song.createdAt,
+                    'updatedAt': song.updatedAt,
+                    'image_url': song.image_url,
+                    'song_url': song.song_url
+                }
+            ]
+        }
+
+        return jsonify(playlist_data), 201
 
 except Exception as e:
     return jsonify({'error':str(e)}), 400
