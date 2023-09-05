@@ -150,11 +150,15 @@ def add_song_to_playlist(playlistId):
     b. Authenticated user required for successful response.
     """
     try:
-        # Find playlist by id
-        playlist = Playlist.query.get(playlistId)
+        # Find playlist by id (join table)
+        playlist_ID = Playlist.query.get(playlistId)
+        song_ID = Song.query.get(songId)
 
-        if not playlist:
+        if not playlist_ID:
             return jsonify({'message': 'Playlist not found', 'statusCode': 404}), 404
+
+        if not song_ID:
+            return jsonify({'message': 'Song not found', 'statusCode': 404}), 404
 
         # Check that requested playlist belongs to current user
         if playlist.userId != current_user.id:
@@ -163,17 +167,9 @@ def add_song_to_playlist(playlistId):
         # Parse JSON data request to check for necessary information
         data = request.get_json()
 
-        if 'songId' not in data:
-            return jsonify({'message': 'songId is required', 'statusCode': 400}), 400
-
-        songId = data['songId']
-
         # Check if song is already in playlist
-        if any(song.id == songId for song in playlist.songs):
+        if any(song.id == song_ID for song in playlist.songs):
             return jsonify({'message': 'Playlist aready has this song', 'statusCode': 403}), 403
-
-        # Find song by id
-        song = Song.query.get(songId)
 
         if not song:
             return jsonify({'message': 'Song not found', 'statusCode': 404}), 404
