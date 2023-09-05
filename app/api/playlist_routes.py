@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from app.models import Playlist
 
@@ -64,13 +64,13 @@ def get_playlist_details(playlist_id):
     d. Playlist data returned has id, userId, playlist_name, createdAt, and updatedAt.
     e. Playlist data also has current user data: id, firstName, and lastName.
     """
-    # Find Playlist by Id
+    # Find playlist by id
     playlist = Playlist.query.get(playlist_id)
 
     if not playlist:
         return jsonify({'error': 'Playlist not found'}), 404
 
-    # Ensure that requested playlist belongs to Current User
+    # Ensure that requested playlist belongs to current user
     if playlist.userId != current_user.id:
         return jsonify({'error': 'Access denied'}), 403
 
@@ -92,4 +92,45 @@ def get_playlist_details(playlist_id):
 # ------------------------------------------------------------------------------ #
 
 # CREATE A PLAYLIST
-@playlist_routes.route('/playlist/create')
+@playlist_routes.route('/playlists/create', methods=['POST'])
+@login_required
+def create_playlist():
+    """
+        a. Creates and returns new playlist.
+        b. Requires user authentication.
+        c. New playlist will exist in the database after successful request.
+        d. Playlist data returned has id, userId, playlist_name, createdAt, and updatedAt.
+        e.  Error response with status 400 is given when body validations for the userId or playlist_name are violated
+    """
+
+    #Get requested data
+    try:
+        data = request.get_json()
+
+    #Check if request body is valid
+    if 'userId' not in data or 'playlist_name' not in data:
+        return jsonify({'error': 'userId and playlist_name are required'}), 400
+
+    #Create new playlist
+    new_playlist = Playlist(
+        userId=current_user.id,
+        playlist_name=data['playlist_name']
+    )
+
+    #Add new playlist to database
+    db.session.add(new_playlist)
+    db.session.commit()
+
+    #Return new playlist
+    playlist_data = {
+        'id': new_playlist.id,
+        'userId': new_playlist.userId,
+        'playlist_name': new_playlist.playlist_name,
+        'createdAt': new_playlist.createdAt,
+        'updatedAt': new_playlist.updatedAt
+    }
+
+    return jsonify(playlist_data), 201
+
+except Exception as e:
+    return jsonify({'error':str(e)}), 400
