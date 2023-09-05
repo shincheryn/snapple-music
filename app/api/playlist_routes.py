@@ -234,3 +234,16 @@ def delete_song_from_playlist(playlistId, songId):
 
 except Exception as e:
     return jsonify({'message': 'An error occurred', 'statusCode': 500}), 500
+
+# ------------------------------------------------------------------------------ #
+
+# DELETE A PLAYLIST
+@playlist_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def delete_playlist(id):
+    playlist_id = Playlist.query.get(id)
+    if not playlist_id:
+        return jsonify({'message': 'Playlist not found', 'statusCode': 404}), 404
+    db.session.delete(delete_playlist)
+    db.session.commit()
+    return jsonify({'message': 'Successfully deleted', 'statusCode': 200}), 200
