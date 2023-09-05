@@ -207,3 +207,30 @@ except Exception as e:
 # ------------------------------------------------------------------------------ #
 
 # DELETE SONG FROM PLAYLIST BASED ON PLAYLIST ID
+@playlist_routes.route('/<int:playlistId>/songs/<int:songId>', methods=["DELETE"])
+@login_required
+def delete_song_from_playlist(playlistId, songId):
+
+    try:
+        # Find playlist by id (join table)
+        playlist_ID = Playlist.query.get(playlistId)
+        song_ID = Song.query.get(songId)
+
+        if not playlist_ID:
+            return jsonify({'message': 'Playlist not found', 'statusCode': 404}), 404
+
+        if not song_ID:
+            return jsonify({'message': 'Song not found', 'statusCode': 404}), 404
+
+        # Check that requested playlist belongs to current user
+        if playlist.userId != current_user.id:
+            return jsonify({'message': 'Access denied', 'statusCode': 403}), 403
+
+        # Remove song from playlist
+        playlist.songs.remove(song)
+        db.session.commit()
+
+        return jsonify({'message': 'Successfully deleted', 'statusCode': 200}), 200
+
+except Exception as e:
+    return jsonify({'message': 'An error occurred', 'statusCode': 500}), 500
