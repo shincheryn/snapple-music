@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_required
+from app.forms import PlaylistForm
 from app.models import db, User, Playlist, Song, playlist_songs
 
 playlist_routes = Blueprint('playlist', __name__)
@@ -109,15 +110,20 @@ def create_playlist():
     if 'userId' not in data or 'playlist_name' not in data:
         return jsonify({'error': 'userId and playlist_name are required'}), 400
 
-    #Create new playlist
-    new_playlist = Playlist(
-        userId=current_user.id,
-        playlist_name=data['playlist_name']
-    )
+    #Create new playlist via Playlist Form
+    form = PlaylistForm()
+    current_user_id = current_user.get_id()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_playlist = Playlist(
+            userId=current_user.id,
+            playlist_name=form.data['playlist_name']
+        )
 
     #Add new playlist to database
     db.session.add(new_playlist)
     db.session.commit()
+
 
     #Return new playlist
     playlist_data = {
