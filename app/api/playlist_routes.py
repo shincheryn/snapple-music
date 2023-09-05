@@ -1,10 +1,8 @@
-import os
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_required
-from app.models import Playlist, Song
+from app.models import db, User, Playlist, Song, playlist_songs
 
 playlist_routes = Blueprint('playlist', __name__)
-DB_FILE = os.environ.get("DB_FILE")
 
 #GET ALL PLAYLISTS OWNED BY CURRENT USER
  """
@@ -54,9 +52,9 @@ def all_playlists(playlists):
 # ------------------------------------------------------------------------------ #
 
 #GET DETAILS OF A PLAYLIST FROM ID
-@playlist_routes.route('/<int:playlist_id>', methods=['GET'])
+@playlist_routes.route('/<int:playlistId>', methods=['GET'])
 @login_required
-def get_playlist_details(playlist_id):
+def get_playlist_details(playlistId):
     """
     a. Gets details of playlist specified by playlist id.
     b. Authenticated user required for successful response.
@@ -65,7 +63,7 @@ def get_playlist_details(playlist_id):
     e. Playlist data also has current user data: id, firstName, and lastName.
     """
     # Find playlist by id
-    playlist = Playlist.query.get(playlist_id)
+    playlist = Playlist.query.get(playlistId)
 
     if not playlist:
         return jsonify({'error': 'Playlist not found'}), 404
@@ -138,16 +136,16 @@ except Exception as e:
 # ------------------------------------------------------------------------------ #
 
 # POST A SONG TO PLAYLIST BASED ON PLAYLIST ID
-@playlist_routes.route('/<int:playlist_id>', methods=['POST'])
+@playlist_routes.route('/<int:playlistId>', methods=['POST'])
 @login_required
-def add_song_to_playlist(playlist_id):
+def add_song_to_playlist(playlistId):
     """
     a. Add and return song to a playlist specified by playlist id
     b. Authenticated user required for successful response.
     """
     try:
         # Find playlist by id
-        playlist = Playlist.query.get(playlist_id)
+        playlist = Playlist.query.get(playlistId)
 
         if not playlist:
             return jsonify({'message': 'Playlist not found', 'statusCode': 404}), 404
@@ -162,14 +160,14 @@ def add_song_to_playlist(playlist_id):
         if 'songId' not in data:
             return jsonify({'message': 'songId is required', 'statusCode': 400}), 400
 
-        song_id = data['songId']
+        songId = data['songId']
 
         # Check if song is already in playlist
-        if any(song.id == song_id for song in playlist.songs):
+        if any(song.id == songId for song in playlist.songs):
             return jsonify({'message': 'Playlist aready has this song', 'statusCode': 403}), 403
 
         # Find song by id
-        song = Song.query.get(song_id)
+        song = Song.query.get(songId)
 
         if not song:
             return jsonify({'message': 'Song not found', 'statusCode': 404}), 404
@@ -203,3 +201,7 @@ def add_song_to_playlist(playlist_id):
 
 except Exception as e:
     return jsonify({'error':str(e)}), 400
+
+# ------------------------------------------------------------------------------ #
+
+# DELETE SONG FROM PLAYLIST BASED ON PLAYLIST ID
