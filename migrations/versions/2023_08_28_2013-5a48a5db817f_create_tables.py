@@ -28,7 +28,7 @@ def upgrade() -> None:
     sa.Column('hashed_password', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('username')
+    # sa.UniqueConstraint('username')
     )
     op.create_table('playlists',
     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
