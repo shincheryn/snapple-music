@@ -7,16 +7,9 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
+from .api.playlist_routes import playlist_routes
 from .seeds import seed_commands
 from .config import Config
-from flask.cli import AppGroup
-from .users import seed_users, undo_users
-from .songs import seed_songs, undo_songs
-from .albums import seed_albums, undo_albums
-from .playlists import seed_playlists, undo_playlists
-from .album_songs import seed_album_songs, undo_album_songs
-from .playlist_songs import seed_playlist_songs, undo_playlist_songs
-from app.models.db import db, environment, SCHEMA
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
@@ -36,6 +29,7 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(playlist_routes, url_prefix='/api/playlist')
 db.init_app(app)
 Migrate(app, db)
 
@@ -97,37 +91,3 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
-
-# Creates a seed group to hold our commands
-# So we can type `flask seed --help`
-seed_commands = AppGroup('seed')
-# Creates the `flask seed all` command
-@seed_commands.command('all')
-def seed():
-    if environment == 'production':
-        # Before seeding in production, you want to run the seed undo
-        # command, which will  truncate all tables prefixed with
-        # the schema name (see comment in users.py undo_users function).
-        # Make sure to add all your other model's undo functions below
-        undo_playlist_songs()
-        undo_album_songs()
-        undo_playlists()
-        undo_albums()
-        undo_songs()
-        undo_users()
-    seed_users()
-    seed_songs()
-    seed_albums()
-    seed_playlists()
-    seed_album_songs()
-    seed_playlist_songs()
-
-# Creates the `flask seed undo` command
-@seed_commands.command('undo')
-def undo():
-    undo_playlist_songs()
-    undo_album_songs()
-    undo_playlists()
-    undo_albums()
-    undo_songs()
-    undo_users()

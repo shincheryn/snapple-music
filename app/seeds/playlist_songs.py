@@ -2,22 +2,70 @@ from app.models import db, playlist_songs, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_playlist_songs():
-    playlist_songs_data = [
-            {'playlistId': 1, 'songId': 1},
-            {'playlistId': 1, 'songId': 2},
-            {'playlistId': 1, 'songId': 3},
-            {'playlistId': 2, 'songId': 4},
-            {'playlistId': 2, 'songId': 5},
-            {'playlistId': 2, 'songId': 6},
-            {'playlistId': 5, 'songId': 7},
-            {'playlistId': 6, 'songId': 8},
-            {'playlistId': 3, 'songId': 9},
-            {'playlistId': 3, 'songId': 10},
-            {'playlistId': 3, 'songId': 11},
-            {'playlistId': 4, 'songId': 12}
-    ]
-    for playlist_song in playlist_songs_data:
-        db.session.add(**playlist_song)
+    # playlist_songs_data = [
+    #         {'playlistId': 1, 'songId': 1},
+    #         {'playlistId': 1, 'songId': 2},
+    #         {'playlistId': 1, 'songId': 3},
+    #         {'playlistId': 2, 'songId': 4},
+    #         {'playlistId': 2, 'songId': 5},
+    #         {'playlistId': 2, 'songId': 6},
+    #         {'playlistId': 5, 'songId': 7},
+    #         {'playlistId': 6, 'songId': 8},
+    #         {'playlistId': 3, 'songId': 9},
+    #         {'playlistId': 3, 'songId': 10},
+    #         {'playlistId': 3, 'songId': 11},
+    #         {'playlistId': 4, 'songId': 12}
+    # ]
+    # for playlist_song in playlist_songs_data:
+    #     db.session.add(*playlist_song)
+    ps1 = playlist_songs.insert().values(
+        playlistId= 1, songId=1
+    )
+    ps2 = playlist_songs.insert().values(
+        playlistId= 1, songId=2
+    )
+    ps3 = playlist_songs.insert().values(
+        playlistId= 1, songId=3
+    )
+    ps4 = playlist_songs.insert().values(
+        playlistId= 1, songId=4
+    )
+    ps5 = playlist_songs.insert().values(
+        playlistId= 2, songId=5
+    )
+    ps6 = playlist_songs.insert().values(
+        playlistId= 2, songId=6
+    )
+    ps7 = playlist_songs.insert().values(
+        playlistId= 2, songId=7
+    )
+    ps8 = playlist_songs.insert().values(
+        playlistId= 2, songId=8
+    )
+    ps9 = playlist_songs.insert().values(
+        playlistId= 3, songId=9
+    )
+    ps10 = playlist_songs.insert().values(
+        playlistId= 3, songId=10
+    )
+    ps11 = playlist_songs.insert().values(
+        playlistId= 3, songId=11
+    )
+    ps12 = playlist_songs.insert().values(
+        playlistId= 3, songId=12
+    )
+    db.session.execute(ps1)
+    db.session.execute(ps2)
+    db.session.execute(ps3)
+    db.session.execute(ps4)
+    db.session.execute(ps5)
+    db.session.execute(ps6)
+    db.session.execute(ps7)
+    db.session.execute(ps8)
+    db.session.execute(ps9)
+    db.session.execute(ps10)
+    db.session.execute(ps11)
+    db.session.execute(ps12)
     db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
