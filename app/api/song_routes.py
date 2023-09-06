@@ -173,7 +173,7 @@ def update(id):
             if "url" not in upload_image:
                 return {'errors': 'Failed to upload'}
 
-            song.url_image = upload_image["url"]
+            song.song_url = upload_image["url"]
 
         new_song_file = form.song_url.data
         if new_song_file:
@@ -184,12 +184,12 @@ def update(id):
                 # Handle the error here
                 return {'errors': 'Failed to upload'}
 
-            song.url_song = upload_song["url"]
+            song.image_url = upload_song["url"]
 
-        song.song_name=form.data['song_name']
-        song.genre=form.data['genre']
-        song.image_url = song.url_image,
-        song.song_url = song.url_song
+        song.song_name=form.data["song_name"]
+        song.genre=form.data["genre"]
+        song.image_url = upload_image["url"]
+        song.song_url = upload_song["url"]
 
         db.session.commit()
         return song.to_dict()

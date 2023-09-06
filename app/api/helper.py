@@ -23,7 +23,7 @@ def get_unique_filename(filename):
 def upload_file_to_s3(file, acl="public-read"):
     # , acl="public-read"
     try:
-        print(f"!!Uploading file {file} to S3...")
+        # print(f"!!Uploading file {file} to S3...")
 
         s3.upload_fileobj(
             file,
