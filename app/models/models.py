@@ -107,10 +107,22 @@ class Song(db.Model):
     song_name = db.Column(db.String(255), nullable=False)
     userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     genre = db.Column(db.String(255), nullable=False)
-    createdAt = db.Column(db.Date, nullable=False)
-    updatedAt = db.Column(db.Date, nullable=False)
     image_url = db.Column(db.String(255), nullable=False)
     song_url = db.Column(db.String(255), nullable=False)
+    createdAt = db.Column(db.DateTime, default=db.func.now())
+    updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'userId': self.userId,
+            'song_name': self.song_name,
+            'genre': self.genre,
+            'image_url': self.image_url,
+            'song_url': self.song_url,
+            'createdAt': self.createdAt,
+            'updatedAt': self.updatedAt,
+        }
 
     # relationships
     # id has a one to many relationship with Albums_Songs.songId
