@@ -5,6 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import MySongsPage from "./components/MySongsPage";
 import SongDetailsPage from "./components/SongDetailsPage";
+import CreateSong from "./components/CreateSong";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
@@ -27,6 +28,9 @@ function App() {
           <Route path='/songs/owned'>
             <MySongsPage />
           </Route>
+          <Route path='/songs/newsong'>
+            <CreateSong />
+        </Route>
           <Route path="/login" >
             <LoginFormPage />
           </Route>

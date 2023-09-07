@@ -68,7 +68,7 @@ export const getSongsDetails = (id) => async dispatch => {
     }
 }
 
-// create a spot
+// create a song
 export const createSong = (post) => async (dispatch) => {
     const response = await fetch(`/songs/newsong`, {
       method: "POST",
@@ -83,7 +83,7 @@ export const createSong = (post) => async (dispatch) => {
     }
 };
 
-// delete a spot
+// delete a song
 export const deleteSong = (id) => async dispatch => {
     const response = await fetch(`/api/songs/${id}`, {
         method: 'DELETE'
@@ -94,7 +94,7 @@ export const deleteSong = (id) => async dispatch => {
     }
 }
 
-// update a spot
+// update a song
 export const updateSpot = (id, songInfo) => async dispatch => {
     const response = await fetch(`/api/spots/${id}`, {
         method: 'PUT',
@@ -135,7 +135,7 @@ const songsReducer = (state = initialState, action) => {
             newState[action.song.id] = {...newState[action.song.id], ...action.song};
             return newState
         case CREATE_SONG:
-            newState[action.song.id] =  action.song;
+            newState[action.songs.id] =  action.songs;
             return newState;
         case UPDATE_SONG:
             newState[action.song.id] = action.song;
