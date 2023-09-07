@@ -1,7 +1,6 @@
 // import { csrfFetch } from "./csrf";
-
-const LOAD_SONG = 'songs/LOAD_SONG';
 const LOAD_SONGS = 'songs/LOAD_SONGS';
+const LOAD_ONE_SONG = 'songs/LOAD_ONE_SONG';
 const LOAD_USER_SONGS = 'songs/LOAD_USER_SONGS';
 const UPDATE_SONG = 'songs/UPDATE_SONG';
 const DELETE_SONG = 'songs/DELETE';
@@ -13,7 +12,7 @@ const loadsongs = list => ({
 })
 
 const loadsong = song => ({
-    type: LOAD_SONG,
+    type: LOAD_ONE_SONG,
     song
 })
 
@@ -49,30 +48,68 @@ export const getSongs = () => async dispatch => {
 }
 
 // get all the current user's songs
+export const getCurrentUsersSongs = () => async dispatch => {
+    const response = await fetch('/api/songs/owned');
+
+    if(response.ok){
+        const songs = await response.json();
+        dispatch(loadUserSongs(songs));
+    }
+}
 
 // get a song's details
+export const getSongsDetails = (id) => async dispatch => {
+    const response = await fetch(`/api/songs/${id}`);
 
+    if(response.ok){
+        const song = await response.json();
+        dispatch(loadsong(song));
+
+    }
+}
 
 // create a spot
-// export const createImage = (post) => async (dispatch) => {
-//     const response = await fetch(`/images/new`, {
-//       method: "POST",
-//       body: post
-//     });
+export const createSong = (post) => async (dispatch) => {
+    const response = await fetch(`/songs/newsong`, {
+      method: "POST",
+      body: post
+    });
 
-//     if (response.ok) {
-//         const { resPost } = await response.json();
-//         dispatch(createOne(resPost));
-//     } else {
-//         console.log("There was an error making your post!")
-//     }
-// };
+    if (response.ok) {
+        const { resPost } = await response.json();
+        dispatch(createOne(resPost));
+    } else {
+        console.log("There was an error making your post!")
+    }
+};
 
 // delete a spot
+export const deleteSong = (id) => async dispatch => {
+    const response = await fetch(`/api/songs/${id}`, {
+        method: 'DELETE'
+    });
 
+    if(response.ok){
+       return dispatch(deleteOne(id));
+    }
+}
 
 // update a spot
+export const updateSpot = (id, songInfo) => async dispatch => {
+    const response = await fetch(`/api/spots/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(songInfo)
+    });
 
+    if(response.ok) {
+        const updated = await response.json();
+        dispatch(updateOne(updated));
+        return updated;
+    }
+};
 
 
 const initialState = {};
@@ -82,15 +119,29 @@ const songsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SONGS:
             const allSongs = {};
-            action.list.Songs.forEach((song) => {
-                allSongs[song.id] = spot;
+            action.list.songs.forEach((song) => {
+                allSongs[song.id] = song;
             });
             return {
                 ...allSongs
             }
-
+        case LOAD_USER_SONGS:
+            const user = {};
+            action.songs.songs.forEach((song) => {
+                user[song.id] = song;
+            })
+            return user;
+        case LOAD_ONE_SONG:
+            newState[action.song.id] = {...newState[action.song.id], ...action.song};
+            return newState
         case CREATE_SONG:
             newState[action.song.id] =  action.song;
+            return newState;
+        case UPDATE_SONG:
+            newState[action.song.id] = action.song;
+            return newState
+        case DELETE_SONG:
+            delete newState[action.id];
             return newState;
         default:
             return newState;
