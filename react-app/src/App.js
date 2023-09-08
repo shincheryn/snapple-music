@@ -39,9 +39,9 @@ function App() {
           {/* <Route path='/playlists/owned'>
             <MyPlaylists/>
           </Route>*/
-          <Route path='/playlists/create'>
-            <CreatePlaylist />
-          </Route>}
+            <Route path='/playlists/create'>
+              <CreatePlaylist />
+            </Route>}
           <Route path="/login" >
             <LoginFormPage />
           </Route>
@@ -53,6 +53,7 @@ function App() {
           </Route>
           <Route exact path='/songs/:id'>
             <SongDetailsPage />
+          </Route>
           {/* <Route exact path='/playlists/:id'>
             <PlaylistDetails/>
           </Route> */}
