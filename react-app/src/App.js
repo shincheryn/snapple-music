@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
+import CreatePlaylist from "./components/Playlists";
 import Albums from "./components/album/index";
 import AlbumDetails from "./components/album/AlbumDetails";
 
@@ -25,12 +26,21 @@ function App() {
           <Route exact path="/" >
             <LandingPage />
           </Route>
+          {/* <Route path='/playlists/owned'>
+            <MyPlaylists/>
+          </Route>*/
+          <Route path='/playlists/create'>
+            <CreatePlaylist />
+          </Route>}
           <Route path="/login" >
             <LoginFormPage />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          {/* <Route exact path='/playlists/:id'>
+            <PlaylistDetails/>
+          </Route> */}
           <Route path="/albums/owned">
             <Albums />
           </Route>
