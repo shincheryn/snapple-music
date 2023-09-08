@@ -18,7 +18,7 @@ export const getMyPlaylistsAction = (myPlaylists) => {
 
 export const getPlaylistDetailsAction = (playlistId) => {
     return {
-        type: GET_PLAYLIST_DETAILS,
+        type: GET_PLAYLIST_DETAILS, 
         payload: playlistId,
     };
 };
