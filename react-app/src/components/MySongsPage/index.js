@@ -26,8 +26,8 @@ const MySongs = () => {
             {songs && songsArray.map((song) => (
             <div key={song.id}>
                 <Link className='' to={`/songs/${song.id}`}>
-                        <p className=''>{song.name}</p>
-                        <img src={song.image_url || defaultImage} alt='song prev' className='image'title={song.name}/>
+                        <p className=''>{song.song_name}</p>
+                        <img src={song.image_url || defaultImage} alt='song prev' className='image'title={song.song_name}/>
                         <p className=''>{song.genre}</p>
                 </Link>
                 <button onClick={(e) => {
