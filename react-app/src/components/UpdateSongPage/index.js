@@ -1,35 +1,55 @@
-import React, {useState} from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import * as songsActions from '../../store/songs'
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import * as songsActions from '../../store/songs';
 
-const UploadSong = () => {
+const UpdateSong = () => {
     const dispatch = useDispatch();
-    const history = useHistory(); // so that you can redirect after the image upload is successful
+    const history = useHistory();
+    const { id } = useParams();
+    const song = useSelector((state) => state.song[id]);
     const [songName, setSongName] = useState('');
     const [genre, setGenre] = useState('');
     const [image, setImage] = useState(null);
-    const [song, setSong] = useState(null);
+    const [songMP3, setSongMP3] = useState(null);
     const [songLoading, setSongLoading] = useState(false)
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
+    useEffect(() => {
+        dispatch(songsActions.getSongsDetails(id))
+            .then(songdetail => {
+
+            })
+    }, [dispatch, id]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("image", image);
-        formData.append("song", song)
 
-        // aws uploads can be a bit slow—displaying
-        // some sort of loading message is a good idea
-        setImageLoading(true);
-        await dispatch(songsActions.createSong(formData));
-        history.push("/songs");
+        const errors = {};
+
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+          } else {
+            setErrors({});
+
+            const songInfo = { songName, genre, image, song}
+
+            dispatch(songsActions.updateSong(id, songInfo))
+                .then((song) => {
+                    history.push(`/songs/${song.id}`)
+                })
+                .catch(async (res) => {
+                    const data = await res.json()
+                    if(data && data.errors) setErrors(data.errors)
+                })
+          }
     }
 
     return (
-        <div>
-            <h1>Create a New Song</h1>
+        <>
+            <h1>Update Song</h1>
             <form
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
@@ -73,8 +93,8 @@ const UploadSong = () => {
                     Select Song MP3
                     <input
                         type="file"
-                        accept="song/*"
-                        onChange={(e) => setSong(e.target.files[0])}
+                        accept="songMP3/*"
+                        onChange={(e) => setSongMP3(e.target.files[0])}
                     />
                 </label>
                 </div>
@@ -82,8 +102,8 @@ const UploadSong = () => {
                 {(songLoading)&& <p>Loading...</p>}
                 {(imageLoading)&& <p>Loading...</p>}
             </form>
-        </div>
-    )
-}
+        </>
+    );
+};
 
-export default UploadSong;
+export default UpdateSong;
