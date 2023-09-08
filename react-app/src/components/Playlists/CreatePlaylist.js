@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import * as playlistActions from '../../store/playlist'
 import './CreatePlaylist.css'
 
-const CreatePlaylist = () => {
+const CreatePlaylistPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [playlistName, setPlaylistName] = useState('');
@@ -17,7 +17,7 @@ const CreatePlaylist = () => {
         formData.append("playlist", playlistName)
 
         await dispatch(playlistActions.createPlaylistAction(formData));
-        history.push("/playlists");
+        history.push("/playlists/owned");
     }
 
     return (
@@ -45,4 +45,4 @@ const CreatePlaylist = () => {
     )
 }
 
-export default CreatePlaylist;
+export default CreatePlaylistPage;

@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from app.forms import PlaylistForm
 from app.models import db, User, Playlist, Song, playlist_songs
 
-playlist_routes = Blueprint('playlist', __name__)
+playlist_routes = Blueprint('playlists', __name__)
 
 #GET ALL PLAYLISTS OWNED BY CURRENT USER
 """
