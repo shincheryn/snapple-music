@@ -30,17 +30,17 @@ export const createPlaylistAction = (newPlaylist) => {
     };
 };
 
-export const addSongsToPlaylistAction = (addPlaylistId, newSong) => {
+export const addSongsToPlaylistAction = (playlistId, songId) => {
     return {
         type: ADD_SONGS_TO_PLAYLIST,
-        payload: {addPlaylistId, newSong},
+        payload: {playlistId, songId},
     };
 };
 
-export const deleteSongsFromPlaylistAction = (deletePlaylistId, songId) => {
+export const deleteSongsFromPlaylistAction = (playlistId, songId) => {
     return {
         type: DELETE_SONGS_FROM_PLAYLIST,
-        payload: {deletePlaylistId, songId},
+        payload: {playlistId, songId},
     };
 };
 
@@ -55,7 +55,7 @@ export const deletePlaylistAction = (id) => {
 // Thunks
 // GET All Owned Playlists
 export const getMyPlaylistsThunk = () => async (dispatch) => {
-    const response = await fetch ('api/playlists/owned');
+    const response = await fetch (`api/playlists/owned`);
 
     if(response.ok) {
         const allMyPlaylists = await response.json();
@@ -65,8 +65,8 @@ export const getMyPlaylistsThunk = () => async (dispatch) => {
 };
 
 // GET Playlist Details
-export const getPlaylistDetailsThunk = () => async (dispatch) => {
-    const response = await fetch ('api/playlists/<int:playlistId>');
+export const getPlaylistDetailsThunk = (playlistId) => async (dispatch) => {
+    const response = await fetch (`api/playlists/${playlistId}`);
 
     if (response.ok) {
         const getPlaylistDetails = await response.json();
@@ -77,7 +77,7 @@ export const getPlaylistDetailsThunk = () => async (dispatch) => {
 
 // CREATE New Playlist
 export const createPlaylistThunk = (post) => async (dispatch) => {
-    const response = await fetch ('api/playlists/create', {
+    const response = await fetch (`api/playlists/create`, {
         method: "POST",
         body: post
     });
@@ -91,13 +91,13 @@ export const createPlaylistThunk = (post) => async (dispatch) => {
 };
 
 // ADD Song to Playlist
-export const addSongsToPlaylistThunk = (playlistId, newSong) => async (dispatch) => {
-    const response = await fetch ('api/playlists/<int:playlistId>/songs/<int:songId>', {
+export const addSongsToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
+    const response = await fetch (`api/playlists/${playlistId}/songs/${songId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(newSong),
+        body: JSON.stringify(songId),
     });
 
     if (response.ok) {
@@ -110,7 +110,7 @@ export const addSongsToPlaylistThunk = (playlistId, newSong) => async (dispatch)
 
 // DELETE Song from Playlist
 export const deleteSongsFromPlaylistThunk = (playlistId, songId) => async (dispatch) => {
-    const response = await fetch ("api/playlists/<int:playlistId>/songs/<int:songId>", {
+    const response = await fetch (`api/playlists/${playlistId}/songs/${songId}`, {
         method: "DELETE"
     });
 
@@ -124,7 +124,7 @@ export const deleteSongsFromPlaylistThunk = (playlistId, songId) => async (dispa
 
 // DELETE Playlist
 export const deletePlaylistThunk = (id) => async (dispatch) => {
-    const response = await fetch ("api/playlists/<int:id>", {
+    const response = await fetch (`api/playlists/${id}`, {
         method: "DELETE"
     });
 
