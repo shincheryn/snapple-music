@@ -20,13 +20,13 @@ def seed_albums():
     # for album in albums_data:
     #     db.session.add(**album)
     a1 = Album(
-        album_name='Dangerous Woman', userId= 1, genre= 'Mix', release_year= 2016, description= 'Dangerous Woman is the third studio album by American singer Ariana Grande.', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
+        album_name='Dangerous Woman', userId= 1, genre= 'Mix', release_year= 2016, description= 'Dangerous Woman is the third studio album by American singer Ariana Grande.',album_image_url='https://i.imgur.com/Fl65OP9.jpeg', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
     )
     a2 = Album(
-        album_name='Highway to Hell', userId= 2, genre= 'Mix', release_year= 1979, description= 'Highway to Hell is the sixth studio album by Australian hard rock band AC/DC', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
+        album_name='Highway to Hell', userId= 2, genre= 'Mix', release_year= 1979, description= 'Highway to Hell is the sixth studio album by Australian hard rock band AC/DC',album_image_url='https://i.imgur.com/N78J4gd.jpeg', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
     )
     a3 = Album(
-        album_name='One Thing at a Time', userId= 3, genre= 'Mix', release_year= 2023, description= 'One Thing at a Time is the third studio album by American country music singer Morgan Wallen', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
+        album_name='One Thing at a Time', userId= 3, genre= 'Mix', release_year= 2023, description= 'One Thing at a Time is the third studio album by American country music singer Morgan Wallen',album_image_url='https://i.imgur.com/Aj8li3F.jpeg', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
     )
     db.session.add(a1)
     db.session.add(a2)

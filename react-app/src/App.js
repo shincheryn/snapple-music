@@ -7,6 +7,9 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import CreatePlaylist from "./components/Playlists";
+import Albums from "./components/album/index";
+import AlbumDetails from "./components/album/AlbumDetails";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +41,12 @@ function App() {
           {/* <Route exact path='/playlists/:id'>
             <PlaylistDetails/>
           </Route> */}
+          <Route path="/albums/owned">
+            <Albums />
+          </Route>
+          <Route path="/albums/:albumId">
+            <AlbumDetails />
+          </Route>
         </Switch>
       )}
     </>
