@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 function LandingPage() {
   return (
     <div>
-
+  
     </div>
   )
 }

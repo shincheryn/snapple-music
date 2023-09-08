@@ -9,6 +9,7 @@ import LandingPage from "./components/LandingPage";
 import Albums from "./components/album/index";
 import AlbumDetails from "./components/album/AlbumDetails";
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
