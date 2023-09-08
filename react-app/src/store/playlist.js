@@ -66,9 +66,9 @@ export const getPlaylistDetailsThunk = (playlistId) => async (dispatch) => {
   const response = await fetch(`/api/playlists/${playlistId}`);
 
   if (response.ok) {
-    const getPlaylistDetails = await response.json();
-    dispatch(getPlaylistDetailsAction(getPlaylistDetails));
-    return getPlaylistDetails;
+    const playlists = await response.json();
+    dispatch(getPlaylistDetailsAction(playlists));
+    return playlists;
   }
 };
 

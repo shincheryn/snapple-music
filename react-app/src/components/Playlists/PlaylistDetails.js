@@ -13,11 +13,14 @@ const PlaylistDetailsPage = () => {
   }, [dispatch, playlistId]);
 
   const playlist = useSelector((state) => Object.values(state.playlist));
-  console.log(playlist)
+  console.log("Playlist:", playlist);
 
-  const currentPlaylist = playlist[0]; //undefined???
+
+  const currentPlaylist = playlist[0];
+  console.log("Current Playlist:", currentPlaylist);
 
   const user = useSelector((state) => Object.values(state.session));
+  console.log("User:", user);
 
 
   return (
