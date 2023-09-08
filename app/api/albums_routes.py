@@ -23,7 +23,21 @@ def albumDetails(id):
     if album_Details is None:
         return {'errors': ["Album couldn't be found"]}, 404
 
-    return album_Details.to_dict()
+    song_info = album_Details.songs
+
+    ret = {
+        'id': album_Details.id,
+        'album_name': album_Details.album_name,
+        'userId': album_Details.userId,
+        'genre': album_Details.genre,
+        'description': album_Details.description,
+        'album_image_url':album_Details.album_image_url,
+        'createdAt': album_Details.createdAt,
+        'updatedAt': album_Details.updatedAt,
+        'Songs': [each.to_dict() for each in song_info]
+    }
+
+    return ret
 
 
 # Create an Album
@@ -76,7 +90,25 @@ def albumAddSong(albumId, songId):
     )
     db.session.execute(new_song)
     db.session.commit()
-    return {'message':  "Successfully add song to album"}, 200
+
+    album_Details = Album.query.get(albumId)
+    if album_Details is None:
+        return {'errors': ["Album couldn't be found"]}, 404
+
+    song_info = album_Details.songs
+
+    ret = {
+        'id': album_Details.id,
+        'album_name': album_Details.album_name,
+        'userId': album_Details.userId,
+        'genre': album_Details.genre,
+        'description': album_Details.description,
+        'createdAt': album_Details.createdAt,
+        'updatedAt': album_Details.updatedAt,
+        'Songs': [each.to_dict() for each in song_info]
+    }
+
+    return ret
 
 
 # Remove Songs from an Album User Created based on the Album's id
