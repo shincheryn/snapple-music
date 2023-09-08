@@ -57,11 +57,11 @@ def get_user_playlists_by_id():
 @login_required
 def get_playlist_details(playlistId):
     """
-    a. Gets details of playlist specified by playlist id.
-    b. Authenticated user required for successful response.
-    c. If current user is not authenticated user for playlist, access denied.
-    d. Playlist data returned has id, userId, playlist_name, createdAt, and updatedAt.
-    e. Playlist data also has current user data: id, firstName, and lastName.
+        a. Gets details of playlist specified by playlist id.
+        b. Authenticated user required for successful response.
+        c. If current user is not authenticated user for playlist, access denied.
+        d. Playlist data returned has id, userId, playlist_name, createdAt, and updatedAt.
+        e. Playlist data also has current user data: id, firstName, and lastName.
     """
     # Find playlist by id
     playlist = Playlist.query.get(playlistId)

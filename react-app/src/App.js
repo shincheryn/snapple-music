@@ -10,6 +10,10 @@ import UpdateSongPage from './components/UpdateSongPage'
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
+import CreatePlaylist from "./components/Playlists";
+import Albums from "./components/album/index";
+import AlbumDetails from "./components/album/AlbumDetails";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +36,12 @@ function App() {
           <Route path='/songs/newsong'>
             <CreateSong />
           </Route>
+          {/* <Route path='/playlists/owned'>
+            <MyPlaylists/>
+          </Route>*/
+          <Route path='/playlists/create'>
+            <CreatePlaylist />
+          </Route>}
           <Route path="/login" >
             <LoginFormPage />
           </Route>
@@ -43,6 +53,14 @@ function App() {
           </Route>
           <Route exact path='/songs/:id'>
             <SongDetailsPage />
+          {/* <Route exact path='/playlists/:id'>
+            <PlaylistDetails/>
+          </Route> */}
+          <Route path="/albums/owned">
+            <Albums />
+          </Route>
+          <Route path="/albums/:albumId">
+            <AlbumDetails />
           </Route>
         </Switch>
       )}
