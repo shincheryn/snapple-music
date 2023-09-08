@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import * as playlistActions from "../../store/playlist.js";
 import OpenModalButton from '../OpenModalButton';
-import DeleteModal from '../DeleteSongModal';
 import "./Playlists.css";
 
 const MyPlaylistsPage = () => {
