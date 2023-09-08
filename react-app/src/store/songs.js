@@ -69,11 +69,29 @@ export const getSongsDetails = (id) => async dispatch => {
 }
 
 // create a song
-export const createSong = (post) => async (dispatch) => {
-    const response = await fetch(`/songs/newsong`, {
+// export const createSong = (post) => async (dispatch) => {
+//     const response = await fetch(`/api/songs`, {
+//       method: "POST",
+//       headers: {
+//         'Content-Type': 'application/json'
+//     },
+//       body: post
+//     });
+
+//     if (response.ok) {
+//         const { resPost } = await response.json();
+//         dispatch(createOne(resPost));
+//     } else {
+//         console.log("There was an error making your post!")
+//     }
+// };
+export const createSong = (song) => async (dispatch) => {
+    const response = await fetch('/api/songs/newsong', {
       method: "POST",
-      body: post
+      body: song
     });
+
+    console.log('!!!!!!!!!!', response)
 
     if (response.ok) {
         const { resPost } = await response.json();
@@ -135,7 +153,9 @@ const songsReducer = (state = initialState, action) => {
             newState[action.song.id] = {...newState[action.song.id], ...action.song};
             return newState
         case CREATE_SONG:
-            newState[action.songs.id] =  action.songs;
+            if (action.song && action.song.id) {
+                newState[action.song.id] = action.song;
+            }
             return newState;
         case UPDATE_SONG:
             newState[action.song.id] = action.song;
@@ -149,3 +169,5 @@ const songsReducer = (state = initialState, action) => {
 }
 
 export default songsReducer;
+//newState[action.song.id] =  action.song;
+//return newState;
