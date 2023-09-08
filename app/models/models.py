@@ -73,6 +73,7 @@ class Album(db.Model):
     release_year = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=False)
+    album_image_url = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, server_default=db.func.now())
     updatedAt = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -83,6 +84,7 @@ class Album(db.Model):
             'userId': self.userId,
             'release_year': self.release_year,
             'description': self.description,
+            'album_image_url': self.album_image_url,
             'genre': self.genre,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,

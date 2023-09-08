@@ -56,6 +56,7 @@ def upgrade() -> None:
     sa.Column('release_year', sa.Integer(), nullable=False),
     sa.Column('genre', sa.String(length=255), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=False),
+    sa.Column('album_image_url', sa.String(length=255), nullable=False),
     # sa.Column('createdAt', sa.DateTime(), nullable=False),
     # sa.Column('updatedAt', sa.DateTime(), nullable=False),
     sa.Column('createdAt', sa.DateTime, server_default=sa.func.now()),

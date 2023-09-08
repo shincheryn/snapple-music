@@ -5,3 +5,7 @@
 .hidden {
   display: none;
 }
+
+li {
+  list-style-type: none;
+}
