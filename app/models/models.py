@@ -149,6 +149,7 @@ class Playlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     playlist_name = db.Column(db.String(255), nullable=False)
+    playlist_image_url = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
@@ -165,6 +166,7 @@ class Playlist(db.Model):
             'id': self.id,
             'userId': self.userId,
             'playlist_name': self.playlist_name,
+            'playlist_image_url': self.playlist_image_url,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt
         }

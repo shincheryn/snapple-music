@@ -1,5 +1,3 @@
-//..store/playlist.js
-
 // Action Types
 const GET_MY_PLAYLISTS = "playlists/getMyPlaylists";
 const GET_PLAYLIST_DETAILS = "playlists/getPlaylistDetails";
@@ -44,22 +42,22 @@ export const deleteSongsFromPlaylistAction = (playlistId, songId) => {
   };
 };
 
-export const deletePlaylistAction = (id) => {
+export const deletePlaylistAction = (playlistId) => {
   return {
     type: DELETE_PLAYLIST,
-    payload: id,
+    payload: playlistId,
   };
 };
 
 // Thunks
 // GET All Owned Playlists
 export const getMyPlaylistsThunk = () => async (dispatch) => {
-  const response = await fetch(`/api/playlists/owned`);
+  const response = await fetch("/api/playlists/owned");
 
   if (response.ok) {
-    const allMyPlaylists = await response.json();
-    dispatch(getMyPlaylistsAction(allMyPlaylists.Playlists));
-    return allMyPlaylists;
+    const playlists = await response.json();
+    dispatch(getMyPlaylistsAction(playlists));
+    return playlists;
   }
 };
 
@@ -75,14 +73,19 @@ export const getPlaylistDetailsThunk = (playlistId) => async (dispatch) => {
 };
 
 // CREATE New Playlist
-export const createPlaylistThunk = (post) => async (dispatch) => {
-  const response = await fetch(`/api/playlists/create`, {
+export const createPlaylistThunk = (newPlaylist) => async (dispatch) => {
+  const post = JSON.stringify(newPlaylist)
+
+  const response = await fetch(`/api/playlists`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: post,
   });
 
   if (response.ok) {
-    const { createNewPlaylist } = await response.json();
+    const createNewPlaylist = await response.json();
     dispatch(createPlaylistAction(createNewPlaylist));
   } else {
     console.log("Failed to create new playlist");
@@ -90,33 +93,26 @@ export const createPlaylistThunk = (post) => async (dispatch) => {
 };
 
 // ADD Song to Playlist
-export const addSongsToPlaylistThunk =
-  (playlistId, songId) => async (dispatch) => {
-    const response = await fetch(
-      `/api/playlists/${playlistId}/songs/${songId}`,
-      {
+export const addSongsToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
+    const response = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(songId),
+        body: {},
       }
     );
 
     if (response.ok) {
       const addSongsToPlaylist = await response.json();
-      dispatch(addSongsToPlaylistAction(playlistId, addSongsToPlaylist));
-    } else {
-      console.log("Failed to add song to playlist");
+      dispatch(addSongsToPlaylistAction(playlistId, songId));
+      return addSongsToPlaylist
     }
   };
 
 // DELETE Song from Playlist
-export const deleteSongsFromPlaylistThunk =
-  (playlistId, songId) => async (dispatch) => {
-    const response = await fetch(
-      `/api/playlists/${playlistId}/songs/${songId}`,
-      {
+export const deleteSongsFromPlaylistThunk = (playlistId, songId) => async (dispatch) => {
+    const response = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
         method: "DELETE",
       }
     );
@@ -130,13 +126,13 @@ export const deleteSongsFromPlaylistThunk =
   };
 
 // DELETE Playlist
-export const deletePlaylistThunk = (id) => async (dispatch) => {
-  const response = await fetch(`/api/playlists/${id}`, {
+export const deletePlaylistThunk = (playlistId) => async (dispatch) => {
+  const response = await fetch(`/api/playlists/${playlistId}`, {
     method: "DELETE",
   });
 
   if (response.ok) {
-    return dispatch(deletePlaylistAction(id));
+    return dispatch(deletePlaylistAction(playlistId));
   }
 };
 
@@ -147,46 +143,25 @@ const playlistsReducer = (state = initialState, action) => {
   let newState = { ...state };
   switch (action.type) {
     case GET_MY_PLAYLISTS:
-      const ownedPlaylists = action.payload;
-      ownedPlaylists.forEach((myPlaylists) => {
-        newState[myPlaylists.id] = myPlaylists;
+      action.payload.Playlists.forEach((each) => {
+        newState[each.id] = each;
       });
       return newState;
-
     case GET_PLAYLIST_DETAILS:
-      const playlistDetails = action.payload;
-      newState[playlistDetails.id] = playlistDetails;
+      newState[action.payload.id] = action.payload;
       return newState;
-
     case CREATE_PLAYLIST:
-      const newPlaylist = action.payload;
-      newState[newPlaylist.id] = newPlaylist;
+      newState[action.payload.id] = action.payload;
       return newState;
-
     case ADD_SONGS_TO_PLAYLIST:
-      const { addPlaylistId, newSong } = action.payload;
-      newState[addPlaylistId].songs.push(newSong);
+      newState[action.payload.id] = action.payload;
       return newState;
-
     case DELETE_SONGS_FROM_PLAYLIST:
-      const { deletePlaylistId, songId } = action.payload;
-      const playlist = newState.playlists[deletePlaylistId];
-
-      if (!playlist) {
-        return newState;
-      }
-
-      const updatedSongs = playlist.songs.filter((song) => song.id !== songId);
-      newState.playlists[deletePlaylistId] = {
-        ...playlist,
-        songs: updatedSongs,
-      };
+      delete newState[action.payload];
       return newState;
-
     case DELETE_PLAYLIST:
       delete newState[action.payload];
       return newState;
-
     default:
       return state;
   }

@@ -1,43 +1,61 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as playlistActions from "../../store/playlist.js";
-import "./MyPlaylists.css";
+import OpenModalButton from '../OpenModalButton';
+import DeleteModal from '../DeleteSongModal';
+import "./Playlists.css";
 
 const MyPlaylistsPage = () => {
   const dispatch = useDispatch();
-  const myPlaylists = useSelector((state) => Object.values(state.playlist));
-  const user = useSelector((state) => Object.values(state.session));
+  const history = useHistory();
+  const playlists = useSelector((state) => Object.values(state.playlist));
+  const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    console.log("dispatching playlist thunk!");
     dispatch(playlistActions.getMyPlaylistsThunk());
   }, [dispatch]);
 
   return (
     <div>
+
       <h1>My Playlists</h1>
-      {myPlaylists.map((playlist) => (
-        <div key={playlist.id}>
-          <Link to={`/playlists/${playlist.id}`}>
-            <div>
-              <div>
-                <img
-                  className="playlist_image"
-                  key={playlist.id}
-                  src={playlist.playlist_image_url}
-                  alt={playlist.playlist_name}
-                  title={playlist.playlist_name}
-                />
+      {playlists.length === 0 ? (
+        <button onClick={(e) => {
+          e.stopPropagation()
+          history.push(`/playlists/new`)
+        }}>Create Your First Playlist</button>
+      ) : (
+
+        <div>
+          <button onClick={(e) => {
+            e.stopPropagation()
+            history.push(`/playlists/new`)
+          }}>Create a New Playlist</button>
+
+          <main className='playlist-container'>
+            {playlists.map((playlist) => (
+              <div key={playlist.id} className='playlist-tile'>
+                <Link to={`/playlists/${playlist.id}`}>
+                  <div>
+                    <img
+                      className="playlist-image"
+                      src={playlist.playlist_image_url}
+                      alt={playlist.playlist_name}
+                      title={playlist.playlist_name}
+                    />
+                  </div>
+                  <div>{playlist.playlist_name}</div>
+                  <div>
+                    Created by: {user.firstName} {user.lastName}
+                  </div>
+                </Link>
               </div>
-              <div>{playlist.playlist_name}</div>
-              <div>
-                {user[0].firstName} {user[0].lastName}
-              </div>
-            </div>
-          </Link>
+            ))}
+          </main>
         </div>
-      ))}
+      )}
+
     </div>
   );
 };

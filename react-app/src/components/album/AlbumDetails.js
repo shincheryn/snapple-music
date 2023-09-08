@@ -10,7 +10,7 @@ const AlbumDetails = () => {
   const album = useSelector(state => Object.values(state.album));
   const currentAlbum = album[0];
   const user = useSelector(state => Object.values(state.session));
-
+ 
   useEffect(() => {
     dispatch(
       albumsActions.loadAlbumByIdThunk(albumId)
@@ -35,7 +35,7 @@ const AlbumDetails = () => {
       <div>
         Release Year: {currentAlbum.release_year}
       </div>
-      
+
     </>
   )
 }
