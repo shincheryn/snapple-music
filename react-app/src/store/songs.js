@@ -95,8 +95,8 @@ export const deleteSong = (id) => async dispatch => {
 }
 
 // update a song
-export const updateSpot = (id, songInfo) => async dispatch => {
-    const response = await fetch(`/api/spots/${id}`, {
+export const updateSong = (id, songInfo) => async dispatch => {
+    const response = await fetch(`/api/songs/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
