@@ -91,8 +91,6 @@ export const createSong = (song) => async (dispatch) => {
       body: song
     });
 
-    console.log('!!!!!!!!!!', response)
-
     if (response.ok) {
         const { resPost } = await response.json();
         dispatch(createOne(resPost));
