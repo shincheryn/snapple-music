@@ -57,14 +57,10 @@ export const loadAlbumByIdThunk = (albumId) => async (dispatch) => {
 }
 
 export const addAlbumThunk = (newAlbum) => async (dispatch) => {
-  const reqBody = JSON.stringify(newAlbum);
 
   const res = await fetch("/api/albums/", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: reqBody
+    body: newAlbum
   });
 
   if (res.ok) {

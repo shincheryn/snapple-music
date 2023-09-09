@@ -22,10 +22,7 @@ function PostAlbumModal() {
     formData.append("description", description);
     formData.append("album_image_url", album_image_url);
 
-    const data = await dispatch(albumActions.addAlbumThunk(formData));
-    if (data) {
-      setErrors(data);
-    }
+    await dispatch(albumActions.addAlbumThunk(formData));
     history.push("/albums/owned");
   }
 
