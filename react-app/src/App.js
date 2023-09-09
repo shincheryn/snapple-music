@@ -15,6 +15,7 @@ import CreatePlaylistPage from "./components/Playlists/CreatePlaylist";
 import PlaylistDetailsPage from "./components/Playlists/PlaylistDetails"
 import Albums from "./components/album/index";
 import AlbumDetails from "./components/album/AlbumDetails";
+import PostAlbumModal from "./components/album/PostAlbumModal";
 
 
 function App() {
@@ -64,6 +65,9 @@ function App() {
           </Route>
           <Route path="/albums/:albumId">
             <AlbumDetails />
+          </Route>
+          <Route path="/albums/">
+            <PostAlbumModal />
           </Route>
         </Switch>
       )}
