@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as albumActions from "../../store/album";
 import { useHistory } from "react-router-dom";
@@ -12,15 +12,24 @@ function AddAlbumSong({ albumId }) {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
-
+  const album = useSelector(state => Object.values(state.album).filter(x=>x.id ==albumId));
+  let albumSongs = album[0].Songs
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    for(let i = 0; i < albumSongs.length; i++) {
+      if(albumSongs[i].id == songId) {
+        setErrors(['Song already added into this album'])
+        return
+      }
+    }
     if (songId < 1) {
       setErrors(['Song Id not exist'])
-    }
+    } else {
       await dispatch(albumActions.addSongToAlbumThunk(albumId, songId));
       closeModal()
       history.push(`/albums/${albumId}`);
+    }
   };
 
   return (
