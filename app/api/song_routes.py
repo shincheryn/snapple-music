@@ -153,17 +153,22 @@ Updates/Edit and returns an existing song.
 @login_required
 def update(id):
     song = Song.query.get(id)
-
     #error response:
     if song is None:
         return {'message': "Song couldn\'t be found", "statusCode": 404}
 
     if song.userId != current_user.id:
         return {'errors': ['Forbidden: You don\'t have permission']}, 403
-
+    print('!!!!SONG', song)
     form = SongForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    # print('!!!!FORM DATA!!!',form.data)
     if form.validate_on_submit():
+
+        song.song_name=form.data["song_name"]
+        song.genre=form.data["genre"]
+
+        # song.image_url=form.data['image_url']
         new_image_file = form.image_url.data
         if new_image_file:
             new_image_filename = get_unique_filename(new_image_file.filename)
@@ -174,8 +179,8 @@ def update(id):
                 return {'errors': 'Failed to upload'}
 
             song.song_url = upload_image["url"]
+        new_image_file = form.image_url.data
 
-        new_song_file = form.song_url.data
         if new_song_file:
             new_song_filename = get_unique_filename(new_song_file.filename)
             upload_song = upload_file_to_s3(new_song_file, new_song_filename)
@@ -185,19 +190,77 @@ def update(id):
                 return {'errors': 'Failed to upload'}
 
             song.image_url = upload_song["url"]
+        new_song_file = form.song_url.data
 
-        song.song_name=form.data["song_name"]
-        song.genre=form.data["genre"]
-        song.image_url = upload_image["url"]
-        song.song_url = upload_song["url"]
 
+        # song.image_url = upload_image["url"]
+        # song.song_url = upload_song["url"]
+        # song.userId = user_info['userId']
+        # print('!!!!FORM DATA!!!',form.data)
         db.session.commit()
         return song.to_dict()
-
+    print('!!!!FORM DATA!!!',form.data)
     if form.errors:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
     return {"message": "Validation Error","statusCode": 400,'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+
+# @song_routes.route('/<int:id>', methods=['PUT'])
+# @login_required
+# def update(id):
+#     song = Song.query.get(id)
+#     # print('REQUEST', request.json())
+
+#     #error response:
+#     if song is None:
+#         return {'message': "Song couldn\'t be found", "statusCode": 404}
+
+#     if song.userId != current_user.id:
+#         return {'errors': ['Forbidden: You don\'t have permission']}, 403
+
+#     form = SongForm()
+#     form['csrf_token'].data = request.cookies['csrf_token']
+#     print('!!!!FORM DATA!!!',form.data)
+#     if form.validate_on_submit():
+
+
+#         new_image_file = form.image_url.data
+#         if new_image_file:
+#             new_image_filename = get_unique_filename(new_image_file.filename)
+#             upload_image = upload_file_to_s3(new_image_file, new_image_filename)
+
+#             # print(f'!!!upload {upload}') #debug
+#             if "url" not in upload_image:
+#                 return {'errors': 'Failed to upload'}
+
+#             song.song_url = upload_image["url"]
+
+#         new_song_file = form.song_url.data
+#         if new_song_file:
+#             new_song_filename = get_unique_filename(new_song_file.filename)
+#             upload_song = upload_file_to_s3(new_song_file, new_song_filename)
+
+#             if "url" not in upload_song:
+#                 # Handle the error here
+#                 return {'errors': 'Failed to upload'}
+
+#             song.image_url = upload_song["url"]
+
+
+#         song.song_name=form.data["song_name"]
+#         song.genre=form.data["genre"]
+#         song.image_url = upload_image["url"]
+#         song.song_url = upload_song["url"]
+#         # song.userId = user_info['userId']
+
+#         db.session.commit()
+#         return song.to_dict()
+
+#     if form.errors:
+#         return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+#     return {"message": "Validation Error","statusCode": 400,'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 """

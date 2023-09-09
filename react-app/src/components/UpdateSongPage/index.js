@@ -29,12 +29,12 @@ const UpdateSong = () => {
         }
     }, [song])
 
-    const songConverter = (e) => {
-        const file = e.target.value;
-        if (file) {
-            setSong_url(URL.createObjectURL(file));
-        }
-    };
+    // const songConverter = (e) => {
+    //     const file = e.target.value;
+    //     if (file) {
+    //         setSong_url(URL.createObjectURL(file));
+    //     }
+    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,7 +54,7 @@ const UpdateSong = () => {
         const songInfo = { song_name, genre, image_url, song_url}
         // const songInfo = {song_name, genre}
         console.log('!!!!!songInfo', songInfo)
-        dispatch(songsActions.updateSong(id, songInfo));
+        await dispatch(songsActions.updateSong(id, songInfo));
             history.push(`/songs/${id}`)
 
 
@@ -74,6 +74,7 @@ const UpdateSong = () => {
             <h1>Update Song</h1>
             <form
                 onSubmit={handleSubmit}
+                method='PUT'
                 encType="multipart/form-data"
             >
                 <div>
@@ -140,6 +141,7 @@ const UpdateSong = () => {
                     <input
                         type="file"
                         accept="songMP3/*"
+                        // onChange={songConverter}
                         onChange={(e) => setSong_url(e.target.files[0])}
                     />
                 </label>

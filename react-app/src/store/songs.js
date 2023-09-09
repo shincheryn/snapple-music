@@ -124,9 +124,10 @@ export const updateSong = (id, songInfo) => async dispatch => {
         body: JSON.stringify(songInfo)
     });
 
-    response.text().then((text) => {
-        console.log('Response body:', text);
-      });
+
+    // response.text().then((text) => {
+    //     console.log('Response body:', text);
+    //   });
 
     console.log('!!res!!', response)
     if(response.ok) {

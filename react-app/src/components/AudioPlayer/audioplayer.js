@@ -22,7 +22,7 @@ const Player = ({song_url}) => {
   return (
     <div>
        <AudioPlayer
-    autoPlay
+    // autoPlay
     // src={process.env.PUBLIC_URL + '/Test1.mp3'}
     src={song_url}
     // onPlay={e => console.log("onPlay")}
