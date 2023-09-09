@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as playlistActions from "../../store/playlist.js";
-import "./Playlists.css";
+import OpenModalButton from "../OpenModalButton";
+import DeleteSongFromPlaylist from "./DeleteSongfromPlaylistModal.js";
+import { useModal } from "../../context/Modal";
 
 const PlaylistDetailsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { openModal } = useModal();
 
   useEffect(() => {
     dispatch(playlistActions.getPlaylistDetailsThunk(id));
   }, [dispatch, id]);
 
   const currentPlaylist = useSelector((state) =>
-  {
-    if(state.playlist.hasOwnProperty(id)){
-      return state.playlist[id];
-     }
-     else{
-      return {};
-     }
-    }
+    state.playlist.hasOwnProperty(id) ? state.playlist[id] : {}
   );
 
-  console.log("Current Playlist:", currentPlaylist);
-
   const user = useSelector((state) => state.session.user);
-  console.log("User:", user);
 
+  // const openDeleteModal = (songId) => {
+  //   openModal(
+  //     <DeleteSongFromPlaylist playlistId={id} songId={songId} />,
+  //     'Delete Song from Playlist'
+  //   );
+  // };
 
   return (
     <>
@@ -40,13 +39,22 @@ const PlaylistDetailsPage = () => {
           title={currentPlaylist.playlist_name}
         />
       </div>
-      <div>{currentPlaylist.playlist_name}</div>
 
-      <div className="playlist-details">
-        <p>Created by: {user.firstName} {user.lastName}</p>
+      <div>
+        {currentPlaylist?.Songs?.map((each, index) => (
+          <div key={`${index}`}>
+            <div>{`${index + 1}. {each?.song_name}`}</div>
+            <div>
+              {user && (
+                <openModal
+                  buttonText="Delete Song from Playlist"
+                  onItemClick={() => DeleteSongFromPlaylist(each?.id)}
+                />
+              )}
+            </div>
+          </div>
+        ))}
       </div>
-
-
     </>
   );
 };
