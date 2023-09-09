@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_required
 from app.forms import PlaylistForm
 from app.models import db, User, Playlist, Song, playlist_songs
+from sqlalchemy import and_
 
 playlist_routes = Blueprint('playlists', __name__)
 
@@ -134,7 +135,6 @@ def delete_song_from_playlist(playlistId, songId):
     if Playlist.id != current_user.id:
         return jsonify({'message': 'Access denied', 'statusCode': 403}), 403
 
-    from sqlalchemy import and_
     db.session.query(playlist_songs).filter(and_(playlist_songs.c.albumId == playlistId, playlist_songs.c.songId == songId)).delete()
     db.session.commit()
     return {'message': "Successfully deleted"}, 200
