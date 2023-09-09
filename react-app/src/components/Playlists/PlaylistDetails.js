@@ -45,6 +45,8 @@ const PlaylistDetailsPage = () => {
       <div className="playlist-details">
         <p>Created by: {user.firstName} {user.lastName}</p>
       </div>
+
+
     </>
   );
 };
