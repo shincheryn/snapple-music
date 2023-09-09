@@ -149,7 +149,7 @@ def createSong():
 """
 Updates/Edit and returns an existing song.
 """
-@song_routes.route('/<int:id>/edit', methods=['POST'])
+@song_routes.route('/<int:id>/edit', methods=['PUT'])
 @login_required
 def update(id):
     print("Trying to edit song with id", id)

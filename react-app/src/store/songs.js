@@ -100,7 +100,7 @@ export const updateSong = (id, formData) => async dispatch => {
       console.log(value);
     }
     const response = await fetch(`/api/songs/${id}/edit`, {
-        method: 'POST',
+        method: 'PUT',
         body: formData
     });
 

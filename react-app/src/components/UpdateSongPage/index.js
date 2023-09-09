@@ -19,16 +19,22 @@ const UpdateSong = () => {
 
     useEffect(() => {
         dispatch(songsActions.getSongsDetails(id))
+            .then((songdetails) =>{
+                setSongName(songdetails?.song_name || '');
+                setGenre(songdetails?.genre || '');
+                setImage(songdetails?.image_url || null);
+                setSongMP3(songdetails?.song_url || null);
+            })
     }, [dispatch, id]);
 
-    useEffect(() => {
-        if(song){
-        setSongName(song?.song_name || '');
-        setGenre(song?.genre || '');
-        setImage(song?.image_url || null);
-        setSongMP3(song?.song_url || null);
-        }
-    }, [song])
+    // useEffect(() => {
+    //     if(song){
+    //     setSongName(song?.song_name || '');
+    //     setGenre(song?.genre || '');
+    //     setImage(song?.image_url || null);
+    //     setSongMP3(song?.song_url || null);
+    //     }
+    // }, [song])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
