@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import * as albumActions from "../../store/album.js";
+import * as songActions from "../../store/songs.js";
 import DeleteAlbum from "./DeleteAlbum.js";
 import OpenModalButton from "../OpenModalButton";
 import "./Album.css";
@@ -16,7 +17,7 @@ const Albums = () => {
 
   useEffect(() => {
     dispatch(albumActions.loadAlbumOwnedThunk());
-
+    dispatch(songActions.getSongs());
     if (!showModal) return;
 
     const closeMenu = (e) => {
