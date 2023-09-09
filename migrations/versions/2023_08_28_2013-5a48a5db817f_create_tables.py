@@ -34,6 +34,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
     sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('playlist_name', sa.String(length=255), nullable=False),
+    sa.Column('playlist_image_url', sa.String(length=255), nullable=False),
     sa.Column('createdAt', sa.DateTime, server_default=sa.func.now()),
     sa.Column('updatedAt', sa.DateTime, server_default=sa.func.now(), server_onupdate=sa.func.now()),
     sa.PrimaryKeyConstraint('id'),

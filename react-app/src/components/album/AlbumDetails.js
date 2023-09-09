@@ -24,6 +24,7 @@ const AlbumDetails = () => {
   }
   const currentAlbum = album[currentAlbumId];
   const user = useSelector(state => Object.values(state.session));
+
   const closeMenu = () => setShowModal(false);
 
   useEffect(() => {

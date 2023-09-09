@@ -3,24 +3,14 @@ from sqlalchemy.sql import text
 from datetime import datetime
 
 def seed_playlists():
-    # playlists_data = [
-    #         {'userId': 1, 'playlist_name': 'Favorites'},
-    #         {'userId': 1, 'playlist_name': 'Rock Hits'},
-    #         {'userId': 2, 'playlist_name': 'Daily Mix'},
-    #         {'userId': 2, 'playlist_name': 'Viral Hits'},
-    #         {'userId': 3, 'playlist_name': 'New Music Friday'},
-    #         {'userId': 3, 'playlist_name': 'K-Pop ON!'},
-    # ]
-    # for playlist in playlists_data:
-    #     db.session.add(**playlist)
     p1 = Playlist(
-        userId= 1, playlist_name= 'Favorites', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
+        userId= 1, playlist_name= 'Favorites', playlist_image_url='https://res.cloudinary.com/dvlsr70pm/image/upload/v1694162035/favorites.png', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
     )
     p2 = Playlist(
-        userId= 2, playlist_name= 'New Music Friday', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
+        userId= 2, playlist_name= 'At The Moment', playlist_image_url='https://res.cloudinary.com/dvlsr70pm/image/upload/v1694162179/atthemoment.png', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
     )
     p3 = Playlist(
-        userId= 3, playlist_name= 'Daily Mix', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
+        userId= 3, playlist_name= 'Every Day Jams', playlist_image_url='https://res.cloudinary.com/dvlsr70pm/image/upload/v1694162299/everydayjams.jpg', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
     )
     db.session.add(p1)
     db.session.add(p2)

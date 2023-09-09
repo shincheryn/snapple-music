@@ -10,7 +10,9 @@ import UpdateSongPage from './components/UpdateSongPage'
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
-import CreatePlaylist from "./components/Playlists";
+import MyPlaylistsPage from "./components/Playlists/index";
+import CreatePlaylistPage from "./components/Playlists/CreatePlaylist";
+import PlaylistDetailsPage from "./components/Playlists/PlaylistDetails"
 import Albums from "./components/album/index";
 import AlbumDetails from "./components/album/AlbumDetails";
 import PostAlbumModal from "./components/album/PostAlbumModal";
@@ -37,12 +39,12 @@ function App() {
           <Route path='/songs/newsong'>
             <CreateSong />
           </Route>
-          {/* <Route path='/playlists/owned'>
-            <MyPlaylists/>
-          </Route>*/
-            <Route path='/playlists/create'>
-              <CreatePlaylist />
-            </Route>}
+          <Route path='/playlists/owned'>
+            <MyPlaylistsPage />
+          </Route>
+          <Route path='/playlists/new'>
+            <CreatePlaylistPage />
+          </Route>
           <Route path="/login" >
             <LoginFormPage />
           </Route>
@@ -55,9 +57,9 @@ function App() {
           <Route exact path='/songs/:id'>
             <SongDetailsPage />
           </Route>
-          {/* <Route exact path='/playlists/:id'>
-            <PlaylistDetails/>
-          </Route> */}
+          <Route exact path='/playlists/:id'>
+            <PlaylistDetailsPage />
+          </Route>
           <Route path="/albums/owned">
             <Albums />
           </Route>
