@@ -1,9 +1,10 @@
+import Cookies from 'js-cookie';
 const LOAD_ALBUM_OWNED = "albums/owned";
 const LOAD_ALBUM_BY_ID = "albums/loadSpotById";
 const ADD_ALBUM = "albums/addAlbum";
 const DELETE_ALBUM = "albums/deleteAlbum";
-const ADD_SONG_TO_ALBUM = "albums/addAlbum";
-const DELETE_SONG_TO_ALBUM = "albums/deleteAlbum";
+const ADD_SONG_TO_ALBUM = "albums/addAlbumSong";
+const DELETE_SONG_TO_ALBUM = "albums/deleteAlbumSong";
 
 export const loadAlbumOwned = (albums) => ({
   type: LOAD_ALBUM_OWNED,
@@ -25,14 +26,14 @@ export const deleteAlbum = (albumId) => ({
   payload: albumId
 });
 
-export const addSongToAlbum = (albumsId, songId) => ({
+export const addSongToAlbum = (album) => ({
   type: ADD_SONG_TO_ALBUM,
-  payload: { albumsId, songId }
+  payload: album
 });
 
 export const deleteSongToAlbum = (albumsId, songId) => ({
   type: DELETE_SONG_TO_ALBUM,
-  payload: { albumsId, songId }
+  payload: [albumsId, songId]
 });
 
 
@@ -59,12 +60,12 @@ export const loadAlbumByIdThunk = (albumId) => async (dispatch) => {
 export const addAlbumThunk = (newAlbum) => async (dispatch) => {
   const reqBody = JSON.stringify(newAlbum);
 
-  const res = await fetch("/api/albums", {
+  const res = await fetch("/api/albums/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: reqBody,
+    body: reqBody
   });
 
   if (res.ok) {
@@ -95,7 +96,7 @@ export const addSongToAlbumThunk = (albumId, songId) => async (dispatch) => {
 
   if (res.ok) {
     const ret = await res.json();
-    dispatch(addSongToAlbum(albumId, songId));
+    dispatch(addSongToAlbum(ret));
     return ret;
   }
 };
@@ -109,6 +110,19 @@ export const deleteSongToAlbumThunk = (albumId, songId) => async (dispatch) => {
     dispatch(deleteSongToAlbum(albumId, songId));
   }
 };
+
+const funDeleteSong = (state, albumId, songId) => {
+  let songs = state[albumId.toString()].Songs
+  let currentSongId = 0;
+  for (let i = 0; i < songs.length; i++) {
+    if (songs[i].id == songId) {
+      currentSongId = i;
+      break;
+    }
+  }
+  delete state[albumId].Songs[currentSongId.toString()]
+  return state
+}
 
 const initialState = {};
 
@@ -133,10 +147,9 @@ const albumReducer = (state = initialState, action) => {
       newState[action.payload.id] = action.payload;
       return newState;
     case DELETE_SONG_TO_ALBUM:
-      delete newState[action.payload];
-      return newState;
+      return funDeleteSong(newState, action.payload[0], action.payload[1])
     default:
-      return state
+      return newState
   }
 };
 

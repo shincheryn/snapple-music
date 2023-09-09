@@ -1,41 +1,86 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from 'react-router-dom';
 import * as albumsActions from "../../store/album.js";
 import "./Album.css";
+import AddAlbumSong from "./AddAlbumSong";
+import DeleteAlbumSong from "./DeleteAlbumSong";
+import OpenModalButton from "../OpenModalButton";
 
 const AlbumDetails = () => {
   const dispatch = useDispatch();
   const { albumId } = useParams();
+  const ulRef = useRef();
+
+  const [showModal, setShowModal] = useState(false);
+
   const album = useSelector(state => Object.values(state.album));
-  const currentAlbum = album[0];
+  let currentAlbumId = 0;
+  for (let i = 0; i < album.length; i++) {
+    if (album[i].id == albumId) {
+      currentAlbumId = i;
+      break;
+    }
+  }
+  const currentAlbum = album[currentAlbumId];
   const user = useSelector(state => Object.values(state.session));
+
+  const closeMenu = () => setShowModal(false);
 
   useEffect(() => {
     dispatch(
       albumsActions.loadAlbumByIdThunk(albumId)
     )
-  }, [dispatch, albumId])
+    if (!showModal) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowModal(false);
+      }
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [dispatch, albumId, showModal])
+
 
   return (
     <>
       <div>
-        <img className="album-image" key={currentAlbum.id} src={currentAlbum.album_image_url} alt={currentAlbum.album_name} title={currentAlbum.album_name} />
+        <OpenModalButton
+          buttonText="Add Song into this Album"
+          onItemClick={closeMenu}
+          modalComponent={<AddAlbumSong albumId={albumId} />}
+        />
       </div>
       <div>
-        {currentAlbum.album_name}
+        <img className="album-image" key={currentAlbum?.id} src={currentAlbum?.album_image_url} alt={currentAlbum?.album_name} title={currentAlbum?.album_name} />
+      </div>
+      <div>
+        {currentAlbum?.album_name}
       </div>
       <div>{user[0].firstName} {user[0].lastName}</div>
       <div>
-        Genre: {currentAlbum.genre}
+        Genre: {currentAlbum?.genre} · Release Year: {currentAlbum?.release_year}
       </div>
       <div>
-        Description: {currentAlbum.description}
+        Description: {currentAlbum?.description}
       </div>
       <div>
-        Release Year: {currentAlbum.release_year}
+        {currentAlbum?.Songs?.map((each, index) => (
+          <div key={`${index}`}>
+            <div>{`${index + 1}`} {each?.song_name}</div>
+            <div>
+              <OpenModalButton
+                buttonText="Delete"
+                onItemClick={closeMenu}
+                modalComponent={<DeleteAlbumSong albumId={albumId} songId={each?.id} />}
+              />
+            </div>
+          </div>
+        ))}
       </div>
-      
     </>
   )
 }

@@ -30,7 +30,7 @@ function Navigation({ isLoaded }) {
 					</li>
 					<h5>Playlists</h5>
 					<li>
-						<NavLink to='/playlists/owned'>All Playlists</NavLink>
+						<NavLink to='/playlists/owned'>My Playlists</NavLink>
 					</li>
 				</>
 			)}

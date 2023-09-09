@@ -2,22 +2,6 @@ from app.models import db, album_songs, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_album_songs():
-    # album_songs_data = [
-    #         {'albumId': 1, 'songId': 1},
-    #         {'albumId': 1, 'songId': 2},
-    #         {'albumId': 1, 'songId': 3},
-    #         {'albumId': 1, 'songId': 4},
-    #         {'albumId': 2, 'songId': 5},
-    #         {'albumId': 2, 'songId': 6},
-    #         {'albumId': 2, 'songId': 7},
-    #         {'albumId': 2, 'songId': 8},
-    #         {'albumId': 3, 'songId': 9},
-    #         {'albumId': 3, 'songId': 10},
-    #         {'albumId': 3, 'songId': 11},
-    #         {'albumId': 3, 'songId': 12}
-    # ]
-    # for album_song in album_songs_data:
-    #     db.session.add(*album_song)
     as1 = album_songs.insert().values(
         albumId= 1, songId=1
     )
