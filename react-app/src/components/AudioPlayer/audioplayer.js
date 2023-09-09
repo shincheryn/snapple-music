@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 // import 'react-h5-audio-player/lib/styles.less' //Use LESS
-// import 'react-h5-audio-player/src/styles.scss' Use SASS
+// import 'react-h5-audio-player/src/styles.scss' //Use SASS
 
 
 
@@ -11,17 +11,19 @@ const Player = ({song_url}) => {
 
   const [isPlaying, setIsPlaying] = useState(false);
 
-  useEffect(() => {
-    console.log('song_url:', song_url);
-  }, [song_url]);
+  // useEffect(() => {
+  //   console.log('song_url:', song_url);
+  // }, [song_url]);
 
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
+  // const togglePlay = () => {
+  //   setIsPlaying(!isPlaying);
+  // };
 
   return (
     <div>
        <AudioPlayer
+
+      //  className='audioplayer'
     // autoPlay
     // src={process.env.PUBLIC_URL + '/Test1.mp3'}
     src={song_url}
@@ -33,9 +35,9 @@ const Player = ({song_url}) => {
     }}
     onPause={() => setIsPlaying(false)}
   />
-      <button onClick={togglePlay}>
-        {isPlaying ? "Pause" : "Play"} {/* Play/Pause button */}
-      </button>
+      {/* <button onClick={togglePlay}>
+        {isPlaying ? "Pause" : "Play"}
+      </button> */}
     </div>
 
 
