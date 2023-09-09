@@ -1,6 +1,7 @@
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import * as songsActions from '../../store/songs';
 
 const UpdateSong = () => {
@@ -8,65 +9,52 @@ const UpdateSong = () => {
     const history = useHistory();
     const { id } = useParams();
     const song = useSelector((state) => state.song[id]);
-    const [song_name, setSong_Name] = useState(song?.song_name || '');
+    const [songName, setSongName] = useState(song?.song_name ||'');
     const [genre, setGenre] = useState(song?.genre || '');
-    const [image_url, setImage_url] = useState(song?.image_url || '');
-    const [song_url, setSong_url] = useState(song?.song_url || '');
+    const [image, setImage] = useState(song?.image_url || null);
+    const [songMP3, setSongMP3] = useState(song?.song_url || null);
     const [songLoading, setSongLoading] = useState(false)
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
         dispatch(songsActions.getSongsDetails(id))
-    },[dispatch, id])
+    }, [dispatch, id]);
 
     useEffect(() => {
-        if (song){
-            setSong_Name(song?.song_name || '');
-            setGenre(song?.genre || '');
-            setImage_url(song?.image_url || '');
-            setSong_url(song?.song_url || '');
+        if(song){
+        setSongName(song?.song_name || '');
+        setGenre(song?.genre || '');
+        setImage(song?.image_url || null);
+        setSongMP3(song?.song_url || null);
         }
     }, [song])
-
-    // const songConverter = (e) => {
-    //     const file = e.target.value;
-    //     if (file) {
-    //         setSong_url(URL.createObjectURL(file));
-    //     }
-    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!song) {
-            return <div>No song</div>
-        }
+        const errors = {};
 
-        const formData = new FormData();
-        formData.append("song_name", song_name);
-        formData.append("genre", genre);
-        formData.append("image_url", image_url);
-        formData.append("song_url", song_url)
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+          } else {
+            setErrors({});
+            const formData = new FormData();
+            formData.append("song_name", songName);
+            formData.append("genre", genre);
+            formData.append("image_url", image);
+            formData.append("song_url", songMP3)
+            setImageLoading(true);
+            setSongLoading(true);
 
-        // formData = {song_name, genre, image_url, song_url}
-
-        const songInfo = { song_name, genre, image_url, song_url}
-        // const songInfo = {song_name, genre}
-        console.log('!!!!!songInfo', songInfo)
-        await dispatch(songsActions.updateSong(id, songInfo));
-            history.push(`/songs/${id}`)
-
-
-        // try {
-        //      dispatch(songsActions.updateSong(id, songInfo));
-        //          history.push(`/songs/${id}`);
-        // }
-        // catch (err){
-        //     console.error("Error creating song:", err);
-        //     setImageLoading(false);
-        //     setSongLoading(false);
-        // }
+            dispatch(songsActions.updateSong(id, formData))
+                .then((song) => {
+                    history.push(`/songs/${song.id}`)
+                })
+                .catch((err) => {
+                    setErrors(err)
+                })
+          }
     }
 
     return (
@@ -74,7 +62,6 @@ const UpdateSong = () => {
             <h1>Update Song</h1>
             <form
                 onSubmit={handleSubmit}
-                method='PUT'
                 encType="multipart/form-data"
             >
                 <div>
@@ -83,9 +70,10 @@ const UpdateSong = () => {
                     <input
                         className=""
                         type='text'
+                        name="song_name"
                         placeholder="Song Name"
-                        value={song_name}
-                        onChange={(e) => setSong_Name(e.target.value)}
+                        value={songName}
+                        onChange={(e) => setSongName(e.target.value)}
                     />
                 </label>
                 </div>
@@ -95,6 +83,7 @@ const UpdateSong = () => {
                     <input
                         className=""
                         type='text'
+                        name="genre"
                         placeholder="Genre"
                         value={genre}
                         onChange={(e) => setGenre(e.target.value)}
@@ -103,46 +92,23 @@ const UpdateSong = () => {
                 </div>
                 <div>
                 <label className="">
-                    Existing Image File
-                    <input
-                        className=""
-                        type='text'
-                        placeholder="image url"
-                        value={image_url}
-                        onChange={(e) => setImage_url(e.target.value)}
-                    />
-                </label>
-                </div>
-                <div>
-                <label className="">
-                    Update Image File
+                    Select Song Image
                     <input
                         type="file"
+                        name="image_url"
                         accept="image/*"
-                        onChange={(e) => setImage_url(e.target.files[0])}
+                        onChange={(e) => setImage(e.target.files[0])}
                     />
                 </label>
                 </div>
                 <div>
                 <label className="">
-                    Existing Song File
-                    <input
-                        className=""
-                        type='text'
-                        placeholder="song url"
-                        value={song_url}
-                        onChange={(e) => setSong_url(e.target.value)}
-                    />
-                </label>
-                </div>
-                <div>
-                <label className="">
-                    Update MP3 File
+                    Select Song MP3
                     <input
                         type="file"
+                        name="song_url"
                         accept="songMP3/*"
-                        // onChange={songConverter}
-                        onChange={(e) => setSong_url(e.target.files[0])}
+                        onChange={(e) => setSongMP3(e.target.files[0])}
                     />
                 </label>
                 </div>
