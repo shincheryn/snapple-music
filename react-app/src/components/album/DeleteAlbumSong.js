@@ -13,7 +13,7 @@ function DeleteAlbumSong({albumId, songId}) {
         e.preventDefault();
         await dispatch(albumActions.deleteSongToAlbumThunk(albumId, songId));
         closeModal()
-        history.push(`/albums/owned`);
+        history.push(`/albums/${albumId}`);
     };
 
     return(

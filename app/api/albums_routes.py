@@ -105,6 +105,7 @@ def albumAddSong(albumId, songId):
         'album_name': album_Details.album_name,
         'userId': album_Details.userId,
         'genre': album_Details.genre,
+        'album_image_url': album_Details.album_image_url,
         'description': album_Details.description,
         'createdAt': album_Details.createdAt,
         'updatedAt': album_Details.updatedAt,

@@ -20,8 +20,7 @@ function AddAlbumSong({ albumId }) {
     }
       await dispatch(albumActions.addSongToAlbumThunk(albumId, songId));
       closeModal()
-      // history.push(`/albums/${albumId}`);
-      history.push(`/albums/owned`);
+      history.push(`/albums/${albumId}`);
   };
 
   return (
