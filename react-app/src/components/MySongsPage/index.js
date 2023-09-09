@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import * as songsActions from '../../store/songs';
 import OpenModalButton from '../OpenModalButton';
 import DeleteModal from '../DeleteSongModal';
+import Player from '../AudioPlayer/audioplayer';
 import './mysongs.css'
 
 const MySongs = () => {
@@ -43,6 +44,7 @@ const MySongs = () => {
                                 <p className=''>{song.song_name}</p>
                                 <p className=''>{song.genre}</p>
                             </Link>
+                            <Player song_url={song.song_url}/>
                             <button onClick={(e) => {
                                 e.stopPropagation()
                                 history.push(`/songs/${song.id}/edit`)

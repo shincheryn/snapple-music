@@ -36,9 +36,9 @@ function App() {
           <Route path='/songs/newsong'>
             <CreateSong />
           </Route>
-          <Route path='/playlists/create'>
+          {/* <Route path='/playlists/create'>
             <CreatePlaylist />
-          </Route>
+          </Route> */}
           <Route path="/login" >
             <LoginFormPage />
           </Route>

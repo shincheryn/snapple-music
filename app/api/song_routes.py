@@ -149,7 +149,7 @@ def createSong():
 """
 Updates/Edit and returns an existing song.
 """
-@song_routes.route('/<int:id>/edit', methods=['POST'])
+@song_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update(id):
     song = Song.query.get(id)
@@ -193,6 +193,9 @@ def update(id):
 
         db.session.commit()
         return song.to_dict()
+
+    if form.errors:
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
     return {"message": "Validation Error","statusCode": 400,'errors': validation_errors_to_error_messages(form.errors)}, 400
 

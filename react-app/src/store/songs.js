@@ -1,4 +1,3 @@
-// import { csrfFetch } from "./csrf";
 const LOAD_SONGS = 'songs/LOAD_SONGS';
 const LOAD_ONE_SONG = 'songs/LOAD_ONE_SONG';
 const LOAD_USER_SONGS = 'songs/LOAD_USER_SONGS';
@@ -31,10 +30,14 @@ const deleteOne = id => ({
     id
 });
 
-const updateOne = song => ({
+const updateOne = (song)=> ({
     type: UPDATE_SONG,
     song
 });
+// const updateOne = (id, songInfo)=> ({
+//     type: UPDATE_SONG,
+//     payload: {id, songInfo}
+// });
 
 // get the list of all songs thunk
 export const getSongs = () => async dispatch => {
@@ -112,6 +115,7 @@ export const deleteSong = (id) => async dispatch => {
 
 // update a song
 export const updateSong = (id, songInfo) => async dispatch => {
+    console.log('!!!!!Updating spot:!!!', songInfo);
     const response = await fetch(`/api/songs/${id}`, {
         method: 'PUT',
         headers: {
@@ -120,13 +124,46 @@ export const updateSong = (id, songInfo) => async dispatch => {
         body: JSON.stringify(songInfo)
     });
 
+    response.text().then((text) => {
+        console.log('Response body:', text);
+      });
+
+    console.log('!!res!!', response)
     if(response.ok) {
         const updated = await response.json();
+        console.log('!!!!updated!!!', updated)
         dispatch(updateOne(updated));
         return updated;
     }
 };
 
+// update a song
+// export const updateSong = (id, formData) => async dispatch => {
+//     console.log('!!!!!Updating spot:!!!', formData);
+//     const response = await fetch(`/api/songs/${id}`, {
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(formData)
+//     });
+
+//     // response.text().then((text) => {
+//     //     console.log('Response body:', text);
+//     //   });
+
+//     // console.log('!!res!!', response)
+//     if(response.ok) {
+//         const updated = await response.json();
+//         console.log('!!!!updated!!!', updated)
+//         dispatch(updateOne(updated));
+//         return updated;
+//     } else {
+//         console.error('Update Song Failed:', response.status, response.statusText);
+//     const errorData = await response.json(); // You might have error messages in the response
+//     console.error('Error Data:', errorData);
+//     }
+// };
 
 const initialState = {};
 
@@ -167,5 +204,3 @@ const songsReducer = (state = initialState, action) => {
 }
 
 export default songsReducer;
-//newState[action.song.id] =  action.song;
-//return newState;

@@ -22,8 +22,6 @@ const UploadSong = () => {
         formData.append("image_url", image_url);
         formData.append("song_url", song_url)
 
-        // aws uploads can be a bit slow—displaying
-        // some sort of loading message is a good idea
         setImageLoading(true);
         setSongLoading(true);
 
