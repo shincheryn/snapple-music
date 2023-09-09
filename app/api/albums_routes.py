@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from app.models import User, db, Album, Song, album_songs
 from app.forms import AlbumForm
 from flask_login import current_user, login_required
+from sqlalchemy import and_
 
 albums_routes = Blueprint('albums', __name__)
 
@@ -32,6 +33,7 @@ def albumDetails(id):
         'genre': album_Details.genre,
         'description': album_Details.description,
         'album_image_url':album_Details.album_image_url,
+        'release_year': album_Details.release_year,
         'createdAt': album_Details.createdAt,
         'updatedAt': album_Details.updatedAt,
         'Songs': [each.to_dict() for each in song_info]
@@ -42,7 +44,7 @@ def albumDetails(id):
 
 # Create an Album
 @albums_routes.route('/', methods=['POST'])
-@login_required
+# @login_required
 def createAlbum():
     form = AlbumForm()
     current_user_id = current_user.get_id()
@@ -53,6 +55,7 @@ def createAlbum():
             release_year=form.data['release_year'],
             genre=form.data['genre'],
             description=form.data['description'],
+            album_image_url=form.data['album_image_url'],
             userId=current_user_id
         )
         db.session.add(new)
@@ -123,6 +126,6 @@ def deleteSongFromAlbum(albumId, songId):
     if song_ID is None:
         return {'errors': ["Song couldn't be found"]}, 404
 
-    db.session.query(album_songs).filter(album_songs.c.albumId == albumId and album_songs.c.songId == songId).delete()
+    db.session.query(album_songs).filter(and_(album_songs.c.albumId == albumId, album_songs.c.songId == songId)).delete()
     db.session.commit()
     return {'message':  "Successfully deleted"}, 200
