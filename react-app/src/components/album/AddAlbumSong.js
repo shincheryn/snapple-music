@@ -25,7 +25,7 @@ function AddAlbumSong({ albumId }) {
         return
       }
     }
-    if (songId < 1 || songExist) {
+    if (songId < 1) {
       setErrors(['Song Id not exist'])
     } else {
       await dispatch(albumActions.addSongToAlbumThunk(albumId, songId));
