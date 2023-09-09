@@ -5,21 +5,27 @@ import * as playlistActions from "../../store/playlist.js";
 import "./Playlists.css";
 
 const PlaylistDetailsPage = () => {
-  const { playlistId } = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(playlistActions.getPlaylistDetailsThunk(playlistId));
-  }, [dispatch, playlistId]);
+    dispatch(playlistActions.getPlaylistDetailsThunk(id));
+  }, [dispatch, id]);
 
-  const playlist = useSelector((state) => Object.values(state.playlist));
-  console.log("Playlist:", playlist);
+  const currentPlaylist = useSelector((state) =>
+  {
+    if(state.playlist.hasOwnProperty(id)){
+      return state.playlist[id];
+     }
+     else{
+      return {};
+     }
+    }
+  );
 
-
-  const currentPlaylist = playlist[0];
   console.log("Current Playlist:", currentPlaylist);
 
-  const user = useSelector((state) => Object.values(state.session));
+  const user = useSelector((state) => state.session.user);
   console.log("User:", user);
 
 
@@ -37,7 +43,7 @@ const PlaylistDetailsPage = () => {
       <div>{currentPlaylist.playlist_name}</div>
 
       <div className="playlist-details">
-        <p>Created by: {user[0].firstName} {user[0].lastName}</p>
+        <p>Created by: {user.firstName} {user.lastName}</p>
       </div>
     </>
   );

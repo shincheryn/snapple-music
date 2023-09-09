@@ -63,25 +63,30 @@ export const getMyPlaylistsThunk = () => async (dispatch) => {
 
 // GET Playlist Details
 export const getPlaylistDetailsThunk = (playlistId) => async (dispatch) => {
+  console.log("Playlist ID", playlistId);
   const response = await fetch(`/api/playlists/${playlistId}`);
 
   if (response.ok) {
     const playlists = await response.json();
+    console.log(playlists);
     dispatch(getPlaylistDetailsAction(playlists));
     return playlists;
   }
 };
 
 // CREATE New Playlist
-export const createPlaylistThunk = (newPlaylist) => async (dispatch) => {
-  const post = JSON.stringify(newPlaylist)
+export const createPlaylistThunk = (playlistName, playlistImageUrl) => async (dispatch) => {
+  console.log(playlistName, playlistImageUrl);
 
-  const response = await fetch(`/api/playlists`, {
+  const response = await fetch(`/api/playlists/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: post,
+    body: JSON.stringify({
+      "playlist_name": playlistName,
+      "playlist_image_url": playlistImageUrl,
+    }),
   });
 
   if (response.ok) {

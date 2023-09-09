@@ -8,15 +8,17 @@ import './CreatePlaylist.css'
 const CreatePlaylistPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const defaultPlaylistImageUrl = 'https://res.cloudinary.com/dvlsr70pm/image/upload/v1694219162/noimageplaylist.jpg';
     const [playlistName, setPlaylistName] = useState('');
+    const [playlistImageUrl, setPlaylistImageUrl] = useState('');
     // const [errors, setErrors] = useState({}); error handlers?
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("playlist", playlistName)
-
-        await dispatch(playlistActions.createPlaylistAction(formData));
+        if(playlistImageUrl.trim() === ''){
+            playlistImageUrl = defaultPlaylistImageUrl;
+        }
+        await dispatch(playlistActions.createPlaylistThunk(playlistName, playlistImageUrl));
         history.push("/playlists/owned");
     }
 
@@ -36,6 +38,15 @@ const CreatePlaylistPage = () => {
                         placeholder="Playlist Name"
                         value={playlistName}
                         onChange={(e) => setPlaylistName(e.target.value)}
+                    />
+                </label><label className="Playlist Image URL">
+                    Playlist Image Url
+                    <input
+                        className=""
+                        type="text"
+                        placeholder="Playlist Image URL"
+                        value={playlistImageUrl}
+                        onChange={(e) => setPlaylistImageUrl(e.target.value)}
                     />
                 </label>
                 </div>

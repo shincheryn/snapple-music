@@ -26,8 +26,7 @@ def get_playlist_details(playlistId):
     # Ensure that requested playlist belongs to current user
     if playlist.userId != current_user.id:
         return {'errors': ["Access Denied"]}, 403
-
-    return get_playlist_details.to_dict()
+    return playlist.to_dict()
 
 
 # CREATE A PLAYLIST
@@ -42,6 +41,7 @@ def createPlaylist():
         new = Playlist(
             userId=current_user.id,
             playlist_name=form.data['playlist_name'],
+            playlist_image_url=form.data['playlist_image_url'],
         )
         db.session.add(new)
         db.session.commit()
