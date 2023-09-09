@@ -134,7 +134,8 @@ def delete_song_from_playlist(playlistId, songId):
     if Playlist.id != current_user.id:
         return jsonify({'message': 'Access denied', 'statusCode': 403}), 403
 
-    db.session.query(playlist_songs).filter(playlist_songs.c.playlistId == playlistId and playlist_songs.c.songId == songId).delete()
+    from sqlalchemy import and_
+    db.session.query(playlist_songs).filter(and_(playlist_songs.c.albumId == playlistId, playlist_songs.c.songId == songId)).delete()
     db.session.commit()
     return {'message': "Successfully deleted"}, 200
 
