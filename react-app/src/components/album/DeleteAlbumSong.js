@@ -19,9 +19,9 @@ function DeleteAlbumSong({albumId, songId}) {
     return(
         <div className="deleteSpotButtonDiv">
             <h1>Confirm Delete</h1>
-            <h5>Are you sure you want to remove this album?</h5>
-            <button onClick={confirmButtonHandler}>Yes (Delete Album)</button>
-            <button onClick={closeModal}>No (Keep Album)</button>
+            <h5>Are you sure you want to remove this song?</h5>
+            <button onClick={confirmButtonHandler}>Yes (Delete Song)</button>
+            <button onClick={closeModal}>No (Keep Song)</button>
         </div>
     )
 };
