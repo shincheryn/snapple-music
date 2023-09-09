@@ -6,10 +6,10 @@ import * as songsActions from '../../store/songs'
 const UploadSong = () => {
     const dispatch = useDispatch();
     const history = useHistory(); // so that you can redirect after the image upload is successful
-    const [songName, setSongName] = useState('');
+    const [song_name, setSong_Name] = useState('');
     const [genre, setGenre] = useState('');
-    const [image, setImage] = useState(null);
-    const [song, setSong] = useState(null);
+    const [image_url, setImage_url] = useState(null);
+    const [song_url, setSong_url] = useState(null);
     const [songLoading, setSongLoading] = useState(false)
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -17,14 +17,22 @@ const UploadSong = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("image", image);
-        formData.append("song", song)
+        formData.append("song_name", song_name);
+        formData.append("genre", genre);
+        formData.append("image_url", image_url);
+        formData.append("song_url", song_url)
 
-        // aws uploads can be a bit slow—displaying
-        // some sort of loading message is a good idea
         setImageLoading(true);
-        await dispatch(songsActions.createSong(formData));
-        history.push("/songs");
+        setSongLoading(true);
+
+        try {
+            await dispatch(songsActions.createSong(formData));
+            history.push("/songs/owned");
+        } catch (err){
+            console.error("Error creating song:", err);
+            setImageLoading(false);
+            setSongLoading(false);
+        }
     }
 
     return (
@@ -41,8 +49,8 @@ const UploadSong = () => {
                         className=""
                         type='text'
                         placeholder="Song Name"
-                        value={songName}
-                        onChange={(e) => setSongName(e.target.value)}
+                        value={song_name}
+                        onChange={(e) => setSong_Name(e.target.value)}
                     />
                 </label>
                 </div>
@@ -63,8 +71,8 @@ const UploadSong = () => {
                     Select Song Image
                     <input
                         type="file"
-                        accept="image/*"
-                        onChange={(e) => setImage(e.target.files[0])}
+                        accept="image_url/*"
+                        onChange={(e) => setImage_url(e.target.files[0])}
                     />
                 </label>
                 </div>
@@ -73,8 +81,8 @@ const UploadSong = () => {
                     Select Song MP3
                     <input
                         type="file"
-                        accept="song/*"
-                        onChange={(e) => setSong(e.target.files[0])}
+                        accept="song_url/*"
+                        onChange={(e) => setSong_url(e.target.files[0])}
                     />
                 </label>
                 </div>

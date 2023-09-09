@@ -70,7 +70,7 @@ export const getSongsDetails = (id) => async dispatch => {
 
 // create a song
 export const createSong = (post) => async (dispatch) => {
-    const response = await fetch(`/songs/newsong`, {
+    const response = await fetch('/songs/newsong', {
       method: "POST",
       body: post
     });
@@ -95,13 +95,13 @@ export const deleteSong = (id) => async dispatch => {
 }
 
 // update a song
-export const updateSong = (id, songInfo) => async dispatch => {
-    const response = await fetch(`/api/songs/${id}`, {
+export const updateSong = (id, formData) => async dispatch => {
+    for (const value of formData.values()) {
+      console.log(value);
+    }
+    const response = await fetch(`/api/songs/${id}/edit`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(songInfo)
+        body: formData
     });
 
     if(response.ok) {

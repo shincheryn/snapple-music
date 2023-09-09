@@ -4,7 +4,6 @@ import { useModal } from "../../context/Modal";
 import * as songsActions from "../../store/songs";
 
 function DeleteModal({id}) {
-
     const { closeModal } = useModal();
     const dispatch = useDispatch();
 
