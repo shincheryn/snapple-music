@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 const LOAD_ALBUM_OWNED = "albums/owned";
 const LOAD_ALBUM_BY_ID = "albums/loadSpotById";
 const ADD_ALBUM = "albums/addAlbum";
