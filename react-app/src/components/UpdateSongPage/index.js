@@ -11,6 +11,8 @@ const UpdateSong = () => {
     const song = useSelector((state) => state.song[id]);
     const [songName, setSongName] = useState(song?.song_name || '');
     const [genre, setGenre] = useState(song?.genre || '');
+    // const [image, setImage] = useState(song?.image_url || '');
+    // const [songMP3, setSongMP3] = useState(song?.song_url || '');
     const [image, setImage] = useState(null);
     const [songMP3, setSongMP3] = useState(null);
     const [songLoading, setSongLoading] = useState(false)
@@ -51,8 +53,6 @@ const UpdateSong = () => {
         if(!image) errors.image = 'Image is required';
         if(!songMP3) errors.songMP3 = 'Song MP3 is required';
 
-        setErrors(errors);
-
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
           } else {
@@ -62,6 +62,13 @@ const UpdateSong = () => {
             formData.append("genre", genre);
             formData.append("image_url", image);
             formData.append("song_url", songMP3);
+            // if (image) {
+            //     formData.append("image_url", image);
+            // }
+
+            // if (songMP3) {
+            //     formData.append("song_url", songMP3);
+            // }
             setImageLoading(true);
             setSongLoading(true);
 
@@ -115,6 +122,7 @@ const UpdateSong = () => {
                 </div>
                 <div>
                 <div className="error-message ">{errors.image && <p className="">{errors.image}</p>}</div>
+                {song?.image_url && <img src={song.image_url} alt="Current Song Image" />}
                 <label className="">
                     Select Song Image
                     <input
@@ -128,6 +136,12 @@ const UpdateSong = () => {
                 </div>
                 <div>
                 <div className="error-message ">{errors.songMP3 && <p className="">{errors.songMP3}</p>}</div>
+                {song?.song_url && (
+                    <audio controls>
+                        <source src={song.song_url} type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                    </audio>
+                )}
                 <label className="">
                     Select Song MP3
                     <input

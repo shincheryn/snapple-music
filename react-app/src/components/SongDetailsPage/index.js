@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import * as songsActions from '../../store/songs';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
@@ -9,6 +9,7 @@ import './songdetails.css'
 const SongDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const history = useHistory();
     // const [isLoaded, setIsLoaded] = useState(false);
     const song = useSelector((state) => state.song[id]);
     const user = useSelector(state => state.session.user);
@@ -60,17 +61,11 @@ const SongDetails = () => {
                         {/* <button onClick={handleShuffle}>
                             {isShuffle ? "Shuffle On" : "Shuffle Off"}
                         </button> */}
+                        {/* <button onClick={(e) => {
+                                e.stopPropagation()
+                                history.push(`/songs/${song.id}/edit`)
+                                }}>Update</button> */}
                     </div>
-                    {/* <AudioPlayer
-                        // autoPlay={isPlaying}
-                        src={audioSrc}
-                        onPlay={() => {
-                            setIsPlaying(true);
-                        }}
-                        onPause={() => {
-                            setIsPlaying(false);
-                        }}
-                    /> */}
                 </div>
                 </div>
             </div>
