@@ -1,71 +1,96 @@
-/* Navigation.css */
+/* Navigation CSS */
+
+/* Sidebar Style */
 .nav-container {
-  background-color: #333;
-  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15%;
+  height: 100%;
+  background-color: rgb(244, 244, 244);
+  color: rgb(0, 0, 0);
+  padding: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
+  flex-direction: column;
 }
 
-.nav-logo a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.nav-items ul {
-  list-style-type: none;
-  margin: 0;
+.nav-items {
+  list-style: none;
   padding: 0;
-  display: flex;
-  gap: 20px;
 }
 
-.nav-items ul li {
-  font-size: 16px;
-}
-
-.nav-items ul li a {
+.nav-link {
   text-decoration: none;
-  color: #fff;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.nav-items ul li a:hover {
-  text-decoration: underline;
-}
-
+/* Profile Button */
 .profile-button-container {
-  position: relative;
+  position: fixed;
+  top: 20px;
+  right: 10%;
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
 }
 
 .profile-button-container button {
   background: none;
   border: none;
-  font-size: 18px;
-  color: #fff;
-  cursor: pointer;
+  color: darkgrey;
+  font-size: 24px;
 }
 
+/* Music Player Image Styles */
+.music-player-image {
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 17%;
+  left: auto;
+  width: 60%;
+  z-index: -1;
+}
+
+/* Dropdown Menu */
 .profile-dropdown {
   position: absolute;
-  top: 40px;
-  right: 0;
-  background-color: #333;
-  border: 1px solid #555;
+  top: 50px;
+  right: 10%;
+  z-index: 1;
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #ccc;
   border-radius: 4px;
+  padding: 8px;
   list-style-type: none;
-  padding: 10px;
-  display: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .profile-dropdown li {
-  margin: 5px 0;
+  margin-bottom: 8px;
 }
 
-.profile-button-container:hover .profile-dropdown {
+.profile-dropdown button {
   display: block;
+  width: 100%;
+  padding: 0px 4px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: black;
+  background-color: transparent;
 }
 
-/* Add more custom styles as needed */
+.profile-dropdown button:hover {
+  background-color: lightgrey;
+}
+
+.profile-dropdown.hidden {
+  display: none;
+}

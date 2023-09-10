@@ -11,16 +11,15 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
+  const toggleMenu = () => {
+    setShowMenu((prev) => !prev);
   };
 
   useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
@@ -33,41 +32,43 @@ function ProfileButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    setShowMenu(false);
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-  const closeMenu = () => setShowMenu(false);
 
   return (
-    <div className="profile-button-container">
-      <button onClick={openMenu}>
+    <div className="profile-button-container" onClick={toggleMenu}>
+      <button>
         <i className="fas fa-user-circle" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
+      {showMenu && (
+        <ul className={ulClassName} ref={ulRef}>
+          {user ? (
+            <>
+              <li>{user.username}</li>
+              <li>{user.email}</li>
+              <li>
+                <button onClick={handleLogout}>Log Out</button>
+              </li>
+            </>
+          ) : (
+            <>
+              <OpenModalButton
+                buttonText="Log In"
+                onItemClick={toggleMenu}
+                modalComponent={<LoginFormModal onClose={() => setShowMenu(false)} />}
+              />
 
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
-          </>
-        )}
-      </ul>
+              <OpenModalButton
+                buttonText="Sign Up"
+                onItemClick={toggleMenu}
+                modalComponent={<SignupFormModal onClose={() => setShowMenu(false)} />}
+              />
+            </>
+          )}
+        </ul>
+      )}
     </div>
   );
 }

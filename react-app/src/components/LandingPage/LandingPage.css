@@ -1,29 +1,31 @@
 /* LandingPage.css */
 
-/* Set the background of the entire page to white */
-body {
-    background-color: #ffffff;
-}
-
 /* Container Style */
 .container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: center;
+    align-items: left;
+    text-align: left;
+    transition: all 0.3s;
+    max-width: calc(100% - 10%);
+    margin-left: 19%;
+    margin-top: 13%
 }
 
 .headline {
-    font-size: 45px;
+    font-size: 32px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-top: 5%;
+    margin-right: 89%;
+    margin-bottom: -3%;
     text-align: left;
-  }
+}
 
 /* Featured Titles */
 .featured-title {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: bold;
     text-align: left;
 }
@@ -31,17 +33,17 @@ body {
 /* Featured Section */
 .featured-section {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 2px;
+    margin-bottom: 1%;
 }
 
 .featured-section > div {
     flex: 1;
-    max-width: auto;
+    max-width: 70%;
     border-radius: 10px;
     transition: transform 0.3s;
-    padding: px;
     text-align: left;
 }
 
@@ -49,8 +51,8 @@ body {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .featured-section > div:hover,
@@ -58,40 +60,38 @@ body {
     transform: translateY(-5px);
 }
 
-/* Song Card Grid */
+/* Song Cards */
 .song-card-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 10px;
 }
 
-/* Song Name */
 .song-name {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     text-align: left;
-    margin-bottom: 5px;
+    margin-bottom: -15px;
 }
 
-/* Song Card */
 .song-card {
     text-align: center;
     border-radius: 10px;
     transition: transform 0.3s;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .song-card img {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 5px;
 }
 
-/* Song Genre */
 .song-genre {
-    font-size: 14px;
+    font-size: 12px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     text-align: left;
     color: red;
