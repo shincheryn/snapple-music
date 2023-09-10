@@ -69,18 +69,19 @@ export const getSongsDetails = (id) => async dispatch => {
 }
 
 // create a song
-export const createSong = (post) => async (dispatch) => {
-    const response = await fetch(`/songs/newsong`, {
-      method: "POST",
-      body: post
-    });
+export const createSong = (song) => async (dispatch) => {
+    const response = await fetch('/api/songs/newsong', {
+        method: "POST",
+        body: song
+      });
 
-    if (response.ok) {
-        const { resPost } = await response.json();
-        dispatch(createOne(resPost));
-    } else {
-        console.log("There was an error making your post!")
-    }
+      console.log('!!!CREATE', response)
+      if (response.ok) {
+          const resPost  = await response.json();
+          dispatch(createOne(resPost));
+      } else {
+          console.log("There was an error making your post!")
+      }
 };
 
 // delete a song
@@ -95,6 +96,22 @@ export const deleteSong = (id) => async dispatch => {
 }
 
 // update a song
+// export const updateSong = (id, formData) => async dispatch => {
+//     for (const value of formData.values()) {
+//       console.log(value);
+//     }
+//     console.log('!!!!!FORMDATA', formData)
+//     const response = await fetch(`/api/songs/${id}`, {
+//         method: 'PUT',
+//         body: formData
+//     });
+
+//     if(response.ok) {
+//         const updated = await response.json();
+//         dispatch(updateOne(updated));
+//         return updated;
+//     }
+// };
 export const updateSong = (id, formData) => async dispatch => {
     const response = await fetch(`/api/songs/${id}/edit`, {
         method: 'POST',
@@ -104,10 +121,10 @@ export const updateSong = (id, formData) => async dispatch => {
     if(response.ok) {
         const updated = await response.json();
         dispatch(updateOne(updated));
+        console.log('!!!updated', updated)
         return updated;
     }
 };
-
 
 const initialState = {};
 
@@ -132,8 +149,10 @@ const songsReducer = (state = initialState, action) => {
             newState[action.song.id] = {...newState[action.song.id], ...action.song};
             return newState
         case CREATE_SONG:
-            newState[action.songs.id] =  action.songs;
-            return newState;
+            if (action.song && action.song.id) {
+                newState[action.song.id] = action.song;
+            }
+            return newState
         case UPDATE_SONG:
             newState[action.song.id] = action.song;
             return newState

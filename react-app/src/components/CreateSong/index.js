@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as songsActions from '../../store/songs'
+import './createSong.css'
 
 const UploadSong = () => {
     const dispatch = useDispatch();
-    const history = useHistory(); // so that you can redirect after the image upload is successful
+    const history = useHistory()
     const [song_name, setSong_Name] = useState('');
     const [genre, setGenre] = useState('');
     const [image_url, setImage_url] = useState(null);
@@ -16,6 +17,17 @@ const UploadSong = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const errors = {};
+
+        if(!song_name) errors.song_name = 'Song name is required';
+        if(!genre) errors.genre = 'Genre is required';
+        if(!image_url) errors.image_url = 'Image is required';
+        if(!song_url) errors.song_url = 'Song MP3 is required';
+
+        setErrors(errors);
+
+        if (Object.keys(errors).length === 0) {
         const formData = new FormData();
         formData.append("song_name", song_name);
         formData.append("genre", genre);
@@ -29,24 +41,31 @@ const UploadSong = () => {
             await dispatch(songsActions.createSong(formData));
             history.push("/songs/owned");
         } catch (err){
+            setErrors({});
             console.error("Error creating song:", err);
             setImageLoading(false);
             setSongLoading(false);
         }
     }
 
+
+    }
+
     return (
-        <div>
+        <>
+        <div className="page-container">
+        <div className="form-create">
             <h1>Create a New Song</h1>
             <form
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
             >
                 <div>
-                <label className="">
-                    Song Name
+                <div className="error-message">{errors.song_name && <p className="">{errors.song_name}</p>}</div>
+                <label className="label-create">
+                    Your Song Name
                     <input
-                        className=""
+                        className="input-create"
                         type='text'
                         placeholder="Song Name"
                         value={song_name}
@@ -55,10 +74,11 @@ const UploadSong = () => {
                 </label>
                 </div>
                 <div>
-                <label className="">
+                <div className="error-message">{errors.genre && <p className="">{errors.genre}</p>}</div>
+                <label className="label-create">
                     Genre
                     <input
-                        className=""
+                        className="input-create"
                         type='text'
                         placeholder="Genre"
                         value={genre}
@@ -67,30 +87,38 @@ const UploadSong = () => {
                 </label>
                 </div>
                 <div>
-                <label className="">
+                <div className="error-message">{errors.image_url && <p className="">{errors.image_url}</p>}</div>
+                {(imageLoading)&& <p>Image Uploading...</p>}
+                <label className="label-create">
                     Select Song Image
                     <input
+                        className="input-create"
                         type="file"
-                        accept="image_url/*"
+                        accept="image/*"
                         onChange={(e) => setImage_url(e.target.files[0])}
                     />
                 </label>
                 </div>
                 <div>
-                <label className="">
+                <div className="error-message">{errors.song_url && <p className="">{errors.song_url}</p>}</div>
+                {(songLoading)&& <p>Song Uploading...</p>}
+                <label className="label-create">
                     Select Song MP3
                     <input
+                        className="input-create"
                         type="file"
-                        accept="song_url/*"
+                        accept="song/*"
                         onChange={(e) => setSong_url(e.target.files[0])}
                     />
                 </label>
                 </div>
-                <button type="submit">Submit</button>
-                {(songLoading)&& <p>Loading...</p>}
-                {(imageLoading)&& <p>Loading...</p>}
+                <div className=".align-create-button">
+                <button className='create-button' type="submit">UPLOAD</button>
+                </div>
             </form>
         </div>
+        </div>
+        </>
     )
 }
 

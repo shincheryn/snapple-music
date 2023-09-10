@@ -9,25 +9,50 @@ const UpdateSong = () => {
     const history = useHistory();
     const { id } = useParams();
     const song = useSelector((state) => state.song[id]);
-    const [songName, setSongName] = useState('');
-    const [genre, setGenre] = useState('');
+    const [songName, setSongName] = useState(song?.song_name || '');
+    const [genre, setGenre] = useState(song?.genre || '');
+    // const [image, setImage] = useState(song?.image_url || '');
+    // const [songMP3, setSongMP3] = useState(song?.song_url || '');
     const [image, setImage] = useState(null);
     const [songMP3, setSongMP3] = useState(null);
     const [songLoading, setSongLoading] = useState(false)
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
-    useEffect(() => {
-        dispatch(songsActions.getSongsDetails(id))
-            .then(songdetail => {
+    console.log("SONG URL OMG", song?.song_url)
 
-            })
-    }, [dispatch, id]);
+    useEffect(() => {
+
+        if (!song) {
+            dispatch(songsActions.getSongsDetails(id))
+                .then((songDetail) => {
+                    if (songDetail) {
+                        setSongName(songDetail.song_name);
+                        setGenre(songDetail.genre);
+                        setImage(songDetail.image_url);
+                        setSongMP3(songDetail.song_url);
+                    }
+                    console.log('i!!!!d', songDetail)
+                })
+                .catch((err) => {
+                    console.error('Error fetching song details:', err);
+                });
+        }
+
+    }, [dispatch, id, song]);
+
+
+    console.log('!!!song', song)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const errors = {};
+
+        if(!songName) errors.songName = 'Song name is required';
+        if(!genre) errors.genre = 'Genre is required';
+        if(!image) errors.image = 'Image is required';
+        if(!songMP3) errors.songMP3 = 'Song MP3 is required';
 
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
@@ -37,7 +62,14 @@ const UpdateSong = () => {
             formData.append("song_name", songName);
             formData.append("genre", genre);
             formData.append("image_url", image);
-            formData.append("song_url", songMP3)
+            formData.append("song_url", songMP3);
+            // if (image) {
+            //     formData.append("image_url", image);
+            // }
+
+            // if (songMP3) {
+            //     formData.append("song_url", songMP3);
+            // }
             setImageLoading(true);
             setSongLoading(true);
 
@@ -53,12 +85,16 @@ const UpdateSong = () => {
 
     return (
         <>
+            <div className='page-container'>
+            <div className='form-create'>
             <h1>Update Song</h1>
             <form
+                method='PUT'
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
             >
                 <div>
+                <div className="error-message ">{errors.songName && <p className="">{errors.songName}</p>}</div>
                 <label className="">
                     Song Name
                     <input
@@ -72,6 +108,7 @@ const UpdateSong = () => {
                 </label>
                 </div>
                 <div>
+                <div className="error-message ">{errors.genre && <p className="">{errors.genre}</p>}</div>
                 <label className="">
                     Genre
                     <input
@@ -85,6 +122,8 @@ const UpdateSong = () => {
                 </label>
                 </div>
                 <div>
+                <div className="error-message ">{errors.image && <p className="">{errors.image}</p>}</div>
+                {song?.image_url && <img src={song.image_url} alt="Current Song Image" />}
                 <label className="">
                     Select Song Image
                     <input
@@ -94,22 +133,31 @@ const UpdateSong = () => {
                         onChange={(e) => setImage(e.target.files[0])}
                     />
                 </label>
+                {(imageLoading)&& <p>Loading...</p>}
                 </div>
                 <div>
+                <div className="error-message ">{errors.songMP3 && <p className="">{errors.songMP3}</p>}</div>
+                {song?.song_url && (
+                    <audio controls>
+                        <source src={song.song_url} type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                    </audio>
+                )}
                 <label className="">
                     Select Song MP3
                     <input
                         type="file"
                         name="song_url"
-                        accept="songMP3/*"
+                        accept="audio/*"
                         onChange={(e) => setSongMP3(e.target.files[0])}
                     />
                 </label>
+                {(songLoading)&& <p>Loading...</p>}
                 </div>
                 <button type="submit">Submit</button>
-                {(songLoading)&& <p>Loading...</p>}
-                {(imageLoading)&& <p>Loading...</p>}
             </form>
+            </div>
+            </div>
         </>
     );
 };

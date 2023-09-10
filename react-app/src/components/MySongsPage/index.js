@@ -24,7 +24,8 @@ const MySongs = () => {
 
     return (
         <>
-            <h1>My Songs</h1>
+            <div className='page-container'>
+            <h1 className='title'>My Songs</h1>
             {songsArray.length === 0 ? (
                  <button onClick={(e) => {
                     e.stopPropagation()
@@ -33,7 +34,7 @@ const MySongs = () => {
             ): (
 
                 <div>
-                    <button onClick={(e) => {
+                    <button className='upload-button' onClick={(e) => {
                     e.stopPropagation()
                     history.push('/songs/newsong')
                     }}>Upload a New Song</button>
@@ -42,10 +43,10 @@ const MySongs = () => {
                         <div key={song.id} className='song-tile'>
                             <Link className='' to={`/songs/${song.id}`}>
                                 <img src={song.image_url || defaultImage} alt='song prev' className='image' title={song.song_name}/>
-                                <p className=''>{song.song_name}</p>
-                                <p className=''>{song.genre}</p>
+                                <p className='a-details'>{song.song_name}</p>
+                                <p className='b-details'>{song.genre}</p>
                             </Link>
-                            <Player song_url={song.song_url}/>
+                            <Player song_url={song.song_url} className='audioplayer'/>
                             <button onClick={(e) => {
                                 e.stopPropagation()
                                 history.push(`/songs/${song.id}/edit`)
@@ -64,8 +65,8 @@ const MySongs = () => {
                         ))}
                     </main>
                 </div>
-
             )}
+            </div>
         </>
     )
 
