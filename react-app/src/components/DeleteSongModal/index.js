@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as songsActions from "../../store/songs";
+import './delete.css'
 
 function DeleteModal({id}) {
     const { closeModal } = useModal();
