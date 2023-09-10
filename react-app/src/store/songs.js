@@ -95,23 +95,35 @@ export const deleteSong = (id) => async dispatch => {
 }
 
 // update a song
+// export const updateSong = (id, formData) => async dispatch => {
+//     for (const value of formData.values()) {
+//       console.log(value);
+//     }
+//     console.log('!!!!!FORMDATA', formData)
+//     const response = await fetch(`/api/songs/${id}`, {
+//         method: 'PUT',
+//         body: formData
+//     });
+
+//     if(response.ok) {
+//         const updated = await response.json();
+//         dispatch(updateOne(updated));
+//         return updated;
+//     }
+// };
 export const updateSong = (id, formData) => async dispatch => {
-    for (const value of formData.values()) {
-      console.log(value);
-    }
-    console.log('!!!!!FORMDATA', formData)
-    const response = await fetch(`/api/songs/${id}`, {
-        method: 'PUT',
+    const response = await fetch(`/api/songs/${id}/edit`, {
+        method: 'POST',
         body: formData
     });
 
     if(response.ok) {
         const updated = await response.json();
         dispatch(updateOne(updated));
+        console.log('!!!updated', updated)
         return updated;
     }
 };
-
 
 const initialState = {};
 

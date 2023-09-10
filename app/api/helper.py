@@ -13,34 +13,12 @@ s3 = boto3.client(
    aws_secret_access_key=os.environ.get("S3_SECRET")
 )
 
-
 def get_unique_filename(filename):
     ext = filename.rsplit(".", 1)[1].lower()
     unique_filename = uuid.uuid4().hex
     return f"{unique_filename}.{ext}"
 
 
-# def upload_file_to_s3(file, acl="public-read"):
-#     # , acl="public-read"
-#     try:
-#         # print(f"!!Uploading file {file} to S3...")
-
-#         s3.upload_fileobj(
-#             file,
-#             BUCKET_NAME,
-#             file.filename,
-#             ExtraArgs={
-#                 "ACL": "public-read",
-#                 "ContentType": file.content_type
-#             }
-#         )
-
-#     except Exception as e:
-#         # in case the your s3 upload fails
-#         print(f"Upload failed: {str(e)}")
-#         return {"errors": str(e)}
-
-#     return {"url": f"{S3_LOCATION}{file.filename}"}
 def upload_file_to_s3(file, acl="public-read"):
     try:
         new_filename = get_unique_filename(file.filename)
@@ -60,6 +38,7 @@ def upload_file_to_s3(file, acl="public-read"):
         return {"errors": str(e)}
 
     return {"url": f"{S3_LOCATION}{new_filename}"}
+
 
 def remove_file_from_s3(image_url):
     # AWS needs the image file name, not the URL,
