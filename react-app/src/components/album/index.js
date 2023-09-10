@@ -34,7 +34,7 @@ const Albums = () => {
   const closeMenu = () => setShowModal(false);
 
   return (
-    <div>
+    <div className="pageContainers">
       <div>
         <NavLink to="/albums" style={{ color: 'black', textDecoration: 'none' }}>Create a new album</NavLink>
       </div>

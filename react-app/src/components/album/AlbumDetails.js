@@ -46,7 +46,7 @@ const AlbumDetails = () => {
 
 
   return (
-    <>
+    <div className="pageContainers">
       <div>
         <OpenModalButton
           buttonText="Add Song into this Album"
@@ -81,7 +81,7 @@ const AlbumDetails = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

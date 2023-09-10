@@ -14,7 +14,7 @@ function DeleteAlbum({albumId}) {
     };
 
     return(
-        <div className="deleteSpotButtonDiv">
+        <div className="pageContainers">
             <h1>Confirm Delete</h1>
             <h5>Are you sure you want to remove this album?</h5>
             <button onClick={confirmButtonHandler}>Yes (Delete Album)</button>
