@@ -43,7 +43,7 @@
     font-size: 32px;
     font-weight: bold;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    width: 300px;
+    width: 400px;
     margin-bottom: -15px;
 }
 
@@ -51,9 +51,15 @@
     font-size: 20px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: red;
-
+    margin-bottom: 10px;
 }
 
+.createdat-year{
+    font-size: 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: grey;
+    margin-top: 0%;
+}
 .song-image-detail-id img {
     /* object-fit: cover; */
     max-width: calc(100% - 10%);

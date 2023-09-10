@@ -31,14 +31,16 @@ const SongDetails = () => {
         return <div>No song</div>
     }
 
-    const handlePlayPause = () => {
-        if (isPlaying) {
-            audio.pause();
-        } else {
-            audio.play();
-        }
-        setIsPlaying(!isPlaying);
-    }
+    const year = new Date(song.createdAt).getFullYear();
+    // const handlePlayPause = () => {
+    //     if (isPlaying) {
+    //         audio.pause();
+    //     } else {
+    //         audio.play();
+    //     }
+    //     setIsPlaying(!isPlaying);
+    // }
+
 
     return (
         <>
@@ -52,19 +54,9 @@ const SongDetails = () => {
                         <h2 className="song-name-detail-id">{song.song_name}</h2>
                         {/* <p className="artist">{user.username}</p> */}
                         <p className="genre-detail-id div2">{song.genre}</p>
+                        <p className='createdat-year'>{year}</p>
                     </div>
-                    {/* <div className="player-controls div3">
-                        <button onClick={handlePlayPause}>
-                            {isPlaying ? "Pause" : "Play"}
-                        </button> */}
-                        {/* <button onClick={handleShuffle}>
-                            {isShuffle ? "Shuffle On" : "Shuffle Off"}
-                        </button> */}
-                        {/* <button onClick={(e) => {
-                                e.stopPropagation()
-                                history.push(`/songs/${song.id}/edit`)
-                                }}>Update</button> */}
-                    {/* </div> */}
+
                     <div className="apple-music-player div4">
                         <audio className='div4'controls>
                             <source src={song.song_url} type="audio/mpeg" />
