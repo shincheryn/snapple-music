@@ -11,30 +11,24 @@ const UpdateSong = () => {
     const song = useSelector((state) => state.song[id]);
     const [songName, setSongName] = useState(song?.song_name ||'');
     const [genre, setGenre] = useState(song?.genre || '');
-    const [image, setImage] = useState(song?.image_url || null);
-    const [songMP3, setSongMP3] = useState(song?.song_url || null);
+    const [image, setImage] = useState(song?.image_url || '');
+    const [songMP3, setSongMP3] = useState(song?.song_url || '');
     const [songLoading, setSongLoading] = useState(false)
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
         dispatch(songsActions.getSongsDetails(id))
-            .then((songdetails) =>{
-                setSongName(songdetails?.song_name || '');
-                setGenre(songdetails?.genre || '');
-                setImage(songdetails?.image_url || null);
-                setSongMP3(songdetails?.song_url || null);
-            })
     }, [dispatch, id]);
 
-    // useEffect(() => {
-    //     if(song){
-    //     setSongName(song?.song_name || '');
-    //     setGenre(song?.genre || '');
-    //     setImage(song?.image_url || null);
-    //     setSongMP3(song?.song_url || null);
-    //     }
-    // }, [song])
+    useEffect(() => {
+        if(song){
+        setSongName(song?.song_name);
+        setGenre(song?.genre);
+        setImage(song?.image_url);
+        setSongMP3(song?.song_url);
+        }
+    }, [song])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,8 +48,8 @@ const UpdateSong = () => {
             setSongLoading(true);
 
             dispatch(songsActions.updateSong(id, formData))
-                .then((song) => {
-                    history.push(`/songs/${song.id}`)
+                .then((updatedSong) => {
+                    history.push(`/songs/${updatedSong.id}`)
                 })
                 .catch((err) => {
                     setErrors(err)
@@ -76,7 +70,6 @@ const UpdateSong = () => {
                     <input
                         className=""
                         type='text'
-                        name="song_name"
                         placeholder="Song Name"
                         value={songName}
                         onChange={(e) => setSongName(e.target.value)}
@@ -89,7 +82,6 @@ const UpdateSong = () => {
                     <input
                         className=""
                         type='text'
-                        name="genre"
                         placeholder="Genre"
                         value={genre}
                         onChange={(e) => setGenre(e.target.value)}
@@ -101,7 +93,6 @@ const UpdateSong = () => {
                     Select Song Image
                     <input
                         type="file"
-                        name="image_url"
                         accept="image/*"
                         onChange={(e) => setImage(e.target.files[0])}
                     />
@@ -112,7 +103,6 @@ const UpdateSong = () => {
                     Select Song MP3
                     <input
                         type="file"
-                        name="song_url"
                         accept="songMP3/*"
                         onChange={(e) => setSongMP3(e.target.files[0])}
                     />
