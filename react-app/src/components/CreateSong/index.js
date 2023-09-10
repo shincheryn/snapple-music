@@ -16,6 +16,17 @@ const UploadSong = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const errors = {};
+
+        if(!song_name) errors.song_name = 'Song name is required';
+        if(!genre) errors.genre = 'Genre is required';
+        if(!image_url) errors.image_url = 'Image is required';
+        if(!song_url) errors.song_url = 'Song MP3 is required';
+
+        setErrors(errors);
+
+        if (Object.keys(errors).length === 0) {
         const formData = new FormData();
         formData.append("song_name", song_name);
         formData.append("genre", genre);
@@ -29,10 +40,14 @@ const UploadSong = () => {
             await dispatch(songsActions.createSong(formData));
             history.push("/songs/owned");
         } catch (err){
+            setErrors({});
             console.error("Error creating song:", err);
             setImageLoading(false);
             setSongLoading(false);
         }
+    }
+
+
     }
 
     return (
@@ -43,6 +58,7 @@ const UploadSong = () => {
                 encType="multipart/form-data"
             >
                 <div>
+                <div className="">{errors.song_name && <p className="">{errors.song_name}</p>}</div>
                 <label className="">
                     Song Name
                     <input
@@ -55,6 +71,7 @@ const UploadSong = () => {
                 </label>
                 </div>
                 <div>
+                <div className="">{errors.genre && <p className="">{errors.genre}</p>}</div>
                 <label className="">
                     Genre
                     <input
@@ -67,28 +84,30 @@ const UploadSong = () => {
                 </label>
                 </div>
                 <div>
+                <div className="">{errors.image_url && <p className="">{errors.image_url}</p>}</div>
+                {(imageLoading)&& <p>Image Uploading...</p>}
                 <label className="">
                     Select Song Image
                     <input
                         type="file"
-                        accept="image_url/*"
+                        accept="image/*"
                         onChange={(e) => setImage_url(e.target.files[0])}
                     />
                 </label>
                 </div>
                 <div>
+                <div className="">{errors.song_url && <p className="">{errors.song_url}</p>}</div>
+                {(songLoading)&& <p>Song Uploading...</p>}
                 <label className="">
                     Select Song MP3
                     <input
                         type="file"
-                        accept="song_url/*"
+                        accept="song/*"
                         onChange={(e) => setSong_url(e.target.files[0])}
                     />
                 </label>
                 </div>
                 <button type="submit">Submit</button>
-                {(songLoading)&& <p>Loading...</p>}
-                {(imageLoading)&& <p>Loading...</p>}
             </form>
         </div>
     )

@@ -75,12 +75,14 @@ export const createSong = (song) => async (dispatch) => {
         body: song
       });
 
+      console.log('!!!CREATE', response)
       if (response.ok) {
           const resPost  = await response.json();
           dispatch(createOne(resPost));
       } else {
           console.log("There was an error making your post!")
       }
+
 };
 
 // delete a song
@@ -113,7 +115,7 @@ export const deleteSong = (id) => async dispatch => {
 // };
 export const updateSong = (id, formData) => async dispatch => {
     const response = await fetch(`/api/songs/${id}/edit`, {
-        method: 'POST',
+        method: 'PUT',
         body: formData
     });
 
@@ -148,10 +150,10 @@ const songsReducer = (state = initialState, action) => {
             newState[action.song.id] = {...newState[action.song.id], ...action.song};
             return newState
         case CREATE_SONG:
-            console.log(action.song)
             if (action.song && action.song.id) {
                 newState[action.song.id] = action.song;
             }
+            return newState
         case UPDATE_SONG:
             newState[action.song.id] = action.song;
             return newState

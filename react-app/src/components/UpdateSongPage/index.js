@@ -17,6 +17,8 @@ const UpdateSong = () => {
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
+    console.log("SONG URL OMG", song?.song_url)
+
     useEffect(() => {
         // Fetch song details if they are not already loaded.
         if (!song) {
@@ -78,6 +80,7 @@ const UpdateSong = () => {
         <>
             <h1>Update Song</h1>
             <form
+                method='PUT'
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
             >
