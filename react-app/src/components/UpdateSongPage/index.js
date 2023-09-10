@@ -22,6 +22,7 @@ const UpdateSong = () => {
     console.log("SONG URL OMG", song?.song_url)
 
     useEffect(() => {
+
         if (!song) {
             dispatch(songsActions.getSongsDetails(id))
                 .then((songDetail) => {

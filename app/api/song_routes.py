@@ -149,7 +149,7 @@ def createSong():
 """
 Updates/Edit and returns an existing song.
 """
-@song_routes.route('/<int:id>/edit', methods=['PUT'])
+@song_routes.route('/<int:id>/edit', methods=['POST'])
 @login_required
 def update(id):
     song = Song.query.get(id)
@@ -199,7 +199,7 @@ def update(id):
 """
 Delete an existing song.
 """
-@song_routes.route('/<int:id>', methods=['DELETE'])
+@song_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
 def delete(id):
     song = Song.query.get(id)

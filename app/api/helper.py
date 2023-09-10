@@ -27,7 +27,7 @@ def upload_file_to_s3(file, acl="public-read"):
             BUCKET_NAME,
             new_filename,
             ExtraArgs={
-                "ACL": "public-read",
+                "ACL": acl,
                 "ContentType": file.content_type
             }
         )

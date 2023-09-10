@@ -82,7 +82,6 @@ export const createSong = (song) => async (dispatch) => {
       } else {
           console.log("There was an error making your post!")
       }
-
 };
 
 // delete a song
@@ -115,7 +114,7 @@ export const deleteSong = (id) => async dispatch => {
 // };
 export const updateSong = (id, formData) => async dispatch => {
     const response = await fetch(`/api/songs/${id}/edit`, {
-        method: 'PUT',
+        method: 'POST',
         body: formData
     });
 

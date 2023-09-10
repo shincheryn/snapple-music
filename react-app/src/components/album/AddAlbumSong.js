@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as albumActions from "../../store/album";
 import { useHistory } from "react-router-dom";
+import "./Album.css";
 
 
 function AddAlbumSong({ albumId }) {
@@ -13,7 +14,16 @@ function AddAlbumSong({ albumId }) {
   const { closeModal } = useModal();
 
   const album = useSelector(state => Object.values(state.album).filter(x=>x.id == albumId));
-  const songExist = useSelector(state => Object.values(state.song).filter(x=>x.id == songId));
+  const songExist = useSelector(state => Object.values(state.song))
+
+  const checkSongExist = (songObj, songId) => {
+    for (let key in songObj) {
+      if (songObj[key].id == songId) {
+        return false
+      }
+    }
+    return true
+  }
 
   let albumSongs = album[0].Songs
   const handleSubmit = async (e) => {
@@ -25,7 +35,10 @@ function AddAlbumSong({ albumId }) {
         return
       }
     }
-    if (songId < 1) {
+
+    let songNotExist = checkSongExist(songExist, songId)
+
+    if (songId < 1 || songNotExist) {
       setErrors(['Song Id not exist'])
     } else {
       await dispatch(albumActions.addSongToAlbumThunk(albumId, songId));
@@ -35,7 +48,7 @@ function AddAlbumSong({ albumId }) {
   };
 
   return (
-    <div>
+    <div className="pageContainers">
       <h1>Add Song into Album</h1>
       <div>
         {errors.length > 0 && errors.map(el => (

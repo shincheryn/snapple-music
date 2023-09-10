@@ -12,7 +12,16 @@ playlist_routes = Blueprint('playlists', __name__)
 def get_user_playlists_by_id():
     current_user_id = current_user.get_id()
     owned = Playlist.query.filter(Playlist.userId == current_user.id)
-    return jsonify({'Playlists':[each.to_dict() for each in owned]})
+    playlists = []
+    for playlist in owned:
+        playlist_details = playlist.to_dict()
+        playlist_details["songs"] = []
+        for song in playlist.songs:
+            playlist_details["songs"].append(song.to_dict())
+
+        playlists.append(playlist_details)
+
+    return jsonify({'Playlists': playlists})
 
 
 #GET DETAILS OF A PLAYLIST FROM ID
@@ -27,7 +36,11 @@ def get_playlist_details(playlistId):
     # Ensure that requested playlist belongs to current user
     if playlist.userId != current_user.id:
         return {'errors': ["Access Denied"]}, 403
-    return playlist.to_dict()
+    playlist_details = playlist.to_dict()
+    playlist_details["songs"] = []
+    for song in playlist.songs:
+        playlist_details["songs"].append(song.to_dict())
+    return playlist_details
 
 
 # CREATE A PLAYLIST
@@ -66,23 +79,10 @@ def add_song_to_playlist(playlistId, songId):
     if song_ID is None:
         return {'errors': ["Song couldn't be found"]}, 404
 
-    # Check that requested playlist belongs to current user
-    # if playlistId != current_user.id:
-    #     return jsonify({'message': 'Access denied', 'statusCode': 403}), 403
+    existing_entry =  db.session.query(playlist_songs).filter_by(playlistId=playlistId, songId=songId).first()
 
-    # Parse JSON data request to check for necessary information
-    # data = request.get_json()
-
-    # Check if song is already in playlist
-    # if any(Song.id == song_ID for song in Playlist_Songs.songId):
-    #     return jsonify({'message': 'Playlist aready has this song', 'statusCode': 403}), 403
-
-    # if not song_ID:
-        # return jsonify({'message': 'Song not found', 'statusCode': 404}), 404
-
-    # # Add song to playlist
-    # Playlist.songs.append(song)
-    # db.session.commit()
+    if existing_entry:
+        return {'error': "Song is already in the playlist"}, 400
 
     new_song = playlist_songs.insert().values(
         playlistId=playlistId, songId=songId
@@ -93,28 +93,23 @@ def add_song_to_playlist(playlistId, songId):
 
     return {'message': "Successfully added song to playlist"}, 200
 
-    # Format and return playlist with newly added song
-    # playlist_data = {
-    #     'id': playlist.id,
-    #     'playlist_name': playlist.playlist_name,
-    #     'username': current_user.username,
-    #     'createdAt': playlist.createdAt,
-    #     'updatedAt': playlist.updatedAt,
-    #     'Songs': [
-    #         {
-    #             'id': song.id,
-    #             'song_name': song.song_name,
-    #             'username': song.username,
-    #             'genre': song.genre,
-    #             'createdAt': song.createdAt,
-    #             'updatedAt': song.updatedAt,
-    #             'image_url': song.image_url,
-    #             'song_url': song.song_url
-    #         }
-    #     ]
+    # playlist_details = Playlist.query.get(playlistId)
+    # if playlist_details is None:
+    #     return {'errors': ["Playlist couldn't be found"]}, 404
+
+    # song_info = playlist_details.songs
+
+    # addedSong = {
+    #     'id': playlist_details.id,
+    #     'playlist_name': playlist_details.playlist_name,
+    #     'userId': playlist_details.userId,
+    #     'playlist_image_url': playlist_details.album_image_url,
+    #     'createdAt': playlist_details.createdAt,
+    #     'updatedAt': playlist_details.updatedAt,
+    #     'Songs': [each.to_dict() for each in song_info]
     # }
 
-    # return jsonify(playlist_data), 200
+    # return addedSong
 
 
 # DELETE SONG FROM PLAYLIST BASED ON PLAYLIST ID

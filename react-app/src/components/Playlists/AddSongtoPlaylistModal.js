@@ -1,6 +1,3 @@
-//Going to have a button in songs that says "Add song to playlist"
-//Will trigger a popup modal that provides a list of playlists
-
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -13,17 +10,18 @@ function AddSongToPlaylistModal({ songId }) {
   const [playlistId, setPlaylistId] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
-
-  const playlists = useSelector((state) => state.playlist.playlists);
+  const playlistMap = useSelector((state) => state.playlist);
+  const playlists = Object.values(playlistMap);
 
   useEffect(() => {
-    dispatch(playlistActions.getMyPlaylistsAction());
+    dispatch(playlistActions.getMyPlaylistsThunk());
   }, [dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!playlistId) {
-      setErrors(['Please select a playlist']);
+    const selectedPlaylist = playlists.find((playlist) => playlist.id == playlistId);
+    if (selectedPlaylist && selectedPlaylist.songs.some((song) => song.id === songId)) {
+      setErrors(["Song is already in the playlist"]);
     } else {
       await dispatch(playlistActions.addSongsToPlaylistThunk(playlistId, songId));
       closeModal();
@@ -49,7 +47,9 @@ function AddSongToPlaylistModal({ songId }) {
           onChange={(e) => setPlaylistId(e.target.value)}
           required
         >
-          <option value="">Select a Playlist</option>
+          <option key="default" value="">
+            Select a Playlist
+          </option>
           {playlists.map((playlist) => (
             <option key={playlist.id} value={playlist.id}>
               {playlist.playlist_name}
