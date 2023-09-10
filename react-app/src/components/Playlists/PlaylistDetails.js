@@ -41,6 +41,7 @@ const PlaylistDetailsPage = () => {
   }, [showModal]);
 
   return (
+    <div class="container">
     <div className="playlist-details-container">
       {!isLoading && !currentPlaylist && <div>Playlist not found.</div>}
       {!isLoading && currentPlaylist && (
@@ -54,9 +55,9 @@ const PlaylistDetailsPage = () => {
           />
 
           <div>
-            {currentPlaylist?.Songs?.map((each, index) => (
+            {currentPlaylist?.songs?.map((each, index) => (
               <div key={each?.id} className="song-item">
-                <div>{`${index + 1}. {each?.song_name}`}</div>
+                <div>{`${index + 1}. ${each?.song_name}`}</div>
                 <div className="delete-button">
                   {user && (
                     <OpenModalButton
@@ -71,6 +72,7 @@ const PlaylistDetailsPage = () => {
           </div>
         </>
       )}
+    </div>
     </div>
   );
 };
