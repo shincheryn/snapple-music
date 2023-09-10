@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import Player from '../AudioPlayer/audioplayer';
+// import Player from '../AudioPlayer/audioplayer';
 import * as songsActions from '../../store/songs';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
 	const dispatch = useDispatch();
 	const sessionUser = useSelector(state => state.session.user);
-	const songs = useSelector((state) => state.song);
+	// const songs = useSelector((state) => state.song);
 
 	useEffect(() => {
 		dispatch(songsActions.getSongs())

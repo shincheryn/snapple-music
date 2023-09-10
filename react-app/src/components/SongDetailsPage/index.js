@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import * as songsActions from '../../store/songs';
-import AudioPlayer from 'react-h5-audio-player';
+// import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import './songdetails.css'
 
 const SongDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
     // const [isLoaded, setIsLoaded] = useState(false);
     const song = useSelector((state) => state.song[id]);
-    const user = useSelector(state => state.session.user);
+    // const user = useSelector(state => state.session.user);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [audioSrc, setAudioSrc] = useState('');
+    // const [audioSrc, setAudioSrc] = useState('');
     const [audio] = useState(new Audio());
 
     useEffect(() => {
@@ -65,6 +65,11 @@ const SongDetails = () => {
                                 e.stopPropagation()
                                 history.push(`/songs/${song.id}/edit`)
                                 }}>Update</button> */}
+                    </div>
+                    <div className="apple-music-player div4">
+                        <audio className='div4'controls>
+                            <source src={song.song_url} type="audio/mpeg" />
+                        </audio>
                     </div>
                 </div>
                 </div>

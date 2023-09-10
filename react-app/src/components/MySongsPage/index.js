@@ -6,10 +6,10 @@ import * as songsActions from '../../store/songs';
 import OpenModalButton from '../OpenModalButton';
 import AddSongToPlaylistModal from '../Playlists/AddSongtoPlaylistModal';
 import DeleteModal from '../DeleteSongModal';
-import Player from '../AudioPlayer/audioplayer';
+// import Player from '../AudioPlayer/audioplayer';
 import './mysongs.css'
 
-import AudioPlayer from 'react-h5-audio-player';
+// import AudioPlayer from 'react-h5-audio-player';
 
 
 const MySongs = () => {
@@ -17,11 +17,11 @@ const MySongs = () => {
     const history = useHistory();
     const songs = useSelector((state) => state.song);
     const songsArray = Object.values(songs);
-    const user = useSelector(state => state.session.user);
+    // const user = useSelector(state => state.session.user);
 
-     // State variables for audio player
-     const [isPlaying, setIsPlaying] = useState(false);
-     const [audioSrc, setAudioSrc] = useState(""); // Set the initial audio source
+
+    //  const [isPlaying, setIsPlaying] = useState(false);
+    //  const [audioSrc, setAudioSrc] = useState("");
 
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const MySongs = () => {
                             </Link>
                             {/* <Player song_url={song.song_url} className='audioplayer'/> */}
                             {song?.song_url && (
-                        <div class="apple-music-player">
+                        <div className="apple-music-player">
                         <audio controls>
                             <source src={song.song_url} type="audio/mpeg" />
                         </audio>
