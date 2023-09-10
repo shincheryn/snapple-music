@@ -134,7 +134,7 @@ export const deleteSongsFromPlaylistThunk = (playlistId, songId) => async (dispa
     let songs = state[playlistId.toString()].Songs
     let currentSongId = 0;
     for (let i = 0; i < songs.length; i++) {
-      if (songs[i].id === songId) {
+      if (songs[i].id == songId) {
         currentSongId = i;
         break;
       }
