@@ -19,13 +19,18 @@ function AddSongToPlaylistModal({ songId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const selectedPlaylist = playlists.find((playlist) => playlist.id == playlistId);
-    if (selectedPlaylist && selectedPlaylist.songs.some((song) => song.id === songId)) {
-      setErrors(["Song is already in the playlist"]);
+
+    if (!playlistId) {
+      setErrors(["Please select a playlist"]);
     } else {
-      await dispatch(playlistActions.addSongsToPlaylistThunk(playlistId, songId));
-      closeModal();
-      history.push(`/playlists/${playlistId}`);
+      const selectedPlaylist = playlists.find((playlist) => playlist.id == playlistId);
+      if (selectedPlaylist && selectedPlaylist.songs.some((song) => song.id === songId)) {
+        setErrors(["Song is already in the playlist"]);
+      } else {
+        await dispatch(playlistActions.addSongsToPlaylistThunk(playlistId, songId));
+        closeModal();
+        history.push(`/playlists/${playlistId}`);
+      }
     }
   };
 
