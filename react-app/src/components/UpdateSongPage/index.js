@@ -61,8 +61,10 @@ const UpdateSong = () => {
         <>
             <h1>Update Song</h1>
             <form
+                method='PUT'
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
+                action='/songs/edit'
             >
                 <div>
                 <label className="">
@@ -93,6 +95,7 @@ const UpdateSong = () => {
                     Select Song Image
                     <input
                         type="file"
+                        name="image_url"
                         accept="image/*"
                         onChange={(e) => setImage(e.target.files[0])}
                     />
@@ -103,6 +106,7 @@ const UpdateSong = () => {
                     Select Song MP3
                     <input
                         type="file"
+                        name="song_url"
                         accept="songMP3/*"
                         onChange={(e) => setSongMP3(e.target.files[0])}
                     />

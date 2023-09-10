@@ -157,20 +157,21 @@ def update(id):
 
     #error response:
     if song is None:
-        print(" no song")
         return {'message': "Song couldn\'t be found", "statusCode": 404}
-    print("song exists")
 
     if song.userId != current_user.id:
         return {'errors': ['Forbidden: You don\'t have permission']}, 403
-    print("User is correct")
 
     form = SongForm()
-    print(form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
+        song.song_name = form.data["song_name"]
+        song.genre = form.data["genre"]
+
         new_image_file = form.image_url.data
-        print("image file", new_image_file)
+
+        # print("image file", new_image_file)
         if new_image_file:
             new_image_filename = get_unique_filename(new_image_file.filename)
             upload_image = upload_file_to_s3(new_image_file, new_image_filename)
@@ -181,6 +182,7 @@ def update(id):
                 return {'errors': 'Failed to upload'}
 
             song.song_url = upload_image["url"]
+        song.image_url = upload_song["url"]
 
         new_song_file = form.song_url.data
         if new_song_file:
@@ -191,13 +193,7 @@ def update(id):
                 # Handle the error here
                 print("no url")
                 return {'errors': 'Failed to upload'}
-
-            song.image_url = upload_song["url"]
-
-        song.song_name=form.data["song_name"]
-        song.genre=form.data["genre"]
         song.image_url = upload_image["url"]
-        song.song_url = upload_song["url"]
 
         db.session.commit()
         return song.to_dict()

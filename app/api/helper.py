@@ -20,17 +20,36 @@ def get_unique_filename(filename):
     return f"{unique_filename}.{ext}"
 
 
-def upload_file_to_s3(file, acl="public-read"):
-    # , acl="public-read"
-    try:
-        # print(f"!!Uploading file {file} to S3...")
+# def upload_file_to_s3(file, acl="public-read"):
+#     # , acl="public-read"
+#     try:
+#         # print(f"!!Uploading file {file} to S3...")
 
+#         s3.upload_fileobj(
+#             file,
+#             BUCKET_NAME,
+#             file.filename,
+#             ExtraArgs={
+#                 "ACL": "public-read",
+#                 "ContentType": file.content_type
+#             }
+#         )
+
+#     except Exception as e:
+#         # in case the your s3 upload fails
+#         print(f"Upload failed: {str(e)}")
+#         return {"errors": str(e)}
+
+#     return {"url": f"{S3_LOCATION}{file.filename}"}
+def upload_file_to_s3(file, acl="public-read"):
+    try:
+        new_filename = get_unique_filename(file.filename)
         s3.upload_fileobj(
             file,
             BUCKET_NAME,
-            file.filename,
+            new_filename,
             ExtraArgs={
-                "ACL": "public-read",
+                "ACL": acl,
                 "ContentType": file.content_type
             }
         )
@@ -40,8 +59,7 @@ def upload_file_to_s3(file, acl="public-read"):
         print(f"Upload failed: {str(e)}")
         return {"errors": str(e)}
 
-    return {"url": f"{S3_LOCATION}{file.filename}"}
-
+    return {"url": f"{S3_LOCATION}{new_filename}"}
 
 def remove_file_from_s3(image_url):
     # AWS needs the image file name, not the URL,
