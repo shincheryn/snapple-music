@@ -50,7 +50,7 @@ const SongDetails = () => {
                 <div>
                     <div className='song-details div3'>
                         <h2 className="song-name">{song.song_name}</h2>
-                        <p className="artist">{user.username}</p>
+                        {/* <p className="artist">{user.username}</p> */}
                         <p className="genre">{song.genre}</p>
                     </div>
 

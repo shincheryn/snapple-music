@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as songActions from "../../store/songs.js";
 import aPicture from "./a.png";
 import bPicture from "./b.png";
+import { Link } from 'react-router-dom';
 import './LandingPage.css';
 
 function LandingPage() {
@@ -31,11 +32,13 @@ function LandingPage() {
         </div>
         <div className="song-card-grid">
           {allSongs.map((song) => (
+            <Link className='song-id' to={`/songs/${song.id}`}>
             <a key={song.id} href="#" className="song-card">
               <img src={song.image_url} alt={song.song_name} title={song.song_name} />
               <div className="song-name">{song.song_name}</div>
               <div className="song-genre">Snapple Music {song.genre}</div>
             </a>
+            </Link>
           ))}
         </div>
     </div>
