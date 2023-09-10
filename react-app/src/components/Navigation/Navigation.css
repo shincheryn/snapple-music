@@ -30,7 +30,7 @@
 .profile-button-container {
   position: fixed;
   top: 20px;
-  right: 10%;
+  right: 3%;
   background: none;
   border: none;
   color: rgb(0, 0, 0);
@@ -41,17 +41,6 @@
   border: none;
   color: darkgrey;
   font-size: 24px;
-}
-
-/* Music Player Image Styles */
-.music-player-image {
-  align-items: center;
-  position: fixed;
-  top: 0;
-  right: 17%;
-  left: auto;
-  width: 60%;
-  z-index: -1;
 }
 
 /* Dropdown Menu */

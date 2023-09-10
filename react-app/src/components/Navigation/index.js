@@ -29,9 +29,6 @@ function Navigation({ isLoaded }) {
 							<li>
 								<ProfileButton user={sessionUser} />
 							</li>
-							<div className="music-player-image">
-								<Player song_url={songs.song_url} />
-							</div>
 							<li>
 								<NavLink to='/'>Browse</NavLink>
 							</li>
