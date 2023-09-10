@@ -130,20 +130,6 @@ export const deleteSongsFromPlaylistThunk = (playlistId, songId) => async (dispa
     }
   };
 
-  const deleteSongHelper = (state, playlistId, songId) => {
-    let songs = state[playlistId.toString()].Songs
-    let currentSongId = 0;
-    for (let i = 0; i < songs.length; i++) {
-      if (songs[i].id == songId) {
-        currentSongId = i;
-        break;
-      }
-    }
-
-  delete state[playlistId].Songs[currentSongId.toString()]
-  return state;
-}
-
 // DELETE Playlist
 export const deletePlaylistThunk = (playlistId) => async (dispatch) => {
   const response = await fetch(`/api/playlists/${playlistId}`, {
@@ -179,7 +165,8 @@ const playlistsReducer = (state = initialState, action) => {
       delete newState[action.payload];
       return newState;
     case DELETE_PLAYLIST:
-      return deleteSongHelper(newState, action.payload[0], action.payload[1])
+      delete newState[action.payload];
+      return newState;
     default:
       return state;
   }
