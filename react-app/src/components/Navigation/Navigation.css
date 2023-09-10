@@ -63,6 +63,7 @@
 
 .profile-dropdown li {
   margin-bottom: 8px;
+  color: #007bff;
 }
 
 .profile-dropdown button {
@@ -73,6 +74,7 @@
   text-align: left;
   cursor: pointer;
   color: black;
+  z-index: 1000;
   background-color: transparent;
 }
 
