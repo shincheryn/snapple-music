@@ -9,32 +9,20 @@ const UpdateSong = () => {
     const history = useHistory();
     const { id } = useParams();
     const song = useSelector((state) => state.song[id]);
-    const [songName, setSongName] = useState(song?.song_name ||'');
-    const [genre, setGenre] = useState(song?.genre || '');
-    const [image, setImage] = useState(song?.image_url || null);
-    const [songMP3, setSongMP3] = useState(song?.song_url || null);
+    const [songName, setSongName] = useState('');
+    const [genre, setGenre] = useState('');
+    const [image, setImage] = useState(null);
+    const [songMP3, setSongMP3] = useState(null);
     const [songLoading, setSongLoading] = useState(false)
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
         dispatch(songsActions.getSongsDetails(id))
-            .then((songdetails) =>{
-                setSongName(songdetails?.song_name || '');
-                setGenre(songdetails?.genre || '');
-                setImage(songdetails?.image_url || null);
-                setSongMP3(songdetails?.song_url || null);
+            .then(songdetail => {
+
             })
     }, [dispatch, id]);
-
-    // useEffect(() => {
-    //     if(song){
-    //     setSongName(song?.song_name || '');
-    //     setGenre(song?.genre || '');
-    //     setImage(song?.image_url || null);
-    //     setSongMP3(song?.song_url || null);
-    //     }
-    // }, [song])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

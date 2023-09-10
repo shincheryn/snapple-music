@@ -5,7 +5,7 @@ import * as playlistActions from '../../store/playlist';
 import './CreatePlaylist.css';
 
 const CreatePlaylistPage = () => {
-    
+
   const dispatch = useDispatch();
   const history = useHistory();
   const defaultPlaylistImageUrl = 'https://res.cloudinary.com/dvlsr70pm/image/upload/v1694219162/noimageplaylist.jpg';
@@ -30,34 +30,36 @@ const CreatePlaylistPage = () => {
   }
 
   return (
-    <div>
-      <h1>Create a Playlist</h1>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div>
-          <label className="Playlist Name">
-            Playlist Name
-            <input
-              className=""
-              type="text"
-              placeholder="Playlist Name"
-              value={playlistName}
-              onChange={(e) => setPlaylistName(e.target.value)}
-            />
-          </label>
-          <label className="Playlist Image URL">
-            Playlist Image Url
-            <input
-              className=""
-              type="text"
-              placeholder="Playlist Image URL"
-              value={playlistImageUrl}
-              onChange={(e) => setPlaylistImageUrl(e.target.value)}
-            />
-          </label>
-          {error && <p className="error-message">{error}</p>}
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+    <div className="create-playlist-container">
+      <div className="centered-content">
+        <h1 className="create-playlist-title">Create a Playlist</h1>
+        <form className="create-playlist-form" onSubmit={handleSubmit} encType="multipart/form-data">
+          <div>
+            <label className="create-playlist-label">
+              Playlist Name
+              <input
+                className="create-playlist-input"
+                type="text"
+                placeholder="Playlist Name"
+                value={playlistName}
+                onChange={(e) => setPlaylistName(e.target.value)}
+              />
+            </label>
+            <label className="create-playlist-label">
+              Playlist Image Url
+              <input
+                className="create-playlist-input"
+                type="text"
+                placeholder="Playlist Image URL"
+                value={playlistImageUrl}
+                onChange={(e) => setPlaylistImageUrl(e.target.value)}
+              />
+            </label>
+            {error && <p className="create-playlist-error-message">{error}</p>}
+          </div>
+          <button className="create-playlist-submit-button" type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   )
 }

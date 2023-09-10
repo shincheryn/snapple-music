@@ -1,67 +1,85 @@
-/* Navigation.css */
+/* Navigation CSS */
+
+/* Sidebar Style */
 .nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15%;
+  height: 100%;
+  background-color: rgb(244, 244, 244);
+  color: rgb(0, 0, 0);
+  padding: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color:red;
-  padding: 10px 20px;
-  color: white;
+  flex-direction: column;
 }
 
-.nav-items ul {
+.nav-items {
   list-style: none;
   padding: 0;
-  margin: 0;
-}
-
-.nav-items ul li {
-  margin-bottom: 10px;
 }
 
 .nav-link {
   text-decoration: none;
-  color: white;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.nav-link:hover {
-  text-decoration: underline;
-}
-
-.nav-logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-/* Profile button styles */
+/* Profile Button */
 .profile-button-container {
-  position: relative;
-}
-
-.profile-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  border-radius: 5px;
-  padding: 10px;
-  display: none;
-}
-
-.profile-dropdown li {
-  list-style: none;
-  margin: 5px 0;
+  position: fixed;
+  top: 20px;
+  right: 3%;
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
 }
 
 .profile-button-container button {
   background: none;
   border: none;
-  color: white;
-  cursor: pointer;
+  color: darkgrey;
+  font-size: 24px;
 }
 
-.profile-button-container:hover .profile-dropdown {
+/* Dropdown Menu */
+.profile-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 10%;
+  z-index: 1;
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.profile-dropdown li {
+  margin-bottom: 8px;
+}
+
+.profile-dropdown button {
   display: block;
+  width: 100%;
+  padding: 0px 4px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: black;
+  background-color: transparent;
 }
 
-.profile-button-container:hover .profile-dropdown.hidden {
+.profile-dropdown button:hover {
+  background-color: lightgrey;
+}
+
+.profile-dropdown.hidden {
   display: none;
 }
