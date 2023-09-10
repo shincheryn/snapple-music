@@ -78,6 +78,7 @@ const UpdateSong = () => {
     return (
         <>
             <div className='page-container'>
+            <div className='form-create'>
             <h1>Update Song</h1>
             <form
                 method='PUT'
@@ -85,7 +86,7 @@ const UpdateSong = () => {
                 encType="multipart/form-data"
             >
                 <div>
-                <div className="">{errors.songName && <p className="">{errors.songName}</p>}</div>
+                <div className="error-message ">{errors.songName && <p className="">{errors.songName}</p>}</div>
                 <label className="">
                     Song Name
                     <input
@@ -99,7 +100,7 @@ const UpdateSong = () => {
                 </label>
                 </div>
                 <div>
-                <div className="">{errors.genre && <p className="">{errors.genre}</p>}</div>
+                <div className="error-message ">{errors.genre && <p className="">{errors.genre}</p>}</div>
                 <label className="">
                     Genre
                     <input
@@ -113,7 +114,7 @@ const UpdateSong = () => {
                 </label>
                 </div>
                 <div>
-                <div className="">{errors.image && <p className="">{errors.image}</p>}</div>
+                <div className="error-message ">{errors.image && <p className="">{errors.image}</p>}</div>
                 <label className="">
                     Select Song Image
                     <input
@@ -123,9 +124,10 @@ const UpdateSong = () => {
                         onChange={(e) => setImage(e.target.files[0])}
                     />
                 </label>
+                {(imageLoading)&& <p>Loading...</p>}
                 </div>
                 <div>
-                <div className="">{errors.songMP3 && <p className="">{errors.songMP3}</p>}</div>
+                <div className="error-message ">{errors.songMP3 && <p className="">{errors.songMP3}</p>}</div>
                 <label className="">
                     Select Song MP3
                     <input
@@ -135,11 +137,11 @@ const UpdateSong = () => {
                         onChange={(e) => setSongMP3(e.target.files[0])}
                     />
                 </label>
+                {(songLoading)&& <p>Loading...</p>}
                 </div>
                 <button type="submit">Submit</button>
-                {(songLoading)&& <p>Loading...</p>}
-                {(imageLoading)&& <p>Loading...</p>}
             </form>
+            </div>
             </div>
         </>
     );
