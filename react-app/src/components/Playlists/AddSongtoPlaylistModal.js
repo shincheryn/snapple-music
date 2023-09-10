@@ -19,10 +19,8 @@ function AddSongToPlaylistModal({ songId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const selectedPlaylist = playlists.find((playlist) => playlist.id === +playlistId);
-
-    // Song already exists?
-    if (selectedPlaylist && selectedPlaylist.Songs.some((song) => song.id === songId)) {
+    const selectedPlaylist = playlists.find((playlist) => playlist.id == playlistId);
+    if (selectedPlaylist && selectedPlaylist.songs.some((song) => song.id === songId)) {
       setErrors(["Song is already in the playlist"]);
     } else {
       await dispatch(playlistActions.addSongsToPlaylistThunk(playlistId, songId));
