@@ -1,0 +1,9 @@
+.page-container{
+    display: flex;
+   flex-direction: column;
+   align-items: left;
+   text-align: left;
+   transition: all 0.3s;
+   max-width: calc(100% - 10%);
+   margin-left: 19%;
+}

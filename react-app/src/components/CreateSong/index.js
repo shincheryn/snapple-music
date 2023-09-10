@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as songsActions from '../../store/songs'
+import './createSong.css'
 
 const UploadSong = () => {
     const dispatch = useDispatch();
-    const history = useHistory(); // so that you can redirect after the image upload is successful
+    const history = useHistory()
     const [song_name, setSong_Name] = useState('');
     const [genre, setGenre] = useState('');
     const [image_url, setImage_url] = useState(null);
@@ -51,18 +52,20 @@ const UploadSong = () => {
     }
 
     return (
-        <div>
+        <>
+        <div className="page-container">
+        <div className="form-create">
             <h1>Create a New Song</h1>
             <form
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
             >
                 <div>
-                <div className="">{errors.song_name && <p className="">{errors.song_name}</p>}</div>
-                <label className="">
-                    Song Name
+                <div className="error-message">{errors.song_name && <p className="">{errors.song_name}</p>}</div>
+                <label className="label-create">
+                    Your Song Name
                     <input
-                        className=""
+                        className="input-create"
                         type='text'
                         placeholder="Song Name"
                         value={song_name}
@@ -71,11 +74,11 @@ const UploadSong = () => {
                 </label>
                 </div>
                 <div>
-                <div className="">{errors.genre && <p className="">{errors.genre}</p>}</div>
-                <label className="">
+                <div className="error-message">{errors.genre && <p className="">{errors.genre}</p>}</div>
+                <label className="label-create">
                     Genre
                     <input
-                        className=""
+                        className="input-create"
                         type='text'
                         placeholder="Genre"
                         value={genre}
@@ -84,11 +87,12 @@ const UploadSong = () => {
                 </label>
                 </div>
                 <div>
-                <div className="">{errors.image_url && <p className="">{errors.image_url}</p>}</div>
+                <div className="error-message">{errors.image_url && <p className="">{errors.image_url}</p>}</div>
                 {(imageLoading)&& <p>Image Uploading...</p>}
-                <label className="">
+                <label className="label-create">
                     Select Song Image
                     <input
+                        className="input-create"
                         type="file"
                         accept="image/*"
                         onChange={(e) => setImage_url(e.target.files[0])}
@@ -96,20 +100,25 @@ const UploadSong = () => {
                 </label>
                 </div>
                 <div>
-                <div className="">{errors.song_url && <p className="">{errors.song_url}</p>}</div>
+                <div className="error-message">{errors.song_url && <p className="">{errors.song_url}</p>}</div>
                 {(songLoading)&& <p>Song Uploading...</p>}
-                <label className="">
+                <label className="label-create">
                     Select Song MP3
                     <input
+                        className="input-create"
                         type="file"
                         accept="song/*"
                         onChange={(e) => setSong_url(e.target.files[0])}
                     />
                 </label>
                 </div>
-                <button type="submit">Submit</button>
+                <div className=".align-create-button">
+                <button className='create-button' type="submit">UPLOAD</button>
+                </div>
             </form>
         </div>
+        </div>
+        </>
     )
 }
 

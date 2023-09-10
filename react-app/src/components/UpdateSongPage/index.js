@@ -20,7 +20,6 @@ const UpdateSong = () => {
     console.log("SONG URL OMG", song?.song_url)
 
     useEffect(() => {
-        // Fetch song details if they are not already loaded.
         if (!song) {
             dispatch(songsActions.getSongsDetails(id))
                 .then((songDetail) => {
@@ -78,6 +77,7 @@ const UpdateSong = () => {
 
     return (
         <>
+            <div className='page-container'>
             <h1>Update Song</h1>
             <form
                 method='PUT'
@@ -140,6 +140,7 @@ const UpdateSong = () => {
                 {(songLoading)&& <p>Loading...</p>}
                 {(imageLoading)&& <p>Loading...</p>}
             </form>
+            </div>
         </>
     );
 };
