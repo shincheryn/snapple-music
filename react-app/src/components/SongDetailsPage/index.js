@@ -27,7 +27,7 @@ const SongDetails = () => {
         }
     }, [song, audio]);
 
-    if (!song) {
+    if(!song){
         return <div>No song</div>
     }
 
@@ -42,16 +42,16 @@ const SongDetails = () => {
 
     return (
         <>
-            <div className='page-container div1'>
+            <div className='page-container'>
                 <div className='parent'>
-                <div className='song-image div2'>
-                    <img className='div2' src={song.image_url} alt={song.song_name}/>
+                <div className='song-image-detail-id div1'>
+                    <img  className='image-id' src={song.image_url} alt={song.song_name}/>
                 </div>
                 <div>
-                    <div className='song-details div3'>
-                        <h2 className="song-name">{song.song_name}</h2>
+                    <div className='song-details div2'>
+                        <h2 className="song-name-detail-id">{song.song_name}</h2>
                         {/* <p className="artist">{user.username}</p> */}
-                        <p className="genre">{song.genre}</p>
+                        <p className="genre-detail-id">{song.genre}</p>
                     </div>
 
                     <div className="player-controls div3">

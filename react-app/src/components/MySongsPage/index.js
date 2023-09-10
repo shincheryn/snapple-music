@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,9 @@ import DeleteModal from '../DeleteSongModal';
 import Player from '../AudioPlayer/audioplayer';
 import './mysongs.css'
 
+import AudioPlayer from 'react-h5-audio-player';
+
+
 const MySongs = () => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -16,9 +19,15 @@ const MySongs = () => {
     const songsArray = Object.values(songs);
     const user = useSelector(state => state.session.user);
 
+     // State variables for audio player
+     const [isPlaying, setIsPlaying] = useState(false);
+     const [audioSrc, setAudioSrc] = useState(""); // Set the initial audio source
+
+
     useEffect(() => {
         dispatch(songsActions.getCurrentUsersSongs())
     }, [dispatch])
+
 
     const defaultImage = 'https://res.cloudinary.com/dc5lrkblw/image/upload/v1688368793/airbnb-proj/No-Image-Placeholder_wthyue.svg'
 
@@ -46,7 +55,16 @@ const MySongs = () => {
                                 <p className='a-details'>{song.song_name}</p>
                                 <p className='b-details'>{song.genre}</p>
                             </Link>
-                            <Player song_url={song.song_url} className='audioplayer'/>
+                            {/* <Player song_url={song.song_url} className='audioplayer'/> */}
+                            {song?.song_url && (
+                        <div class="apple-music-player">
+                        <audio controls>
+                            <source src={song.song_url} type="audio/mpeg" />
+                        </audio>
+                        </div>
+                )}
+
+
                             <button onClick={(e) => {
                                 e.stopPropagation()
                                 history.push(`/songs/${song.id}/edit`)
@@ -63,6 +81,17 @@ const MySongs = () => {
                                     />
                         </div>
                         ))}
+                         {/* <AudioPlayer
+                                className='audio-player'
+                                autoPlay={isPlaying}
+                                src={songs.song_url}
+                                onPlay={() => setIsPlaying(true)}
+                                onPause={() => setIsPlaying(false)}
+                                customControls={[
+                                    // Customize the player controls
+                                    'play', 'progress', 'volume', 'duration', 'time', 'seek'
+                                ]}
+                            /> */}
                     </main>
                 </div>
             )}

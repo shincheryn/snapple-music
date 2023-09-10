@@ -16,12 +16,14 @@ function DeleteModal({id}) {
 
     return (
         <>
-            <h1>Delete Song</h1>
-            <p>Are your sure you want to delete this song?</p>
-            <form className=''onSubmit={handleSubmit}>
-                <button className='' type='submit'>Yes (Delete Song)</button>
-                <button className='' onClick={closeModal}>No (Keep Song)</button>
+            <main className="main">
+            <h1 className="center-text title">Delete Song</h1>
+            <p className="center-text child">Are your sure you want to delete this song?</p>
+            <form className='form-delete' onSubmit={handleSubmit}>
+                <button className='create-button' type='submit'>Yes (Delete Song)</button>
+                <button className='keep-button delete-style' onClick={closeModal}>No (Keep Song)</button>
             </form>
+            </main>
         </>
     )
 }

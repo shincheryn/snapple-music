@@ -1,0 +1,47 @@
+.main{
+    width: 600px;
+    height: 300px;
+    /* border: 2px solid #2980b9;
+    border-radius: 10px; */
+}
+.keep-button {
+    display: grid;
+    justify-items: center;
+    color:white;
+    background-color: gray;
+    box-shadow: 2px 2px 2px black;
+    cursor: pointer;
+    border: 1px solid black;
+    width: 110px;
+}
+
+.delete-style {
+    width: 110px;
+}
+
+.form-delete {
+    gap: 5px;
+}
+.create-button {
+    display: grid;
+    justify-items: center;
+    color:white;
+    background-color: #FF5A5F;
+    box-shadow: 2px 2px 2px black;
+    cursor: pointer;
+    border: 1px solid black;
+
+}
+
+.center-text {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px 10px 0px;
+}
+.title {
+    font-weight: bold;
+}
+
+ .child {
+    font-size: 14px;
+ }
