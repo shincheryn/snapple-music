@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as albumActions from "../../store/album";
 import { useHistory } from "react-router-dom";
+import "./Album.css";
 
 function PostAlbumModal() {
   const dispatch = useDispatch();
@@ -22,21 +23,35 @@ function PostAlbumModal() {
     formData.append("description", description);
     formData.append("album_image_url", album_image_url);
 
-    await dispatch(albumActions.addAlbumThunk(formData));
-    history.push("/albums/owned");
+    if (checkImage(album_image_url)) {
+      setErrors(["Image URL must end in .png, .jpg, or .jpeg"])
+      return
+    } else {
+      await dispatch(albumActions.addAlbumThunk(formData));
+      history.push("/albums/owned");
+    }
+  }
+
+  const checkImage = (urlString) => {
+    const endings = ["png", "jpg", "jpeg"];
+    const array = urlString.split(".");
+    if (endings.includes(array[array.length - 1])) {
+      return false;
+    }
+    return true;
   }
 
   return (
-    <>
+    <div className="pageContainers">
       <h1>Create New Album</h1>
       <form onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
-        {/* <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul> */}
+        <ul>
+        {errors.length > 0 && errors.map(el => (
+          <div key={el} className="errors">{el}</div>
+        ))}
+        </ul>
         <div>
           <label>
             Album Name
@@ -94,7 +109,7 @@ function PostAlbumModal() {
         </div>
         <button type="submit">Create</button>
       </form>
-    </>
+    </div>
   );
 }
 
