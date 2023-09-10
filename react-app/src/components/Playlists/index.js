@@ -33,7 +33,7 @@ const MyPlaylistsPage = () => {
               e.stopPropagation()
               history.push(`/playlists/new`)
             }}>Create a New Playlist</button>
-            <main className='my-playlists-container'>
+            <div className='my-playlists-container'>
               {playlists.map((playlist) => (
                 <div key={playlist.id} className='playlist-tile'>
                   <Link to={`/playlists/${playlist.id}`} className="playlist-link">
@@ -49,7 +49,7 @@ const MyPlaylistsPage = () => {
                       {playlist.playlist_name}
                     </div>
                     <div className="created-by">
-                      Created by: {user.firstName} {user.lastName}
+                      Created by: {user?.firstName} {user?.lastName}
                     </div>
                   </Link>
                   <div className="delete-button">
@@ -60,7 +60,7 @@ const MyPlaylistsPage = () => {
                   </div>
                 </div>
               ))}
-            </main>
+            </div>
           </div>
         )}
       </div>
