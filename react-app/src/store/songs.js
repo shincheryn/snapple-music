@@ -69,18 +69,18 @@ export const getSongsDetails = (id) => async dispatch => {
 }
 
 // create a song
-export const createSong = (song) => async (dispatch) => {
-    const response = await fetch('/api/songs/newsong', {
-        method: "POST",
-        body: song
-      });
+export const createSong = (post) => async (dispatch) => {
+    const response = await fetch(`/songs/newsong`, {
+      method: "POST",
+      body: post
+    });
 
-      if (response.ok) {
-          const resPost  = await response.json();
-          dispatch(createOne(resPost));
-      } else {
-          console.log("There was an error making your post!")
-      }
+    if (response.ok) {
+        const { resPost } = await response.json();
+        dispatch(createOne(resPost));
+    } else {
+        console.log("There was an error making your post!")
+    }
 };
 
 // delete a song
@@ -96,11 +96,8 @@ export const deleteSong = (id) => async dispatch => {
 
 // update a song
 export const updateSong = (id, formData) => async dispatch => {
-    for (const value of formData.values()) {
-      console.log(value);
-    }
     const response = await fetch(`/api/songs/${id}/edit`, {
-        method: 'PUT',
+        method: 'POST',
         body: formData
     });
 
@@ -135,10 +132,8 @@ const songsReducer = (state = initialState, action) => {
             newState[action.song.id] = {...newState[action.song.id], ...action.song};
             return newState
         case CREATE_SONG:
-            console.log(action.song)
-            if (action.song && action.song.id) {
-                newState[action.song.id] = action.song;
-            }
+            newState[action.songs.id] =  action.songs;
+            return newState;
         case UPDATE_SONG:
             newState[action.song.id] = action.song;
             return newState

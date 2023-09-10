@@ -1,67 +1,71 @@
 /* Navigation.css */
 .nav-container {
+  background-color: #333;
+  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color:red;
   padding: 10px 20px;
-  color: white;
 }
 
-.nav-items ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-items ul li {
-  margin-bottom: 10px;
-}
-
-.nav-link {
+.nav-logo a {
   text-decoration: none;
-  color: white;
-}
-
-.nav-link:hover {
-  text-decoration: underline;
-}
-
-.nav-logo {
+  color: #fff;
   font-size: 24px;
   font-weight: bold;
 }
 
-/* Profile button styles */
+.nav-items ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-items ul li {
+  font-size: 16px;
+}
+
+.nav-items ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav-items ul li a:hover {
+  text-decoration: underline;
+}
+
 .profile-button-container {
   position: relative;
-}
-
-.profile-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  border-radius: 5px;
-  padding: 10px;
-  display: none;
-}
-
-.profile-dropdown li {
-  list-style: none;
-  margin: 5px 0;
 }
 
 .profile-button-container button {
   background: none;
   border: none;
-  color: white;
+  font-size: 18px;
+  color: #fff;
   cursor: pointer;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 4px;
+  list-style-type: none;
+  padding: 10px;
+  display: none;
+}
+
+.profile-dropdown li {
+  margin: 5px 0;
 }
 
 .profile-button-container:hover .profile-dropdown {
   display: block;
 }
 
-.profile-button-container:hover .profile-dropdown.hidden {
-  display: none;
-}
+/* Add more custom styles as needed */

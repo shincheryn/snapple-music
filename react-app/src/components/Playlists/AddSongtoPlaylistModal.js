@@ -13,11 +13,12 @@ function AddSongToPlaylistModal({ songId }) {
   const [playlistId, setPlaylistId] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
-
-  const playlists = useSelector((state) => state.playlist.playlists);
+  const playlistMap = useSelector((state) => state.playlist);
+  const playlists = Object.values(playlistMap);
+  console.log(songId);
 
   useEffect(() => {
-    dispatch(playlistActions.getMyPlaylistsAction());
+    dispatch(playlistActions.getMyPlaylistsThunk());
   }, [dispatch]);
 
   const handleSubmit = async (e) => {

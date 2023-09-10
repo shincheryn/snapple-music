@@ -149,47 +149,37 @@ def createSong():
 """
 Updates/Edit and returns an existing song.
 """
-@song_routes.route('/<int:id>/edit', methods=['PUT'])
+@song_routes.route('/<int:id>/edit', methods=['POST'])
 @login_required
 def update(id):
-    print("Trying to edit song with id", id)
     song = Song.query.get(id)
 
     #error response:
     if song is None:
-        print(" no song")
         return {'message': "Song couldn\'t be found", "statusCode": 404}
-    print("song exists")
 
     if song.userId != current_user.id:
         return {'errors': ['Forbidden: You don\'t have permission']}, 403
-    print("User is correct")
 
     form = SongForm()
-    print(form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_image_file = form.image_url.data
-        print("image file", new_image_file)
         if new_image_file:
-            new_image_filename = get_unique_filename(new_image_file.filename)
-            upload_image = upload_file_to_s3(new_image_file, new_image_filename)
+            upload_image = upload_file_to_s3(new_image_file)
 
             # print(f'!!!upload {upload}') #debug
             if "url" not in upload_image:
-                print(" no url for upload image")
                 return {'errors': 'Failed to upload'}
 
             song.song_url = upload_image["url"]
 
         new_song_file = form.song_url.data
         if new_song_file:
-            new_song_filename = get_unique_filename(new_song_file.filename)
-            upload_song = upload_file_to_s3(new_song_file, new_song_filename)
+            upload_song = upload_file_to_s3(new_song_file)
 
             if "url" not in upload_song:
                 # Handle the error here
-                print("no url")
                 return {'errors': 'Failed to upload'}
 
             song.image_url = upload_song["url"]
@@ -208,7 +198,7 @@ def update(id):
 """
 Delete an existing song.
 """
-@song_routes.route('/<int:id>', methods=['DELETE'])
+@song_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
 def delete(id):
     song = Song.query.get(id)

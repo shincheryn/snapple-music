@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as songsActions from '../../store/songs';
 import OpenModalButton from '../OpenModalButton';
+import AddSongToPlaylistModal from '../Playlists/AddSongtoPlaylistModal';
 import DeleteModal from '../DeleteSongModal';
 import Player from '../AudioPlayer/audioplayer';
 import './mysongs.css'
@@ -27,14 +28,14 @@ const MySongs = () => {
             {songsArray.length === 0 ? (
                  <button onClick={(e) => {
                     e.stopPropagation()
-                    history.push(`/songs/newsong`)
+                    history.push('/songs/newsong')
                     }}>Upload Your First Song</button>
             ): (
 
                 <div>
                     <button onClick={(e) => {
                     e.stopPropagation()
-                    history.push(`/songs/newsong`)
+                    history.push('/songs/newsong')
                     }}>Upload a New Song</button>
                     <main className='song-container'>
                         {songs && songsArray.map((song) => (
@@ -52,6 +53,12 @@ const MySongs = () => {
                                     <OpenModalButton
                                         modalComponent={<DeleteModal id={song.id}/>}
                                         buttonText = 'Delete'
+                                    />
+
+                                    {/* ADD TO PLAYLIST MODAL BUTTON */}
+                                    <OpenModalButton
+                                        modalComponent={<AddSongToPlaylistModal songId={song.id}/>}
+                                        buttonText = 'Add to Playlist'
                                     />
                         </div>
                         ))}

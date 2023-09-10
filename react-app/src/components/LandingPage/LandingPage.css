@@ -1,0 +1,98 @@
+/* LandingPage.css */
+
+/* Set the background of the entire page to white */
+body {
+    background-color: #ffffff;
+}
+
+/* Container Style */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+}
+
+.headline {
+    font-size: 45px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+/* Featured Titles */
+.featured-title {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* Featured Section */
+.featured-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.featured-section > div {
+    flex: 1;
+    max-width: auto;
+    border-radius: 10px;
+    transition: transform 0.3s;
+    padding: px;
+    text-align: left;
+}
+
+.featured-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.featured-section > div:hover,
+.song-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Song Card Grid */
+.song-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Song Name */
+.song-name {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+/* Song Card */
+.song-card {
+    text-align: center;
+    border-radius: 10px;
+    transition: transform 0.3s;
+    margin-top: 15px;
+}
+
+.song-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Song Genre */
+.song-genre {
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: left;
+    color: red;
+}
