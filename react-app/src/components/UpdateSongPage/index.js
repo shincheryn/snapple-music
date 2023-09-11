@@ -115,10 +115,10 @@ const UpdateSong = () => {
             >
                 <div>
                 <div className="error-message ">{errors.songName && <p className="">{errors.songName}</p>}</div>
-                <label className="">
+                <label className="label-create">
                     Song Name
                     <input
-                        className=""
+                        className="input-create"
                         type='text'
                         name="song_name"
                         placeholder="Song Name"
@@ -129,10 +129,9 @@ const UpdateSong = () => {
                 </div>
                 <div>
                 <div className="error-message ">{errors.genre && <p className="">{errors.genre}</p>}</div>
-                <label className="">
-                    Genre
+                <label className="label-create">
+                    Song Genre
                     <input
-                        className=""
                         type='text'
                         name="genre"
                         placeholder="Genre"
@@ -143,8 +142,8 @@ const UpdateSong = () => {
                 </div>
                 <div>
                 <div className="error-message ">{errors.image && <p className="">{errors.image}</p>}</div>
-                {song?.image_url && <img src={song.image_url} alt="Current Song Image" />}
-                <label className="">
+                {/* {song?.image_url && <img src={song.image_url} alt="Current Song Image" />} */}
+                <label className="label-create">
                     Select Song Image
                     <input
                         type="file"
@@ -153,17 +152,17 @@ const UpdateSong = () => {
                         onChange={(e) => setImage(e.target.files[0])}
                     />
                 </label>
-                {(imageLoading)&& <p>Loading...</p>}
+                {(imageLoading)&& <p>Image Loading...</p>}
                 </div>
                 <div>
                 <div className="error-message ">{errors.songMP3 && <p className="">{errors.songMP3}</p>}</div>
-                {song?.song_url && (
+                {/* {song?.song_url && (
                     <audio controls>
                         <source src={song.song_url} type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
-                )}
-                <label className="">
+                )} */}
+                <label className="label-create">
                     Select Song MP3
                     <input
                         type="file"
