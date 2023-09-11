@@ -32,6 +32,11 @@ const SongDetails = () => {
     }
 
     const year = new Date(song.createdAt).getFullYear();
+
+    const handleClick = e => {
+        e.preventDefault();
+        alert("Feature Coming Soon :)")
+    }
     // const handlePlayPause = () => {
     //     if (isPlaying) {
     //         audio.pause();
@@ -55,6 +60,7 @@ const SongDetails = () => {
                         {/* <p className="artist">{user.username}</p> */}
                         <p className="genre-detail-id div2">{song.genre}</p>
                         <p className='createdat-year'>{year}</p>
+                        <button onClick={handleClick} className='artist-info' >Artist Info</button>
                     </div>
 
                     <div className="apple-music-player div4">

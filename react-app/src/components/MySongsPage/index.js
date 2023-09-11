@@ -6,16 +6,17 @@ import * as songsActions from '../../store/songs';
 import OpenModalButton from '../OpenModalButton';
 import AddSongToPlaylistModal from '../Playlists/AddSongtoPlaylistModal';
 import DeleteModal from '../DeleteSongModal';
-// import Player from '../AudioPlayer/audioplayer';
+import Player from '../AudioPlayer/audioplayer';
 import './mysongs.css'
 
 // import AudioPlayer from 'react-h5-audio-player';
-
+// import 'react-h5-audio-player/lib/styles.css'
 
 const MySongs = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const songs = useSelector((state) => state.song);
+
     const songsArray = Object.values(songs);
     // const user = useSelector(state => state.session.user);
 
@@ -23,6 +24,8 @@ const MySongs = () => {
     //  const [isPlaying, setIsPlaying] = useState(false);
     //  const [audioSrc, setAudioSrc] = useState("");
 
+    // const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(false);
+    // const [currentSong, setCurrentSong] = useState(null);
 
     useEffect(() => {
         dispatch(songsActions.getCurrentUsersSongs())
@@ -55,7 +58,8 @@ const MySongs = () => {
                                 <p className='a-details'>{song.song_name}</p>
                                 <p className='b-details'>{song.genre}</p>
                             </Link>
-                            {/* <Player song_url={song.song_url} className='audioplayer'/> */}
+                            {/* <Player song_url={song?.song_url} className='audioplayer'/> */}
+
                             {song?.song_url && (
                         <div className="apple-music-player">
                         <audio controls>
@@ -63,8 +67,6 @@ const MySongs = () => {
                         </audio>
                         </div>
                 )}
-
-
                             <button onClick={(e) => {
                                 e.stopPropagation()
                                 history.push(`/songs/${song.id}/edit`)
