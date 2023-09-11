@@ -1,6 +1,20 @@
+#modal-content {
+    position: absolute;
+    background-color:white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+  }
+
+.structure {
+    display: flex;
+    justify-content: center;
+}
+
 .main{
-    width: 600px;
-    height: 300px;
+    width: 500px;
+    height: 200px;
+    /* display: flex;
+    justify-content: center; */
     /* border: 2px solid #2980b9;
     border-radius: 10px; */
 }
@@ -18,15 +32,17 @@
 .delete-style {
     width: 110px;
 }
-
 .form-delete {
     gap: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .create-button {
     display: grid;
     justify-items: center;
     color:white;
-    background-color: #FF5A5F;
+    background-color: red !important;
     box-shadow: 2px 2px 2px black;
     cursor: pointer;
     border: 1px solid black;

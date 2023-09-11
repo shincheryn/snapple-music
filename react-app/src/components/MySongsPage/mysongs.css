@@ -45,6 +45,7 @@
 .song-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    max-width: calc(100% - 10%);
     gap: 10px;
     width: 60%;
     padding: 20px;
@@ -98,4 +99,15 @@
     border: 1px solid #d4d4d4;
     border-radius: 4px;
     padding: 10px;
+}
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1px;
+    justify-content: center;
+}
+
+.spacer {
+    flex-grow: 1;
+    min-width: 10px;
 }

@@ -67,20 +67,24 @@ const MySongs = () => {
                         </audio>
                         </div>
                 )}
+                            <div className='button-container'>
                             <button onClick={(e) => {
                                 e.stopPropagation()
                                 history.push(`/songs/${song.id}/edit`)
                                 }}>Update</button>
-                                    <OpenModalButton
-                                        modalComponent={<DeleteModal id={song.id}/>}
-                                        buttonText = 'Delete'
-                                    />
-
+                                {/* <div className="spacer"></div> */}
                                     {/* ADD TO PLAYLIST MODAL BUTTON */}
                                     <OpenModalButton
                                         modalComponent={<AddSongToPlaylistModal songId={song.id}/>}
                                         buttonText = 'Add to Playlist'
                                     />
+                                    {/* <div className="spacer"></div> */}
+                                    <OpenModalButton
+                                        className='del-button'
+                                        modalComponent={<DeleteModal id={song.id}/>}
+                                        buttonText = 'Delete'
+                                    />
+                                    </div>
                         </div>
                         ))}
                          {/* <AudioPlayer
