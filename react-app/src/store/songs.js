@@ -114,7 +114,7 @@ export const deleteSong = (id) => async dispatch => {
 // };
 export const updateSong = (id, formData) => async dispatch => {
     const response = await fetch(`/api/songs/${id}/edit`, {
-        method: 'POST',
+        method: 'PUT',
         body: formData
     });
 

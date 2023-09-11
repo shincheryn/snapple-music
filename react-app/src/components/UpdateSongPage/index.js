@@ -51,8 +51,28 @@ const UpdateSong = () => {
 
         if(!songName) errors.songName = 'Song name is required';
         if(!genre) errors.genre = 'Genre is required';
-        if(!image) errors.image = 'Image is required';
-        if(!songMP3) errors.songMP3 = 'Song MP3 is required';
+
+        if (image && typeof image === 'object' && image.name) {
+            const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+            const fileExtension = image.name.toLowerCase().slice(-4);
+
+            if (!allowedExtensions.includes(fileExtension)) {
+              errors.image = 'Image file must have a valid extension: .png, .jpg, .jpeg';
+            }
+          } else {
+            errors.image = 'Image is required';
+          }
+
+          if (songMP3 && typeof songMP3 === 'object' && songMP3.name) {
+            const allowedExtensions = ['.mp3'];
+            const fileExtension = songMP3.name.toLowerCase().slice(-4);
+
+            if (!allowedExtensions.includes(fileExtension)) {
+              errors.songMP3 = 'Song file must have a valid extension: .mp3';
+            }
+          } else {
+            errors.songMP3 = 'Song file is required';
+          }
 
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
@@ -95,10 +115,10 @@ const UpdateSong = () => {
             >
                 <div>
                 <div className="error-message ">{errors.songName && <p className="">{errors.songName}</p>}</div>
-                <label className="">
+                <label className="label-create">
                     Song Name
                     <input
-                        className=""
+                        className="input-create"
                         type='text'
                         name="song_name"
                         placeholder="Song Name"
@@ -109,10 +129,9 @@ const UpdateSong = () => {
                 </div>
                 <div>
                 <div className="error-message ">{errors.genre && <p className="">{errors.genre}</p>}</div>
-                <label className="">
-                    Genre
+                <label className="label-create">
+                    Song Genre
                     <input
-                        className=""
                         type='text'
                         name="genre"
                         placeholder="Genre"
@@ -123,8 +142,8 @@ const UpdateSong = () => {
                 </div>
                 <div>
                 <div className="error-message ">{errors.image && <p className="">{errors.image}</p>}</div>
-                {song?.image_url && <img src={song.image_url} alt="Current Song Image" />}
-                <label className="">
+                {/* {song?.image_url && <img src={song.image_url} alt="Current Song Image" />} */}
+                <label className="label-create">
                     Select Song Image
                     <input
                         type="file"
@@ -133,17 +152,17 @@ const UpdateSong = () => {
                         onChange={(e) => setImage(e.target.files[0])}
                     />
                 </label>
-                {(imageLoading)&& <p>Loading...</p>}
+                {(imageLoading)&& <p>Image Loading...</p>}
                 </div>
                 <div>
                 <div className="error-message ">{errors.songMP3 && <p className="">{errors.songMP3}</p>}</div>
-                {song?.song_url && (
+                {/* {song?.song_url && (
                     <audio controls>
                         <source src={song.song_url} type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
-                )}
-                <label className="">
+                )} */}
+                <label className="label-create">
                     Select Song MP3
                     <input
                         type="file"
