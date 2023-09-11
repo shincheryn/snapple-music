@@ -5,6 +5,7 @@ import * as songsActions from '../../store/songs';
 // import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import './songdetails.css'
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 const SongDetails = () => {
     const { id } = useParams();
@@ -28,14 +29,14 @@ const SongDetails = () => {
     }, [song, audio]);
 
     if(!song){
-        return <div>No song</div>
+        return <div> No song</div>
     }
 
     const year = new Date(song.createdAt).getFullYear();
 
     const handleClick = e => {
         e.preventDefault();
-        alert("Feature Coming Soon :)")
+        alert("Feature Coming Soon! <3 :)")
     }
     // const handlePlayPause = () => {
     //     if (isPlaying) {
@@ -58,9 +59,9 @@ const SongDetails = () => {
                     <div className='song-details div2'>
                         <h2 className="song-name-detail-id">{song.song_name}</h2>
                         {/* <p className="artist">{user.username}</p> */}
-                        <p className="genre-detail-id div2">{song.genre}</p>
-                        <p className='createdat-year'>{year}</p>
-                        <button onClick={handleClick} className='artist-info' >Artist Info</button>
+                        <p className="genre-detail-id div2">{song.username}</p>
+                        <p className='createdat-year'>{song.genre} &#8231; {year}</p>
+                        <button onClick={handleClick} className='artist-info' >See Artist Info</button>
                     </div>
 
                     <div className="apple-music-player div4">
@@ -69,6 +70,9 @@ const SongDetails = () => {
                         </audio>
                     </div>
                 </div>
+                </div>
+                <div className='lyrics-text'>
+                   <button onClick={handleClick} className='lyrics-structure'>No lyrics to display . . .</button>
                 </div>
             </div>
 
