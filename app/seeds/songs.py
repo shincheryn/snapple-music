@@ -7,7 +7,7 @@ def seed_songs():
         song_name='Into You', userId= 1, genre= 'Pop', image_url= 'https://res.cloudinary.com/dc5lrkblw/image/upload/v1693534465/snapple-music/ariana-grande-into-you.jpg', song_url= 'https://snapple-music-bucket.s3.us-west-2.amazonaws.com/Ariana+Grande+-+Into+You+(Official+Audio).mp3', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
     )
     s2 = Song(
-        song_name='Highway to Hell', userId= 1, genre= 'Rock', image_url= 'https://res.cloudinary.com/dc5lrkblw/image/upload/v1693534604/snapple-music/Highway-to-Hell-AC-DC.jpg', song_url= 'https://snapple-music-bucket.s3.us-west-2.amazonaws.com/AC+DC+-+Highway+to+Hell+(lyrics).mp3', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
+        song_name='Highway to Hell', userId= 1, genre= 'Rock', image_url= 'https://i.pinimg.com/originals/99/6e/cc/996ecc010fe1339b124880d0d62cdecb.png', song_url= 'https://snapple-music-bucket.s3.us-west-2.amazonaws.com/AC+DC+-+Highway+to+Hell+(lyrics).mp3', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
     )
     s3 = Song(
         song_name='Last Night', userId= 1, genre= 'Country', image_url= 'https://res.cloudinary.com/dc5lrkblw/image/upload/v1693534742/snapple-music/Morgan-Wallen-LastNight.jpg', song_url= 'https://snapple-music-bucket.s3.us-west-2.amazonaws.com/Morgan+Wallen+-+Last+Night+(Audio+Only).mp3', createdAt= datetime(2021,11,19), updatedAt= datetime(2021,11,19)
