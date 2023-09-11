@@ -23,8 +23,8 @@ function AddSongToPlaylistModal({ songId }) {
     if (!playlistId) {
       setErrors(["Please select a playlist"]);
     } else {
-      const selectedPlaylist = playlists.find((playlist) => playlist.id == playlistId);
-      if (selectedPlaylist && selectedPlaylist.songs.some((song) => song.id === songId)) {
+      const selectedPlaylist = playlists.find((playlist) => playlist?.id == playlistId);
+      if (selectedPlaylist && selectedPlaylist.songs.some((song) => song?.id === songId)) {
         setErrors(["Song is already in the playlist"]);
       } else {
         await dispatch(playlistActions.addSongsToPlaylistThunk(playlistId, songId));

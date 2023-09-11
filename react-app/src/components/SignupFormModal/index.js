@@ -34,43 +34,46 @@ function SignupFormModal() {
 	return (
 		<>
 			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className="mm">
 				<ul>
 					{errors.map((error, idx) => (
 						<li key={idx}>{error}</li>
 					))}
 				</ul>
-				<label>
+				<label className="mm">
 					First Name
 					<input
-						type="text"
+						type="texts"
 						value={firstName}
 						onChange={(e) => setFirstName(e.target.value)}
 						required
+						className="mm"
 					/>
 				</label>
-				<label>
+				<label className="mm">
 					Last Name
 					<input
-						type="text"
+						type="texts"
 						value={lastName}
 						onChange={(e) => setLastName(e.target.value)}
 						required
+						className="mm"
 					/>
 				</label>
 				<label>
 					Email
 					<input
-						type="text"
+						type="texts"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
+
 					/>
 				</label>
 				<label>
 					Username
 					<input
-						type="text"
+						type="texts"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 						required
@@ -79,7 +82,7 @@ function SignupFormModal() {
 				<label>
 					Password
 					<input
-						type="password"
+						type="texts"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
@@ -88,13 +91,13 @@ function SignupFormModal() {
 				<label>
 					Confirm Password
 					<input
-						type="password"
+						type="texts"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
 					/>
 				</label>
-				<button type="submit">Sign Up</button>
+				<button type="submit" className="mmButton">Sign Up</button>
 			</form>
 		</>
 	);

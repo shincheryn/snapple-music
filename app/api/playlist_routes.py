@@ -93,24 +93,6 @@ def add_song_to_playlist(playlistId, songId):
 
     return {'message': "Successfully added song to playlist"}, 200
 
-    # playlist_details = Playlist.query.get(playlistId)
-    # if playlist_details is None:
-    #     return {'errors': ["Playlist couldn't be found"]}, 404
-
-    # song_info = playlist_details.songs
-
-    # addedSong = {
-    #     'id': playlist_details.id,
-    #     'playlist_name': playlist_details.playlist_name,
-    #     'userId': playlist_details.userId,
-    #     'playlist_image_url': playlist_details.album_image_url,
-    #     'createdAt': playlist_details.createdAt,
-    #     'updatedAt': playlist_details.updatedAt,
-    #     'Songs': [each.to_dict() for each in song_info]
-    # }
-
-    # return addedSong
-
 
 # DELETE SONG FROM PLAYLIST BASED ON PLAYLIST ID
 @playlist_routes.route('/<int:playlistId>/songs/<int:songId>', methods=["DELETE"])
@@ -126,11 +108,7 @@ def delete_song_from_playlist(playlistId, songId):
     if song_ID is None:
         return {'errors': ["Song couldn't be found"]}, 404
 
-    # Check that requested playlist belongs to current user
-    if Playlist.id != current_user.id:
-        return jsonify({'message': 'Access denied', 'statusCode': 403}), 403
-
-    db.session.query(playlist_songs).filter(and_(playlist_songs.c.albumId == playlistId, playlist_songs.c.songId == songId)).delete()
+    db.session.query(playlist_songs).filter(and_(playlist_songs.c.playlistId == playlistId, playlist_songs.c.songId == songId)).delete()
     db.session.commit()
     return {'message': "Successfully deleted"}, 200
 

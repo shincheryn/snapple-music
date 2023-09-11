@@ -48,7 +48,7 @@ function AddAlbumSong({ albumId }) {
   };
 
   return (
-    <div className="pageContainers">
+    <div>
       <h1>Add Song into Album</h1>
       <div>
         {errors.length > 0 && errors.map(el => (
@@ -56,7 +56,7 @@ function AddAlbumSong({ albumId }) {
         ))}
       </div>
       <label>
-        Song Id
+        Song Id:
         <input
           type="number"
           value={songId}
@@ -64,7 +64,7 @@ function AddAlbumSong({ albumId }) {
           required
         />
       </label>
-      <button onClick={handleSubmit}>Add</button>
+      <button className="addSongButton" onClick={handleSubmit}>Add Song</button>
     </div>
   )
 };

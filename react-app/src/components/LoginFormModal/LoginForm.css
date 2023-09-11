@@ -80,3 +80,20 @@
   button[type="submit"]:hover {
     background-color: #1e7e34;
   }
+
+.mm {
+  all: unset;
+}
+
+.mmInput{
+  width: 100px;
+}
+
+input[type="texts"] {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
