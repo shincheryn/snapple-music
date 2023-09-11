@@ -1,5 +1,5 @@
 /* Container Styles */
-.playlist-details-container {
+.page-container {
     display: flex;
     flex-direction: column;
     align-items: left;

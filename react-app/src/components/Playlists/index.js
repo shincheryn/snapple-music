@@ -18,41 +18,40 @@ const MyPlaylistsPage = () => {
 
   return (
     <div>
-      <div className="container">
-        <h1>My Playlists</h1>
+      <div className="page-container">
+        <h1 className="title">My Playlists</h1>
         {playlists.length === 0 ? (
           <div className="create-first-playlist">
-            <button onClick={(e) => {
+            <button className="upload-button" onClick={(e) => {
               e.stopPropagation()
               history.push(`/playlists/new`)
             }}>Create Your First Playlist</button>
           </div>
         ) : (
           <div className="playlist-button">
-            <button onClick={(e) => {
+            <button className="upload-button" onClick={(e) => {
               e.stopPropagation()
               history.push(`/playlists/new`)
             }}>Create a New Playlist</button>
-            <div className='my-playlists-container'>
+            <div className='playlist-container'>
               {playlists.map((playlist) => (
                 <div key={playlist.id} className='playlist-tile'>
                   <Link to={`/playlists/${playlist.id}`} className="playlist-link">
-                    <div className="playlist-tile">
+                    <div className="image-tiles">
                       <img
-                        className="playlist-image"
                         src={playlist.playlist_image_url}
                         alt={playlist.playlist_name}
                         title={playlist.playlist_name}
                       />
                     </div>
-                    <div className="playlist-name">
+                    <div className="a-details">
                       {playlist.playlist_name}
                     </div>
-                    <div className="created-by">
+                    <div className="b-details">
                       Created by: {user?.firstName} {user?.lastName}
                     </div>
                   </Link>
-                  <div className="delete-button">
+                  <div className="button-container">
                     <OpenModalButton
                       modalComponent={<DeletePlaylistModal id={playlist.id} />}
                       buttonText="Delete"
