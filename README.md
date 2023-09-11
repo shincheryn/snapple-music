@@ -1,4 +1,4 @@
-# Snapple Music
+## Snapple Music
 
 Welcome to Snapple Music! Check out our live version here: [https://snapple-music.onrender.com/](https://snapple-music.onrender.com/)
 
