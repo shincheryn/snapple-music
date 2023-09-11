@@ -34,27 +34,23 @@ const Albums = () => {
   const closeMenu = () => setShowModal(false);
 
   return (
-    <div className="pageContainers">
-      <div>
-        <NavLink to="/albums" style={{ color: 'black', textDecoration: 'none' }}>Create a new album</NavLink>
+    <div className="pageContainersAlbum">
+      <div className="button-85">
+        <NavLink to="/albums" style={{ color: 'white', textDecoration: 'none' }}>Create New Album</NavLink>
       </div>
-      <div>
+      <div className="albumGrid">
         {allalbums.map(album => (
           <div key={album.id}>
-            <div>
-              <Link to={`/albums/${album.id}`}>
-                <div>
-                  <img className="album-image" key={album?.id} src={album?.album_image_url} alt={album?.album_name} title={album?.album_name} />
-                </div>
-                <div>{album?.album_name}</div>
-                <div>{user[0].firstName} {user[0].lastName}</div>
-              </Link>
-            </div>
-            <div>
+            <Link to={`/albums/${album.id}`}>
+              <img className="album-image" key={album?.id} src={album?.album_image_url} alt={album?.album_name} title={album?.album_name} />
+              <div>{album?.album_name}</div>
+              <div>{user[0].firstName} {user[0].lastName}</div>
+            </Link>
+            <div className="button-85x">
               <OpenModalButton
                 buttonText="Delete"
                 onItemClick={closeMenu}
-                modalComponent={<DeleteAlbum albumId={album.id}/>}
+                modalComponent={<DeleteAlbum albumId={album.id} />}
               />
             </div>
           </div>
