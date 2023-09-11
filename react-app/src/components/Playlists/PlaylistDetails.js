@@ -5,6 +5,7 @@ import * as playlistActions from "../../store/playlist.js";
 import OpenModalButton from "../OpenModalButton";
 import DeleteSongFromPlaylist from "./DeleteSongfromPlaylistModal.js";
 import { useModal } from "../../context/Modal";
+import { Link } from 'react-router-dom';
 import './PlaylistDetails.css'
 
 const PlaylistDetailsPage = () => {
@@ -55,15 +56,22 @@ const PlaylistDetailsPage = () => {
           />
 
           <div>
-            {currentPlaylist?.songs?.map((each, index) => (
+
+            {currentPlaylist?.songs?.map((song, index) => (
               <div key={`${index}`} className="song-item">
-                <div>{`${index + 1}. ${each?.song_name}`}</div>
+                <Link className='' to={`/songs/${song.id}`}>
+                  <div class="song-line">
+                    <p>{index + 1}.</p>
+                    <img src={song?.image_url} alt='song prev' className='image' title={song?.song_name}/>
+                    <p>{song?.song_name}</p>
+                  </div>
+                </Link>
                 <div className="delete-button">
                   {user && (
                     <OpenModalButton
                       buttonText="Delete Song from Playlist"
                       onItemClick={closeMenu}
-                      modalComponent={<DeleteSongFromPlaylist playlistId={id} songId={each?.id} />}
+                      modalComponent={<DeleteSongFromPlaylist playlistId={id} songId={song?.id} />}
                     />
                   )}
                 </div>

@@ -1,27 +1,36 @@
 /* Container Styles */
 .page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    text-align: left;
-    transition: all 0.3s;
-    max-width: calc(100% - 10%);
-    margin-left: 19%;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+  transition: all 0.3s;
+  max-width: calc(100% - 10%);
+  margin-left: 19%;
+}
 
-  .playlist-image {
-    max-width: 50%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
+.playlist-image {
+  max-width: 50%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
 
-  /* Song List Styles */
-  .song-item {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
+/* Song List Styles */
+.song-item {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
 
-  .delete-button {
-    margin-top: 5px;
-  }
+.song-line > * {
+  padding: 10px;
+}
+
+.song-item > .delete-button {
+  margin-left: auto;
+}
+
+
+.delete-button {
+  align-self: center;
+}

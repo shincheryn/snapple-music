@@ -1,4 +1,94 @@
 /* TODO Add site wide styles */
-/* .audioplayer{
 
-} */
+.tile-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: calc(100% - 10%);
+    gap: 10px;
+    width: 60%;
+    padding: 20px;
+    margin-left: 15px;
+}
+
+.image {
+    object-fit: cover;
+    height: 300px;
+    width: 300px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    cursor: pointer;
+    flex-basis: 100%;
+    margin-bottom: 10px;
+}
+
+.image > div:hover,
+.tile:hover {
+    transform: translateY(-5px);
+}
+
+.tile p {
+    margin: 4px 0;
+    padding: 0;
+}
+
+.apple-music-player{
+    width: 280px;
+}
+
+.apple-music-player audio {
+    width: 100%;
+    background-color: #f4f4f4;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: left;
+    transition: all 0.3s;
+    max-width: calc(100% - 10%);
+    margin-left: 19%;
+  }
+
+.upload-button {
+    display: grid;
+    justify-items: center;
+    color:white;
+    background-color: red;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 10px;
+    font-size: 16px;
+    margin-left: 50px;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1px;
+    justify-content: center;
+}
+
+.a-details{
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: left;
+    margin-bottom: -15px;
+}
+.b-details{
+    font-size: 12px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: left;
+    color: red;
+}

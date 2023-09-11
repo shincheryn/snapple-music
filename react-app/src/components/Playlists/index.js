@@ -33,12 +33,13 @@ const MyPlaylistsPage = () => {
               e.stopPropagation()
               history.push(`/playlists/new`)
             }}>Create a New Playlist</button>
-            <div className='playlist-container'>
+            <div className='tile-container'>
               {playlists.map((playlist) => (
-                <div key={playlist.id} className='playlist-tile'>
+                <div key={playlist.id} className='tile'>
                   <Link to={`/playlists/${playlist.id}`} className="playlist-link">
-                    <div className="image-tiles">
+                    <div>
                       <img
+                        class="image"
                         src={playlist.playlist_image_url}
                         alt={playlist.playlist_name}
                         title={playlist.playlist_name}
