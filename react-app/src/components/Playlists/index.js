@@ -18,7 +18,7 @@ const MyPlaylistsPage = () => {
 
   return (
     <div>
-      <div className="my-playlists-container">
+      <div className="container">
         <h1>My Playlists</h1>
         {playlists.length === 0 ? (
           <div className="create-first-playlist">
@@ -37,7 +37,7 @@ const MyPlaylistsPage = () => {
               {playlists.map((playlist) => (
                 <div key={playlist.id} className='playlist-tile'>
                   <Link to={`/playlists/${playlist.id}`} className="playlist-link">
-                    <div className="playlist-image-container">
+                    <div className="playlist-tile">
                       <img
                         className="playlist-image"
                         src={playlist.playlist_image_url}
