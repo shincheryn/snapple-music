@@ -22,8 +22,28 @@ const UploadSong = () => {
 
         if(!song_name) errors.song_name = 'Song name is required';
         if(!genre) errors.genre = 'Genre is required';
-        if(!image_url) errors.image_url = 'Image is required';
-        if(!song_url) errors.song_url = 'Song MP3 is required';
+
+        if (image_url && typeof image_url === 'object' && image_url.name) {
+            const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+            const fileExtension = image_url.name.toLowerCase().slice(-4);
+
+            if (!allowedExtensions.includes(fileExtension)) {
+              errors.image_url = 'Image file must have a valid extension: .png, .jpg, .jpeg';
+            }
+          } else {
+            errors.image_url = 'Image is required';
+          }
+
+          if (song_url && typeof song_url === 'object' && song_url.name) {
+            const allowedExtensions = ['.mp3'];
+            const fileExtension = song_url.name.toLowerCase().slice(-4);
+
+            if (!allowedExtensions.includes(fileExtension)) {
+              errors.song_url = 'Song file must have a valid extension: .mp3';
+            }
+          } else {
+            errors.song_url = 'Song file is required';
+          }
 
         setErrors(errors);
 
@@ -76,7 +96,7 @@ const UploadSong = () => {
                 <div>
                 <div className="error-message">{errors.genre && <p className="">{errors.genre}</p>}</div>
                 <label className="label-create">
-                    Genre
+                    Song Genre
                     <input
                         className="input-create"
                         type='text'
@@ -112,8 +132,8 @@ const UploadSong = () => {
                     />
                 </label>
                 </div>
-                <div className=".align-create-button">
-                <button className='create-button' type="submit">UPLOAD</button>
+                <div className="align-create-button">
+                <button className='create-button test' type="submit">UPLOAD</button>
                 </div>
             </form>
         </div>

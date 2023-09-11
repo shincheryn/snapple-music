@@ -22,3 +22,10 @@
     margin: 5px 0px;
     font-size: 12pt;
 }
+
+.label-create {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 5px;
+}
