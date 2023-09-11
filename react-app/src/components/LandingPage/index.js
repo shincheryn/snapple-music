@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as songActions from "../../store/songs.js";
 import aPicture from "./a.png";
 import bPicture from "./b.png";
-import { Link } from 'react-router-dom';
 import './LandingPage.css';
 
 function LandingPage() {
