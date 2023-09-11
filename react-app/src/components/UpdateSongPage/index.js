@@ -51,8 +51,28 @@ const UpdateSong = () => {
 
         if(!songName) errors.songName = 'Song name is required';
         if(!genre) errors.genre = 'Genre is required';
-        if(!image) errors.image = 'Image is required';
-        if(!songMP3) errors.songMP3 = 'Song MP3 is required';
+
+        if (image && typeof image === 'object' && image.name) {
+            const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+            const fileExtension = image.name.toLowerCase().slice(-4);
+
+            if (!allowedExtensions.includes(fileExtension)) {
+              errors.image = 'Image file must have a valid extension: .png, .jpg, .jpeg';
+            }
+          } else {
+            errors.image = 'Image is required';
+          }
+
+          if (songMP3 && typeof songMP3 === 'object' && songMP3.name) {
+            const allowedExtensions = ['.mp3'];
+            const fileExtension = songMP3.name.toLowerCase().slice(-4);
+
+            if (!allowedExtensions.includes(fileExtension)) {
+              errors.songMP3 = 'Song file must have a valid extension: .mp3';
+            }
+          } else {
+            errors.songMP3 = 'Song file is required';
+          }
 
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
