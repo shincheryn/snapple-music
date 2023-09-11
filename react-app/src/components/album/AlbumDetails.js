@@ -46,10 +46,10 @@ const AlbumDetails = () => {
 
 
   return (
-    <div className="pageContainers">
-      <div>
+    <div className="pageContainersAlbum">
+      <div className="button-85">
         <OpenModalButton
-          buttonText="Add Song into this Album"
+          buttonText="Add Song"
           onItemClick={closeMenu}
           modalComponent={<AddAlbumSong albumId={albumId} />}
         />
@@ -71,7 +71,7 @@ const AlbumDetails = () => {
         {currentAlbum?.Songs?.map((each, index) => (
           <div key={`${index}`}>
             <div>{`${index + 1}`} {each?.song_name}</div>
-            <div>
+            <div className="button-85">
               <OpenModalButton
                 buttonText="Delete"
                 onItemClick={closeMenu}
