@@ -60,7 +60,7 @@ const AlbumDetails = () => {
       <div>
         {currentAlbum?.album_name}
       </div>
-      <div>{user[0].firstName} {user[0].lastName}</div>
+      {/* <div>{user[0].firstName} {user[0].lastName}</div> */}
       <div>
         Genre: {currentAlbum?.genre} · Release Year: {currentAlbum?.release_year}
       </div>
