@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as songsActions from '../../store/songs'
-import './css/createSong.css'
+import './css/create-song.css'
 
 const UploadSong = () => {
     const dispatch = useDispatch();

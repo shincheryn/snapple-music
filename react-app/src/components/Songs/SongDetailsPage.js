@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import * as songsActions from '../../store/songs';
 import 'react-h5-audio-player/lib/styles.css';
-import './css/songdetails.css';
+import './css/song-details.css';
 
 const SongDetails = () => {
     const { id } = useParams();
