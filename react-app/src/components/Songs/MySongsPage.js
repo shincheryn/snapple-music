@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import * as songsActions from '../../store/songs';
 import OpenModalButton from '../OpenModalButton';
 import AddSongToPlaylistModal from '../Playlists/AddSongtoPlaylistModal';
-import DeleteModal from '../DeleteSongModal';
+import DeleteModal from './DeleteSongModal';
 import Player from '../AudioPlayer/audioplayer';
-import './mysongs.css'
+import './css/mysongs.css'
 
 // import AudioPlayer from 'react-h5-audio-player';
 // import 'react-h5-audio-player/lib/styles.css'

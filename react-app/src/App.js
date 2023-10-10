@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
-import MySongsPage from "./components/MySongsPage";
-import SongDetailsPage from "./components/SongDetailsPage";
-import CreateSong from "./components/CreateSong";
-import UpdateSongPage from './components/UpdateSongPage'
+import MySongsPage from "./components/Songs/MySongsPage";
+import SongDetails from "./components/Songs/SongDetailsPage";
+import CreateSong from "./components/Songs/CreateSong";
+import UpdateSong from './components/Songs/UpdateSongPage';
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
@@ -52,10 +52,10 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route path='/songs/:id/edit'>
-            <UpdateSongPage />
+            <UpdateSong />
           </Route>
           <Route exact path='/songs/:id'>
-            <SongDetailsPage />
+            <SongDetails />
           </Route>
           <Route exact path='/playlists/:id'>
             <PlaylistDetailsPage />
