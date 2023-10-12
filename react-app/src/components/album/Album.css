@@ -26,6 +26,20 @@ a {
   margin-left: 19%;
 }
 
+.button-85 {
+  display: grid;
+  justify-items: center;
+  color: white;
+  background-color: red;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 10px;
+  font-size: 16px;
+  max-width: 150px;
+}
+
+/*
 .button-53 {
   background-color: #3DD1E7;
   border: 0 solid #E5E7EB;
@@ -54,9 +68,9 @@ a {
 
 .button-53:focus {
   outline: 0;
-}
+} */
 
-.button-53:after {
+/* .button-53:after {
   content: '';
   position: absolute;
   border: 1px solid #000000;
@@ -76,9 +90,9 @@ a {
     padding: .75rem 3rem;
     font-size: 1.25rem;
   }
-}
+} */
 
-.button-85 {
+/* .button-85 {
   margin-right: 85%;
   padding: 1% 2.5%;
   border: none;
@@ -143,7 +157,7 @@ a {
   left: 0;
   top: 0;
   border-radius: 10px;
-}
+} */
 
 .addSongButton {
   margin-left: 30%;
@@ -182,7 +196,7 @@ a {
   grid-row-gap: 45px;
   padding: 0px;
 }
-
+/*
 .button-85x{
   margin-right: 60%;
   padding: 2% 5%;
@@ -248,4 +262,4 @@ a {
   left: 0;
   top: 0;
   border-radius: 10px;
-}
+} */
