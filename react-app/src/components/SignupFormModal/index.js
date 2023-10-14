@@ -15,19 +15,51 @@ function SignupFormModal() {
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
+	const validateEmail = (email) => {
+		return String(email)
+		  .toLowerCase()
+		  .match(
+			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+		  );
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (password === confirmPassword) {
-			const data = await dispatch(signUp(firstName, lastName, username, email, password));
-			if (data) {
-				setErrors(data);
+
+		let errorMess = [];
+		if(!validateEmail(email)) {
+			errorMess.push("Email is not valid")
+		}
+
+		if(password.length < 5) {
+			errorMess.push("Password must have more than 5 characters")
+		}
+
+		if(email.length < 5) {
+			errorMess.push("Email must have more than 5 characters")
+		}
+
+		if(username === email) {
+			errorMess.push("Email and Username cannot be the same")
+		}
+		
+		setErrors(errorMess)
+
+		if(errorMess.length === 0) {
+			if (password === confirmPassword) {
+
+				const data = await dispatch(signUp(firstName, lastName, username, email, password));
+
+				if (data) {
+					setErrors(data);
+				} else {
+					closeModal();
+				}
 			} else {
-				closeModal();
+				setErrors([
+					"Confirm Password field must be the same as the Password field",
+				]);
 			}
-		} else {
-			setErrors([
-				"Confirm Password field must be the same as the Password field",
-			]);
 		}
 	};
 

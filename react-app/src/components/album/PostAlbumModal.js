@@ -11,35 +11,48 @@ function PostAlbumModal() {
   const [genre, setGenre] = useState("");
   const [release_year, setRelease_year] = useState("");
   const [description, setDescription] = useState("");
-  const [album_image_url, setAlbum_image_url] = useState("");
+  const [imageLoading, setImageLoading] = useState(false);
+  const [album_image_url, setAlbum_image_url] = useState(null);
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("album_name", album_name);
-    formData.append("genre", genre);
-    formData.append("release_year", release_year);
-    formData.append("description", description);
-    formData.append("album_image_url", album_image_url);
 
-    if (checkImage(album_image_url)) {
-      setErrors(["Image URL must end in .png, .jpg, or .jpeg"])
-      return
-    } else {
-      await dispatch(albumActions.addAlbumThunk(formData));
-      history.push("/albums/owned");
+    let errorMess = [];
+
+    if ((isNaN(release_year) && isNaN(parseFloat(release_year))) || (release_year.length !== 4)) {
+      errorMess.push('Release year must be a 4 digit number')
     }
+
+
+    if (album_image_url && typeof album_image_url === 'object' && album_image_url.name) {
+      const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+      const fileExtension = album_image_url.name.toLowerCase().slice(-4);
+
+      if (!allowedExtensions.includes(fileExtension)) {
+        errorMess.push('Image file must have a valid extension: .png, .jpg, .jpeg')
+      }
+
+    }
+    setErrors(errorMess)
+
+      if(errorMess.length === 0) {
+
+        const formData = new FormData();
+        formData.append("album_name", album_name);
+        formData.append("genre", genre);
+        formData.append("release_year", release_year);
+        formData.append("description", description);
+        formData.append("album_image_url", album_image_url);
+
+      setImageLoading(true);
+
+        dispatch(albumActions.addAlbumThunk(formData));
+        history.push("/albums/owned");
+    }
+    setImageLoading(false);
   }
 
-  const checkImage = (urlString) => {
-    const endings = ["png", "jpg", "jpeg"];
-    const array = urlString.split(".");
-    if (endings.includes(array[array.length - 1])) {
-      return false;
-    }
-    return true;
-  }
 
   return (
     <div className="pageContainers">
@@ -97,12 +110,15 @@ function PostAlbumModal() {
           </label>
         </div>
         <div>
+          {/* <div className="error-message">{errorMess.album_image_url && <p className="">{errors.album_image_url}</p>}</div> */}
+          {(imageLoading)&& <p>Image Uploading...</p>}
           <label>
             Album Image Url
             <input
-              type="text"
-              value={album_image_url}
-              onChange={(e) => setAlbum_image_url(e.target.value)}
+              type="file"
+              accept="image/*"
+              // value={album_image_url}
+              onChange={(e) => setAlbum_image_url(e.target.files[0])}
               required
             />
           </label>

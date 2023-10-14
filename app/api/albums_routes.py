@@ -3,6 +3,7 @@ from app.models import User, db, Album, Song, album_songs
 from app.forms import AlbumForm
 from flask_login import current_user, login_required
 from sqlalchemy import and_
+from app.api.helper import upload_file_to_s3, get_unique_filename
 
 albums_routes = Blueprint('albums', __name__)
 
@@ -49,18 +50,29 @@ def createAlbum():
     form = AlbumForm()
     current_user_id = current_user.get_id()
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
+        image_file = form.album_image_url.data
+        image_filename = get_unique_filename(image_file.filename)
+        upload = upload_file_to_s3(image_file, image_filename)
+
+        if "url" not in upload:
+            return {'errors': 'Failed to upload'}
+
+        url_image = upload["url"]
+
         new = Album(
             album_name=form.data['album_name'],
             release_year=form.data['release_year'],
             genre=form.data['genre'],
             description=form.data['description'],
-            album_image_url=form.data['album_image_url'],
+            album_image_url=url_image,
             userId=current_user_id
         )
         db.session.add(new)
         db.session.commit()
         return new.to_dict()
+    
     return {'errors': [form.errors]}, 401
 
 
