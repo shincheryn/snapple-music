@@ -55,7 +55,6 @@ def createAlbum():
         image_file = form.album_image_url.data
         image_filename = get_unique_filename(image_file.filename)
         upload = upload_file_to_s3(image_file, image_filename)
-
         if "url" not in upload:
             return {'errors': 'Failed to upload'}
 
@@ -72,7 +71,7 @@ def createAlbum():
         db.session.add(new)
         db.session.commit()
         return new.to_dict()
-    
+
     return {'errors': [form.errors]}, 401
 
 

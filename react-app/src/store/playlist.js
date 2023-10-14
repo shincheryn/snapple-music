@@ -63,7 +63,7 @@ export const getMyPlaylistsThunk = () => async (dispatch) => {
 
 // GET Playlist Details
 export const getPlaylistDetailsThunk = (playlistId) => async (dispatch) => {
-  console.log("Playlist ID", playlistId);
+  // console.log("Playlist ID", playlistId);
   const response = await fetch(`/api/playlists/${playlistId}`);
 
   if (response.ok) {
@@ -75,60 +75,61 @@ export const getPlaylistDetailsThunk = (playlistId) => async (dispatch) => {
 };
 
 // CREATE New Playlist
-export const createPlaylistThunk = (playlistName, playlistImageUrl) => async (dispatch) => {
-  console.log(playlistName, playlistImageUrl);
+export const createPlaylistThunk = (newPlaylist) => async (dispatch) => {
+  // console.log(playlistName, playlistImageUrl);
 
   const response = await fetch(`/api/playlists/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      "playlist_name": playlistName,
-      "playlist_image_url": playlistImageUrl,
-    }),
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
+    // body: JSON.stringify({
+    //   "playlist_name": playlistName,
+    //   "playlist_image_url": playlistImageUrl,
+    // }),
+    body: newPlaylist
   });
 
   if (response.ok) {
     const createNewPlaylist = await response.json();
     dispatch(createPlaylistAction(createNewPlaylist));
   } else {
-    console.log("Failed to create new playlist");
+    // console.log("Failed to create new playlist");
   }
 };
 
 // ADD Song to Playlist
 export const addSongsToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
-    const response = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {},
-      }
-    );
+  const response = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {},
+  }
+  );
 
-    if (response.ok) {
-      const addSongsToPlaylist = await response.json();
-      dispatch(addSongsToPlaylistAction(playlistId, songId));
-      return addSongsToPlaylist
-    }
-  };
+  if (response.ok) {
+    const addSongsToPlaylist = await response.json();
+    dispatch(addSongsToPlaylistAction(playlistId, songId));
+    return addSongsToPlaylist
+  }
+};
 
 // DELETE Song from Playlist
 export const deleteSongsFromPlaylistThunk = (playlistId, songId) => async (dispatch) => {
-    const response = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
-        method: "DELETE",
-      }
-    );
+  const response = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
+    method: "DELETE",
+  }
+  );
 
-    if (response.ok) {
-      dispatch(deleteSongsFromPlaylistAction(playlistId, songId));
-      console.log("Song successfully deleted");
-    } else {
-      console.log("Failed to delete song from playlist");
-    }
-  };
+  if (response.ok) {
+    dispatch(deleteSongsFromPlaylistAction(playlistId, songId));
+    // console.log("Song successfully deleted");
+  } else {
+    // console.log("Failed to delete song from playlist");
+  }
+};
 
 // DELETE Playlist
 export const deletePlaylistThunk = (playlistId) => async (dispatch) => {

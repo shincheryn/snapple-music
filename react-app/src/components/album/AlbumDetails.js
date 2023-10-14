@@ -47,7 +47,7 @@ const AlbumDetails = () => {
 
   return (
     <div className="pageContainersAlbum">
-      <div className="button-85">
+      <div className="">
         <OpenModalButton
           buttonText="Add Song"
           onItemClick={closeMenu}
@@ -71,7 +71,7 @@ const AlbumDetails = () => {
         {currentAlbum?.Songs?.map((each, index) => (
           <div key={`${index}`}>
             <div>{`${index + 1}`} {each?.song_name}</div>
-            <div className="button-85">
+            <div className="">
               <OpenModalButton
                 buttonText="Delete"
                 onItemClick={closeMenu}

@@ -25,11 +25,13 @@ function PostAlbumModal() {
     }
 
 
-    if (album_image_url && typeof album_image_url === 'object' && album_image_url.name) {
-      const allowedExtensions = ['.png', '.jpg', '.jpeg'];
-      const fileExtension = album_image_url.name.toLowerCase().slice(-4);
+    if (album_image_url.name) {
+      const allowedExtensions = ['png', 'jpg', 'jpeg'];
+      // const fileExtension = album_image_url.name.toLowerCase().slice(-4);
 
-      if (!allowedExtensions.includes(fileExtension)) {
+      const fileExtension = album_image_url.name.split('.');
+      
+      if (!allowedExtensions.includes(fileExtension[fileExtension.length-1])) {
         errorMess.push('Image file must have a valid extension: .png, .jpg, .jpeg')
       }
 
