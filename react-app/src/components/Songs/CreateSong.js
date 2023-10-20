@@ -24,10 +24,10 @@ const UploadSong = () => {
         if(!genre) errors.genre = 'Genre is required';
 
         if (image_url && typeof image_url === 'object' && image_url.name) {
-            const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+            const allowedExtensions = ['png', 'jpg', 'jpeg'];
 
             const fileExtension = image_url.name.split('.');
-            
+
             if (!allowedExtensions.includes(fileExtension[fileExtension.length-1])) {
               errors.image_url = 'Image file must have a valid extension: .png, .jpg, .jpeg';
             }
