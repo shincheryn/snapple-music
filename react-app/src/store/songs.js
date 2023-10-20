@@ -1,4 +1,3 @@
-// import { csrfFetch } from "./csrf";
 const LOAD_SONGS = 'songs/LOAD_SONGS';
 const LOAD_ONE_SONG = 'songs/LOAD_ONE_SONG';
 const LOAD_USER_SONGS = 'songs/LOAD_USER_SONGS';
@@ -95,23 +94,6 @@ export const deleteSong = (id) => async dispatch => {
     }
 }
 
-// update a song
-// export const updateSong = (id, formData) => async dispatch => {
-//     for (const value of formData.values()) {
-//       console.log(value);
-//     }
-//     console.log('!!!!!FORMDATA', formData)
-//     const response = await fetch(`/api/songs/${id}`, {
-//         method: 'PUT',
-//         body: formData
-//     });
-
-//     if(response.ok) {
-//         const updated = await response.json();
-//         dispatch(updateOne(updated));
-//         return updated;
-//     }
-// };
 export const updateSong = (id, formData) => async dispatch => {
     const response = await fetch(`/api/songs/${id}/edit`, {
         method: 'PUT',
