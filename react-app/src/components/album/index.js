@@ -9,8 +9,8 @@ import "./Album.css";
 
 const Albums = () => {
   const dispatch = useDispatch();
-  const allalbums = useSelector(state => Object.values(state.album));
-  const user = useSelector(state => Object.values(state.session));
+  const user = useSelector(state => state.session);
+  const allalbums = useSelector(state => Object.values(state.album).filter(e => e.userId == user.id));
   const ulRef = useRef();
 
   const [showModal, setShowModal] = useState(false);

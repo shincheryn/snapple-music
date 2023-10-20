@@ -9,8 +9,9 @@ import "./Playlists.css";
 const MyPlaylistsPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const playlists = useSelector((state) => Object.values(state.playlist));
   const user = useSelector((state) => state.session.user);
+  const playlists = useSelector((state) => Object.values(state.playlist).filter(e => e.userId == user.id));
+
 
   useEffect(() => {
     dispatch(playlistActions.getMyPlaylistsThunk());
