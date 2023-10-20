@@ -22,6 +22,7 @@ const UpdateSong = () => {
         if (!song) {
             dispatch(songsActions.getSongsDetails(id))
                 .then((songDetail) => {
+                    console.log('song detail!!', songDetail)
                     if (songDetail) {
                         setSongName(songDetail.song_name);
                         setGenre(songDetail.genre);
@@ -34,7 +35,7 @@ const UpdateSong = () => {
                 });
         }
 
-    }, [dispatch, id, song, image, songMP3]);
+    }, [dispatch, id, song]);
 
 
     const handleSubmit = async (e) => {

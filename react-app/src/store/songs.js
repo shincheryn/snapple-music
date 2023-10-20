@@ -64,7 +64,7 @@ export const getSongsDetails = (id) => async dispatch => {
     if(response.ok){
         const song = await response.json();
         dispatch(loadsong(song));
-
+        return song;
     }
 }
 
