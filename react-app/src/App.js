@@ -33,9 +33,9 @@ function App() {
           <Route exact path="/">
             <LandingPage />
           </Route>
-          <Route path="/songs/owned">
+          <ProtectedRoute path="/songs/owned">
             <MySongsPage />
-          </Route>
+          </ProtectedRoute>
           <Route path="/songs/newsong">
             <CreateSong />
           </Route>
@@ -60,9 +60,9 @@ function App() {
           <Route exact path="/playlists/:id">
             <PlaylistDetailsPage />
           </Route>
-          <Route path="/albums/owned">
+          <ProtectedRoute path="/albums/owned">
             <Albums />
-          </Route>
+          </ProtectedRoute>
           <Route path="/albums/:albumId">
             <AlbumDetails />
           </Route>
