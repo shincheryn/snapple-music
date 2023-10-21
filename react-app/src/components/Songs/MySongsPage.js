@@ -6,7 +6,7 @@ import * as songsActions from '../../store/songs';
 import OpenModalButton from '../OpenModalButton';
 import AddSongToPlaylistModal from '../Playlists/AddSongtoPlaylistModal';
 import DeleteModal from './DeleteSongModal';
-import './css/mysongs.css'
+import '../CSS/MyPage.css'
 
 const MySongs = () => {
     const dispatch = useDispatch();
@@ -37,9 +37,9 @@ const MySongs = () => {
                     e.stopPropagation()
                     history.push('/songs/newsong')
                     }}>Upload a New Song</button>
-                    <main className='song-container'>
+                    <main className='my-container'>
                         {songs && songsArray.map((song) => (
-                        <div key={song.id} className='song-tile'>
+                        <div key={song.id} className='my-tile'>
                             <Link className='' to={`/songs/${song.id}`}>
                                 <img src={song.image_url || defaultImage} alt='song prev' className='image' title={song.song_name}/>
                                 <p className='a-details'>{song.song_name}</p>
@@ -67,7 +67,7 @@ const MySongs = () => {
                                         className='button-31'
                                         modalComponent={<DeleteModal id={song.id}/>}
                                         buttonText = 'Delete'
-                                        
+
                                     />
                             </div>
                         </div>

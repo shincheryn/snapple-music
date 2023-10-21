@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as albumActions from "../../store/album";
 import { useHistory } from "react-router-dom";
-import "./Album.css";
+import "../CSS/CreatePage.css";
 
 function PostAlbumModal() {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function PostAlbumModal() {
       // const fileExtension = album_image_url.name.toLowerCase().slice(-4);
 
       const fileExtension = album_image_url.name.split('.');
-      
+
       if (!allowedExtensions.includes(fileExtension[fileExtension.length-1])) {
         errorMess.push('Image file must have a valid extension: .png, .jpg, .jpeg')
       }
@@ -57,20 +57,22 @@ function PostAlbumModal() {
 
 
   return (
-    <div className="pageContainers">
-      <h1>Create New Album</h1>
+    <div className="page-container">
+    <div className="form-create">
+      <h1>Create a New Album</h1>
       <form onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
         <ul>
         {errors.length > 0 && errors.map(el => (
-          <div key={el} className="errors">{el}</div>
+          <div key={el} className="error-message">{el}</div>
         ))}
         </ul>
         <div>
-          <label>
+          <label className="label-create">
             Album Name
             <input
+              className="input-create"
               type="text"
               value={album_name}
               onChange={(e) => setAlbum_name(e.target.value)}
@@ -79,9 +81,10 @@ function PostAlbumModal() {
           </label>
         </div>
         <div>
-          <label>
+          <label className="label-create">
             Genre
             <input
+              className="input-create"
               type="text"
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
@@ -90,9 +93,10 @@ function PostAlbumModal() {
           </label>
         </div>
         <div>
-          <label>
+          <label className="label-create">
             Release Year
             <input
+              className="input-create"
               type="text"
               value={release_year}
               onChange={(e) => setRelease_year(e.target.value)}
@@ -101,9 +105,10 @@ function PostAlbumModal() {
           </label>
         </div>
         <div>
-          <label>
+          <label className="label-create">
             Description
             <input
+              className="input-create"
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -114,7 +119,7 @@ function PostAlbumModal() {
         <div>
           {/* <div className="error-message">{errorMess.album_image_url && <p className="">{errors.album_image_url}</p>}</div> */}
           {(imageLoading)&& <p>Image Uploading...</p>}
-          <label>
+          <label className="label-create">
             Album Image Url
             <input
               type="file"
@@ -125,8 +130,11 @@ function PostAlbumModal() {
             />
           </label>
         </div>
-        <button type="submit">Create</button>
+        <div className="align-create-button">
+        <button className="create-button" type="submit">Submit</button>
+        </div>
       </form>
+    </div>
     </div>
   );
 }

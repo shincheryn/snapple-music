@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
 import MySongsPage from "./components/Songs/MySongsPage";
 import SongDetails from "./components/Songs/SongDetailsPage";
 import CreateSong from "./components/Songs/CreateSong";
@@ -44,12 +42,6 @@ function App() {
           </ProtectedRoute>
           <Route path="/playlists/new">
             <CreatePlaylistPage />
-          </Route>
-          <Route path="/login">
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
           </Route>
           <Route path="/songs/:id/edit">
             <UpdateSong />

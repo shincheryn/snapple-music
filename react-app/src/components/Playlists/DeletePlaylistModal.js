@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as playlistActions from "../../store/playlist";
 import { useHistory } from "react-router-dom";
-import './DeletePlaylistModal.css'
+import "../CSS/DeleteModal.css";
 
 function DeletePlaylistModal({ id }) {
   const { closeModal } = useModal();
@@ -20,19 +20,19 @@ function DeletePlaylistModal({ id }) {
   };
 
   return (
-    <div className="deleteCon">
-      <h1>Delete Playlist</h1>
-      <p>Are you sure you want to delete this playlist?</p>
-      <form onSubmit={handleSubmit}>
-        <button className='yesDeletePlaylist' type='submit'>
-          Yes (Delete)
-        </button>
-        <button className='yesDeletePlaylist' onClick={closeModal}>
-          No (Keep)
-        </button>
-      </form>
-    </div>
-  );
-}
+    <>
+        <main className="main">
+        <h1 className="center-text title">Delete Playlist</h1>
+        <p className="center-text child">Are your sure you want to delete this playlist?</p>
+        <div className="structure">
+        <form className='form-delete' onSubmit={handleSubmit}>
+            <button className='create-button' type='submit'>Yes (Delete Playlist)</button>
+            <button className='keep-button delete-style' onClick={closeModal}>No (Keep Playlist)</button>
+        </form>
+        </div>
+        </main>
+    </>
+  )
+};
 
 export default DeletePlaylistModal;

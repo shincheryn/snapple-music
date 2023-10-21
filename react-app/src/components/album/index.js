@@ -35,6 +35,7 @@ const Albums = () => {
 
   return (
     <div className="pageContainersAlbum">
+      <h1 className="title">My Albums</h1>
       <div className="button-85">
         <NavLink to="/albums" style={{ color: 'white', textDecoration: 'none' }}>Create New Album</NavLink>
       </div>

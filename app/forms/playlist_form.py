@@ -6,6 +6,5 @@ from app.api.helper import ALLOWED_EXTENSIONS
 
 class PlaylistForm(FlaskForm):
     playlist_name = StringField('Playlist Name', validators=[DataRequired()])
-    # playlist_image_url = StringField('Image', validators=[DataRequired()])
     playlist_image = FileField("Playlist Image File", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     submit = SubmitField("Create Playlist")

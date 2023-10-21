@@ -1,0 +1,144 @@
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.title{
+    text-align: center;
+}
+
+.a-details{
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: left;
+    margin-bottom: -15px;
+}
+.b-details{
+    font-size: 12px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: left;
+    color: red;
+}
+
+.upload-button {
+    display: grid;
+    justify-items: center;
+    color:white;
+    background-color: red;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 10px;
+    font-size: 16px;
+    margin-left: 50px;
+}
+.page-container{
+   display: flex;
+   flex-direction: column;
+   align-items: left;
+   text-align: left;
+   transition: all 0.3s;
+   max-width: calc(100% - 10%);
+   margin-left: 19%;
+}
+
+.my-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: calc(100% - 10%);
+    gap: 10px;
+    width: 60%;
+    padding: 20px;
+    margin-left: 15px;
+}
+
+.my-tile {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    cursor: pointer;
+    flex-basis: 100%;
+    margin-bottom: 10px;
+}
+
+.image {
+    object-fit: cover;
+    height: 300px;
+    width: 300px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+}
+
+.image > div:hover,
+.my-tile:hover {
+    transform: translateY(-5px);
+}
+
+.my-tile p {
+    margin: 4px 0;
+    padding: 0;
+  }
+
+
+.audio {
+    align-self: center;
+}
+
+.apple-music-player{
+    width: 280px;
+}
+
+
+.apple-music-player audio {
+    width: 100%;
+    background-color: #f4f4f4;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    padding: 10px;
+}
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1px;
+    justify-content: center;
+}
+
+.spacer {
+    flex-grow: 1;
+    min-width: 10px;
+}
+
+
+/* CSS */
+.button-31 {
+  background-color: #222;
+  border-radius: 4px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  max-width: none;
+  min-height: 44px;
+  min-width: 10px;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 20px 8px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  /* width: 100%; */
+}
+
+.button-31:hover,
+.button-31:focus {
+  opacity: .75;
+}
