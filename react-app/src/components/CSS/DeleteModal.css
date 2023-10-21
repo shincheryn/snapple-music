@@ -1,0 +1,61 @@
+/* Modal Content */
+#modal-content {
+  position: absolute;
+  background-color: white;
+  border: 2px solid transparent;
+  border-radius: 10px;
+}
+
+/* Structure */
+.structure {
+  display: flex;
+  justify-content: center;
+}
+
+/* Main */
+.main {
+  width: 500px;
+  height: 200px;
+}
+
+/* Keep Button */
+.keep-button {
+  display: grid;
+  justify-items: center;
+  color: white;
+  background-color: #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid grey;
+  width: 110px;
+}
+
+/* Delete Style */
+.delete-style {
+  width: 110px;
+}
+
+/* Form Delete */
+.form-delete {
+  gap: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Center Text */
+.center-text {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px;
+}
+
+/* Title */
+.title {
+  font-weight: bold;
+}
+
+/* Child */
+.child {
+  font-size: 14px;
+}

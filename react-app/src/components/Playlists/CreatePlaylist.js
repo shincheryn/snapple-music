@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as playlistActions from "../../store/playlist";
-import "./CreatePlaylist.css";
+import "../CSS/CreatePage.css";
 
 const CreatePlaylistPage = () => {
   const dispatch = useDispatch();
@@ -40,27 +40,26 @@ const CreatePlaylistPage = () => {
   };
 
   return (
-    <div className="create-playlist-container">
-      <div className="centered-content">
-        <h1 className="create-playlist-title">Create a Playlist</h1>
+    <div className="page-container">
+      <div className="form-create">
+        <h1>Create a New Playlist</h1>
         <form
-          className="create-playlist-form"
           onSubmit={handleSubmit}
           encType="multipart/form-data"
         >
           <ul>
             {errors.length > 0 &&
               errors.map((el) => (
-                <div key={el} className="errors">
+                <div key={el} className="error-message">
                   {el}
                 </div>
               ))}
           </ul>
           <div>
-            <label className="create-playlist-label">
+            <label className="label-create">
               Playlist Name
               <input
-                className="create-playlist-input"
+                className="input-create"
                 type="text"
                 placeholder="Playlist Name"
                 value={playlistName}
@@ -68,20 +67,21 @@ const CreatePlaylistPage = () => {
               />
             </label>
             {imageLoading && <p>Image Uploading...</p>}
-            <label className="create-playlist-label">
+            <label className="label-create">
               Playlist Image Url
               <input
-                className="create-playlist-input"
+                className="input-create"
                 type="file"
                 accept="image/*"
                 onChange={(e) => setPlaylistImage(e.target.files[0])}
               />
             </label>
-            {/* {error && <p className="create-playlist-error-message">{error}</p>} */}
           </div>
-          <button className="create-playlist-submit-button" type="submit">
+          <div className="align-create-button">
+          <button className="create-button" type="submit">
             Submit
           </button>
+          </div>
         </form>
       </div>
     </div>

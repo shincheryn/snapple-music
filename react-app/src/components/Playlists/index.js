@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import * as playlistActions from "../../store/playlist.js";
 import OpenModalButton from '../OpenModalButton';
 import DeletePlaylistModal from "./DeletePlaylistModal.js";
-import "./Playlists.css";
+import '../CSS/MyPage.css'
 
 const MyPlaylistsPage = () => {
   const dispatch = useDispatch();
@@ -22,21 +22,22 @@ const MyPlaylistsPage = () => {
       <div className="page-container">
         <h1 className="title">My Playlists</h1>
         {playlists.length === 0 ? (
-          <div className="create-first-playlist">
+          <div>
             <button className="upload-button" onClick={(e) => {
               e.stopPropagation()
               history.push(`/playlists/new`)
             }}>Create Your First Playlist</button>
           </div>
         ) : (
-          <div className="playlist-button">
+
+          <div>
             <button className="upload-button" onClick={(e) => {
               e.stopPropagation()
               history.push(`/playlists/new`)
             }}>Create a New Playlist</button>
-            <div className='tile-container'>
+            <div className='my-container'>
               {playlists.map((playlist) => (
-                <div key={playlist.id} className='tile'>
+                <div key={playlist.id} className='my-tile'>
                   <Link to={`/playlists/${playlist.id}`} className="playlist-link">
                     <div>
                       <img

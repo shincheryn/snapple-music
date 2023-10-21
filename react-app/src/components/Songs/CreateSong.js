@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as songsActions from '../../store/songs'
-import './css/create-song.css'
+import "../CSS/CreatePage.css";
 
 const UploadSong = () => {
     const dispatch = useDispatch();
@@ -134,7 +134,7 @@ const UploadSong = () => {
                 </label>
                 </div>
                 <div className="align-create-button">
-                <button className='create-button test' type="submit">UPLOAD</button>
+                <button className='create-button' type="submit">Upload</button>
                 </div>
             </form>
         </div>
