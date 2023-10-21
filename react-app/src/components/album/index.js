@@ -9,7 +9,7 @@ import "./Album.css";
 
 const Albums = () => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.session);
+  const user = useSelector(state => state.session.user);
   const allalbums = useSelector(state => Object.values(state.album).filter(e => e.userId == user.id));
   const ulRef = useRef();
 
