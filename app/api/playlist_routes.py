@@ -6,6 +6,7 @@ from sqlalchemy import and_
 from app.api.helper import upload_file_to_s3, get_unique_filename
 
 playlist_routes = Blueprint('playlists', __name__)
+DEFAULT_PLAYLIST_IMAGE_URL = "https://res.cloudinary.com/dvlsr70pm/image/upload/v1694219162/noimageplaylist.jpg"
 
 #GET ALL PLAYLISTS OWNED BY CURRENT USER
 @playlist_routes.route('/owned', methods=['GET'])
@@ -53,14 +54,18 @@ def createPlaylist():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        image_file = form.playlist_image_url.data
-        image_filename = get_unique_filename(image_file.filename)
-        upload = upload_file_to_s3(image_file, image_filename)
+        if form.playlist_image.data:
+            image_file = form.playlist_image.data
+            image_filename = get_unique_filename(image_file.filename)
+            upload = upload_file_to_s3(image_file, image_filename)
 
-        if "url" not in upload:
-            return {'errors': 'Failed to upload'}
+            if "url" not in upload:
+                return {'errors': 'Failed to upload'}
 
-        url_image = upload["url"]
+            url_image = upload["url"]
+        else:
+            url_image = DEFAULT_PLAYLIST_IMAGE_URL
+
 
         new = Playlist(
             userId=current_user.id,
