@@ -9,5 +9,5 @@ class AlbumForm(FlaskForm):
     release_year = IntegerField('Release year', validators=[DataRequired()])
     genre = StringField('Genre', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    album_image_url = FileField("Image File", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    album_image_url = FileField("Image File", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     submit = SubmitField("Create Album")
