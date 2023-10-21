@@ -12,7 +12,7 @@ function PostAlbumModal() {
   const [release_year, setRelease_year] = useState("");
   const [description, setDescription] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
-  const [album_image_url, setAlbum_image_url] = useState(null);
+  const [album_image_url, setAlbum_image_url] = useState('');
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
@@ -25,12 +25,12 @@ function PostAlbumModal() {
     }
 
 
-    if (album_image_url.name) {
+    if (album_image_url !== '') {
       const allowedExtensions = ['png', 'jpg', 'jpeg'];
       // const fileExtension = album_image_url.name.toLowerCase().slice(-4);
 
       const fileExtension = album_image_url.name.split('.');
-      
+
       if (!allowedExtensions.includes(fileExtension[fileExtension.length-1])) {
         errorMess.push('Image file must have a valid extension: .png, .jpg, .jpeg')
       }
@@ -39,7 +39,6 @@ function PostAlbumModal() {
     setErrors(errorMess)
 
       if(errorMess.length === 0) {
-
         const formData = new FormData();
         formData.append("album_name", album_name);
         formData.append("genre", genre);
@@ -115,13 +114,13 @@ function PostAlbumModal() {
           {/* <div className="error-message">{errorMess.album_image_url && <p className="">{errors.album_image_url}</p>}</div> */}
           {(imageLoading)&& <p>Image Uploading...</p>}
           <label>
-            Album Image Url
+            <p>Album Image Url (optional)</p>
+            <p>URL must ends in .png, .jpg or .jpeg</p>
             <input
               type="file"
               accept="image/*"
               // value={album_image_url}
               onChange={(e) => setAlbum_image_url(e.target.files[0])}
-              required
             />
           </label>
         </div>

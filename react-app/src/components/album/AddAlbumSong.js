@@ -67,7 +67,7 @@ function AddAlbumSong({ albumId }) {
       <button className="addSongButton" onClick={handleSubmit}>Add Song</button>
       {songExist?.map((each, index) => (
         <div key={`${index}`}>
-          <div>{`${index + 1}`} {each?.song_name}</div>
+          <div>{each?.id} {each?.song_name}</div>
         </div>
       ))}
     </div>
