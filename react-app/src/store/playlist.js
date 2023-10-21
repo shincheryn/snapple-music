@@ -80,13 +80,6 @@ export const createPlaylistThunk = (newPlaylist) => async (dispatch) => {
 
   const response = await fetch(`/api/playlists/`, {
     method: "POST",
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
-    // body: JSON.stringify({
-    //   "playlist_name": playlistName,
-    //   "playlist_image_url": playlistImageUrl,
-    // }),
     body: newPlaylist
   });
 
@@ -94,7 +87,7 @@ export const createPlaylistThunk = (newPlaylist) => async (dispatch) => {
     const createNewPlaylist = await response.json();
     dispatch(createPlaylistAction(createNewPlaylist));
   } else {
-    // console.log("Failed to create new playlist");
+    console.log("Failed to create new playlist");
   }
 };
 
@@ -125,9 +118,9 @@ export const deleteSongsFromPlaylistThunk = (playlistId, songId) => async (dispa
 
   if (response.ok) {
     dispatch(deleteSongsFromPlaylistAction(playlistId, songId));
-    // console.log("Song successfully deleted");
+    console.log("Song successfully deleted");
   } else {
-    // console.log("Failed to delete song from playlist");
+    console.log("Failed to delete song from playlist");
   }
 };
 
