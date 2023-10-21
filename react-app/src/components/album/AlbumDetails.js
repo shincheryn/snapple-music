@@ -57,11 +57,11 @@ const AlbumDetails = () => {
       <div>
         <img className="album-image" key={currentAlbum?.id} src={currentAlbum?.album_image_url} alt={currentAlbum?.album_name} title={currentAlbum?.album_name} />
       </div>
-      <div>
-        {currentAlbum?.album_name}
+      <div className='a-details'>
+          <p className='a-details'>{currentAlbum?.album_name}</p>
       </div>
       {/* <div>{user[0].firstName} {user[0].lastName}</div> */}
-      <div>
+      <div className='c-details'>
         Genre: {currentAlbum?.genre} · Release Year: {currentAlbum?.release_year}
       </div>
       <div>

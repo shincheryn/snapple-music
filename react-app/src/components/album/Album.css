@@ -1,11 +1,26 @@
 .album-image {
   height: 200px;
   width: 200px;
+  margin-bottom: 4px;
+  border-radius: 8px;
 }
 
 a {
   text-decoration: none;
   color: black;
+}
+.a-details{
+  font-size: 15px;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: left;
+}
+
+.c-details {
+  font-size: 12px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: left;
+  /* color: ; */
 }
 
 .errors {
@@ -196,21 +211,12 @@ a {
   grid-row-gap: 45px;
   padding: 0px;
 }
-/*
+
 .button-85x{
-  margin-right: 60%;
-  padding: 2% 5%;
-  border: none;
-  outline: none;
-  color: rgb(255, 255, 255);
-  background: #111;
-  position: relative;
-  z-index: 0;
-  border-radius: 10px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+  margin-left: 20%;
 }
+/*
+
 
 .button-85x:before {
   content: "";

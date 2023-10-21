@@ -43,8 +43,8 @@ const Albums = () => {
           <div key={album.id}>
             <Link to={`/albums/${album.id}`}>
               <img className="album-image" key={album?.id} src={album?.album_image_url} alt={album?.album_name} title={album?.album_name} />
-              <div>{album?.album_name}</div>
-              <div>Genre: {album?.genre} </div>
+              <div className="a-details">{album?.album_name}</div>
+              <div className="b-details">Genre: {album?.genre} </div>
               {/* <div>{user[0].firstName} {user[0].lastName}</div> */}
             </Link>
             <div className="button-85x">
