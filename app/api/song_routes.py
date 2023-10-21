@@ -51,6 +51,7 @@ def currentUserSongs():
         user_info = song.user_songs
         song_info.append({
                 'id': song.id,
+                'userId': song.userId,
                 'song_name': song.song_name,
                 'username': user_info.username,
                 'genre': song.genre,
