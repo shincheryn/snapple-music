@@ -11,8 +11,10 @@ import '../CSS/MyPage.css'
 const MySongs = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const user = useSelector((state) => state.session.user);
     const songs = useSelector((state) => state.song);
-    const songsArray = Object.values(songs);
+    // const songsArray = Object.values(songs);
+    const songsArray = useSelector((state) => Object.values(state.song).filter(e => e.userId == user.id));
 
     useEffect(() => {
         dispatch(songsActions.getCurrentUsersSongs())
@@ -26,7 +28,7 @@ const MySongs = () => {
             <div className='page-container'>
             <h1 className='title'>My Songs</h1>
             {songsArray.length === 0 ? (
-                 <button onClick={(e) => {
+                 <button className='button-31' onClick={(e) => {
                     e.stopPropagation()
                     history.push('/songs/newsong')
                     }}>Upload Your First Song</button>

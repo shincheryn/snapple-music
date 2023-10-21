@@ -6,6 +6,7 @@ import * as songActions from "../../store/songs.js";
 import DeleteAlbum from "./DeleteAlbum.js";
 import OpenModalButton from "../OpenModalButton";
 import "./Album.css";
+import noPicture from "./no_image.jpeg";
 
 const Albums = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,38 @@ const Albums = () => {
 
   const closeMenu = () => setShowModal(false);
 
+  const checkImage = (urlString) => {
+    const endings = ["png", "jpg", "jpeg"];
+    const array = urlString.split(".");
+    if (endings.includes(array[array.length - 1])) {
+      return false;
+    }
+    return true;
+  }
+
+  const handleAlbumImage = (album) => {
+    if (checkImage(album.album_image_url)) {
+      return (
+        <div>
+          <img className="album-image" src={noPicture} alt="noImage"></img>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <img className="album-image" src={album?.album_image_url} title={album?.album_name}
+            alt="link broken"
+            onError={event => {
+              event.target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png"
+              event.onerror = null
+            }}></img>
+
+
+        </div>
+      )
+    }
+  }
+
   return (
     <div className="pageContainersAlbum">
       <h1 className="title">My Albums</h1>
@@ -43,7 +76,8 @@ const Albums = () => {
         {allalbums.map(album => (
           <div key={album.id}>
             <Link to={`/albums/${album.id}`}>
-              <img className="album-image" key={album?.id} src={album?.album_image_url} alt={album?.album_name} title={album?.album_name} />
+              {handleAlbumImage(album)}
+              {/* <img className="album-image" key={album?.id} src={album?.album_image_url} alt={album?.album_name} title={album?.album_name} /> */}
               <div className="a-details">{album?.album_name}</div>
               <div className="b-details">Genre: {album?.genre} </div>
               {/* <div>{user[0].firstName} {user[0].lastName}</div> */}

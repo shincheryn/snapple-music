@@ -13,7 +13,7 @@ function AddAlbumSong({ albumId }) {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
-  const album = useSelector(state => Object.values(state.album).filter(x=>x.id == albumId));
+  const album = useSelector(state => Object.values(state.album).filter(x => x.id == albumId));
   const songExist = useSelector(state => Object.values(state.song))
 
   const checkSongExist = (songObj, songId) => {
@@ -29,8 +29,8 @@ function AddAlbumSong({ albumId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    for(let i = 0; i < albumSongs.length; i++) {
-      if(albumSongs[i].id == songId) {
+    for (let i = 0; i < albumSongs.length; i++) {
+      if (albumSongs[i].id == songId) {
         setErrors(['Song already added into this album'])
         return
       }
@@ -65,6 +65,11 @@ function AddAlbumSong({ albumId }) {
         />
       </label>
       <button className="addSongButton" onClick={handleSubmit}>Add Song</button>
+      {songExist?.map((each, index) => (
+        <div key={`${index}`}>
+          <div>{each?.id} {each?.song_name}</div>
+        </div>
+      ))}
     </div>
   )
 };
