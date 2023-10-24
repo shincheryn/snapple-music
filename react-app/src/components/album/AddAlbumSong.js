@@ -56,20 +56,24 @@ function AddAlbumSong({ albumId }) {
         ))}
       </div>
       <label>
-        Song Id:
-        <input
-          type="number"
+        Select Song to add:
+        <select
           value={songId}
           onChange={(e) => setSongId(e.target.value)}
           required
-        />
+        >
+          <option key="default" value="">
+            Select a Playlist
+          </option>
+          {songExist?.map((each, index) => (
+            <option key={each.id} value={each.id}>
+              {each.song_name}
+            </option>
+          ))}
+        </select>
       </label>
       <button className="addSongButton" onClick={handleSubmit}>Add Song</button>
-      {songExist?.map((each, index) => (
-        <div key={`${index}`}>
-          <div>{each?.id} {each?.song_name}</div>
-        </div>
-      ))}
+
     </div>
   )
 };
