@@ -77,6 +77,48 @@ def createAlbum():
 
     return {'errors': [form.errors]}, 401
 
+# Edit a Album
+@albums_routes.route('/<int:id>', methods=['PUT'])
+# @login_required
+def editAlbum(id):
+
+    album_Edit = Album.query.get(id)
+    current_user_id = int(current_user.get_id())
+
+    #error response:
+    if album_Edit is None:
+        return {'message': ["album couldn\'t be found"]}, 404
+
+    if album_Edit.userId != current_user_id:
+        return {'errors': ['Forbidden: You don\'t have permission']}, 403
+
+    form = AlbumForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        image_file = form.album_image_url.data
+        
+        if image_file == None:
+            url_image = ""
+        else:
+            image_filename = get_unique_filename(image_file.filename)
+            upload = upload_file_to_s3(image_file, image_filename)
+            if "url" not in upload:
+             return {'errors': 'Failed to upload'}
+
+            url_image = upload["url"]
+            album_Edit.album_image_url=url_image
+
+        album_Edit.album_name=form.data['album_name']
+        album_Edit.release_year=form.data['release_year']
+        album_Edit.genre=form.data['genre']
+        album_Edit.description=form.data['description']
+
+
+        db.session.commit()
+        return album_Edit.to_dict()
+    return {'errors': [form.errors]}, 401
+
 
 # Delete an Album
 @albums_routes.route('/<int:id>', methods=["DELETE"])
