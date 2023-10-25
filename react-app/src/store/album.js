@@ -4,6 +4,7 @@ const ADD_ALBUM = "albums/addAlbum";
 const DELETE_ALBUM = "albums/deleteAlbum";
 const ADD_SONG_TO_ALBUM = "albums/addAlbumSong";
 const DELETE_SONG_TO_ALBUM = "albums/deleteAlbumSong";
+const EDIT_ALBUM = "albums/editAlbum"
 
 export const loadAlbumOwned = (albums) => ({
   type: LOAD_ALBUM_OWNED,
@@ -33,6 +34,11 @@ export const addSongToAlbum = (album) => ({
 export const deleteSongToAlbum = (albumsId, songId) => ({
   type: DELETE_SONG_TO_ALBUM,
   payload: [albumsId, songId]
+});
+
+export const editAlbum = (album) => ({
+  type: EDIT_ALBUM,
+  payload: album
 });
 
 
@@ -106,6 +112,19 @@ export const deleteSongToAlbumThunk = (albumId, songId) => async (dispatch) => {
   }
 };
 
+export const editAlbumThunk = (id, updatedAlbum) => async (dispatch) => {
+  const res = await fetch(`/api/albums/${id}`, {
+    method: "PUT",
+    body: updatedAlbum
+  });
+
+  if (res.ok) {
+    const album = await res.json();
+    dispatch(editAlbum(album));
+    return album;
+  }
+};
+
 const funDeleteSong = (state, albumId, songId) => {
   let songs = state[albumId.toString()].Songs
   let currentSongId = 0;
@@ -143,6 +162,9 @@ const albumReducer = (state = initialState, action) => {
       return newState;
     case DELETE_SONG_TO_ALBUM:
       return funDeleteSong(newState, action.payload[0], action.payload[1])
+    case EDIT_ALBUM:
+        newState[action.payload.id] = action.payload;
+        return newState;
     default:
       return newState
   }

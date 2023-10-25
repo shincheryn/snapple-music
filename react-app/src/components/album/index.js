@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import * as albumActions from "../../store/album.js";
 import * as songActions from "../../store/songs.js";
 import DeleteAlbum from "./DeleteAlbum.js";
+import EditAlbum from "./EditAlbum.js";
 import OpenModalButton from "../OpenModalButton";
 import "./Album.css";
 import noPicture from "./no_image.jpeg";
@@ -80,12 +81,21 @@ const Albums = () => {
               <div className="b-details">Genre: {album?.genre} </div>
               {/* <div>{user[0].firstName} {user[0].lastName}</div> */}
             </Link>
-            <div className="button-85x">
-              <OpenModalButton
-                buttonText="Delete"
-                onItemClick={closeMenu}
-                modalComponent={<DeleteAlbum albumId={album.id} />}
-              />
+            <div className='button-containers'>
+              <div>
+                <OpenModalButton
+                  buttonText="Update"
+                  onItemClick={closeMenu}
+                  modalComponent={<EditAlbum albumId={album.id} album_info={album} />}
+                />
+              </div>
+              <div>
+                <OpenModalButton
+                  buttonText="Delete"
+                  onItemClick={closeMenu}
+                  modalComponent={<DeleteAlbum albumId={album.id} />}
+                />
+              </div>
             </div>
           </div>
         ))}
