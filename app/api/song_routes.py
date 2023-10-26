@@ -133,6 +133,12 @@ def createSong():
             userId=current_user.id,
         )
 
+        if len(song.song_name) < 30:
+            return {'song_name': 'Song name must be less than 30 characters', "statusCode": 400}, 400
+
+        if len(song.genre) < 20:
+            return {'genre': 'Genre must be less than 30 characters', "statusCode": 400}, 400
+
         db.session.add(song)
         db.session.commit()
         return song.to_dict()
@@ -181,6 +187,12 @@ def update(id):
 
         song.song_name=form.data["song_name"]
         song.genre=form.data["genre"]
+
+        if len(song.song_name) < 30:
+            return {'song_name': 'Song name must be less than 30 characters', "statusCode": 400}, 400
+
+        if len(song.genre) < 20:
+            return {'genre': 'Genre must be less than 30 characters', "statusCode": 400}, 400
 
         db.session.commit()
         return song.to_dict()
