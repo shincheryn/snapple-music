@@ -44,8 +44,11 @@ const UpdateSong = () => {
         const errors = {};
 
         if(!songName) errors.songName = 'Song name is required';
-        if(!genre) errors.genre = 'Genre is required';
+        if(songName.length > 30) errors.song_name = 'Song name must be less than 30 characters';
 
+        if(!genre) errors.genre = 'Genre is required';
+        if(genre.length > 20) errors.genre = 'Genre must be less than 20 characters';
+        
         if (image && typeof image === 'object' && image.name) {
             const allowedExtensions = ['.png', '.jpg', '.jpeg'];
             const fileExtension = image.name.toLowerCase().slice(-4);
