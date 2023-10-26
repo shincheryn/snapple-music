@@ -57,14 +57,10 @@ function PostAlbumModal() {
     setImageLoading(false);
   }
 
-  let kk = () => {
-    console.log("$$$$$$$$", album_image_url.name)
-  }
 
   return (
     <div className="page-container">
       <div className="form-create">
-        {kk()}
         <h1>Create a New Album</h1>
         <form onSubmit={handleSubmit}
           encType="multipart/form-data"
