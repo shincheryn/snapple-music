@@ -21,7 +21,10 @@ const UploadSong = () => {
         const errors = {};
 
         if(!song_name) errors.song_name = 'Song name is required';
+        if(song_name.length > 30) errors.song_name = 'Song name must be less than 30 characters';
+
         if(!genre) errors.genre = 'Genre is required';
+        if(genre.length > 20) errors.genre = 'Genre must be less than 20 characters';
 
         if (image_url && typeof image_url === 'object' && image_url.name) {
             const allowedExtensions = ['png', 'jpg', 'jpeg'];

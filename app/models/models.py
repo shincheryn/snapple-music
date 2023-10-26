@@ -106,9 +106,9 @@ class Song(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    song_name = db.Column(db.String(255), nullable=False)
+    song_name = db.Column(db.String(30), nullable=False)
     userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
-    genre = db.Column(db.String(255), nullable=False)
+    genre = db.Column(db.String(20), nullable=False)
     image_url = db.Column(db.String(255), nullable=False)
     song_url = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
