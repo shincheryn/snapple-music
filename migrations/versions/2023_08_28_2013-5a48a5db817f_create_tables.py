@@ -41,9 +41,9 @@ def upgrade() -> None:
     )
     op.create_table('songs',
     sa.Column('id', sa.Integer(), nullable=False, autoincrement=True),
-    sa.Column('song_name', sa.String(length=255), nullable=False),
+    sa.Column('song_name', sa.String(length=30), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=False),
-    sa.Column('genre', sa.String(length=255), nullable=False),
+    sa.Column('genre', sa.String(length=20), nullable=False),
     sa.Column('createdAt', sa.DateTime(), server_default=sa.func.current_timestamp(), nullable=False),
     sa.Column('updatedAt', sa.DateTime(), server_default=sa.func.current_timestamp(), nullable=False),
     sa.Column('image_url', sa.String(length=255)),
