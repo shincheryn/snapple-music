@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
+import OpenModalButton from '../OpenModalButton';
+import AddSongToPlaylistModal from '../Playlists/AddSongtoPlaylistModal';
 import * as songsActions from '../../store/songs';
-import 'react-h5-audio-player/lib/styles.css';
 import './css/song-details.css';
 
 const SongDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const user = useSelector((state) => state.session.user);
     const song = useSelector((state) => state.song[id]);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [showButton, setShowButton] = useState(false);
     const [audio] = useState(new Audio());
 
     useEffect(() => {
@@ -22,6 +24,11 @@ const SongDetails = () => {
         }
     }, [song, audio]);
 
+    useEffect(() => {
+        if (user) {
+            setShowButton(true);
+        }
+    })
     if(!song){
         return <div> No song</div>
     }
@@ -35,18 +42,23 @@ const SongDetails = () => {
 
 
     return (
-        <>
-            <div className='page-container'>
-                <div className='parent'>
+        <div className='page-container'>
+            <div className='parent'>
                 <div className='song-image-detail-id div1'>
                     <img  className='image-id' src={song.image_url} alt={song.song_name}/>
                 </div>
-                <div>
+                <div className='righthalfpage'>
                     <div className='song-details div2'>
                         <h2 className="song-name-detail-id">{song.song_name}</h2>
                         <p className="genre-detail-id div2">{song.username}</p>
                         <p className='createdat-year'>{song.genre} &#8231; {year}</p>
                         <button onClick={handleClick} className='artist-info' >See Artist Info</button>
+                    </div>
+                    <div>
+                    {showButton && <OpenModalButton
+                        modalComponent={<AddSongToPlaylistModal songId={song.id} />}
+                        buttonText='Add to Playlist'
+                    />}
                     </div>
                     <div className="apple-music-player div4">
                         <audio className='div4'controls>
@@ -54,13 +66,11 @@ const SongDetails = () => {
                         </audio>
                     </div>
                 </div>
-                </div>
-                <div className='lyrics-text'>
-                   <button onClick={handleClick} className='lyrics-structure'>No lyrics to display . . .</button>
-                </div>
             </div>
-
-        </>
+            <div className='lyrics-text'>
+                <button onClick={handleClick} className='lyrics-structure'>No lyrics to display . . .</button>
+            </div>
+        </div>
     )
 }
 
