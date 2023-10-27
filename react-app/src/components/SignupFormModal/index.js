@@ -42,7 +42,7 @@ function SignupFormModal() {
 		if(username === email) {
 			errorMess.push("Email and Username cannot be the same")
 		}
-		
+
 		setErrors(errorMess)
 
 		if(errorMess.length === 0) {
@@ -95,7 +95,7 @@ function SignupFormModal() {
 				<label>
 					Email
 					<input
-						type="texts"
+						type="email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
@@ -114,7 +114,7 @@ function SignupFormModal() {
 				<label>
 					Password
 					<input
-						type="texts"
+						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
@@ -123,7 +123,7 @@ function SignupFormModal() {
 				<label>
 					Confirm Password
 					<input
-						type="texts"
+						type="password"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required

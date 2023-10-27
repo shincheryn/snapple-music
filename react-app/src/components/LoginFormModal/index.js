@@ -43,7 +43,7 @@ function LoginFormModal() {
         <label className="mm">
           Email
           <input
-            type="texts"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -53,7 +53,7 @@ function LoginFormModal() {
         <label className="mm">
           Password
           <input
-            type="texts"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

@@ -7,6 +7,7 @@ import CreateSong from "./components/Songs/CreateSong";
 import UpdateSong from "./components/Songs/UpdateSongPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
 import MyPlaylistsPage from "./components/Playlists/index";
 import CreatePlaylistPage from "./components/Playlists/CreatePlaylist";
@@ -63,6 +64,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer isLoaded={isLoaded} />
     </>
   );
 }
