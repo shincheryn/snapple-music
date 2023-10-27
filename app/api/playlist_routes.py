@@ -109,6 +109,45 @@ def add_song_to_playlist(playlistId, songId):
     return {'message': "Successfully added song to playlist"}, 200
 
 
+# Edit a Playlist
+@playlist_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def edit_playlist(id):
+
+    playlist_edit = Playlist.query.get(id)
+    current_user_id = int(current_user.get_id())
+
+    #error response:
+    if playlist_edit is None:
+        return {'message': ["Playlist couldn\'t be found"]}, 404
+
+    if playlist_edit.userId != current_user_id:
+        return {'errors': ['Forbidden: You don\'t have permission']}, 403
+
+    form = PlaylistForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        image_file = form.playlist_image.data
+
+        if image_file == None:
+            url_image = ""
+        else:
+            image_filename = get_unique_filename(image_file.filename)
+            upload = upload_file_to_s3(image_file, image_filename)
+            if "url" not in upload:
+             return {'errors': 'Failed to upload'}
+
+            url_image = upload["url"]
+            playlist_edit.playlist_image_url=url_image
+
+        playlist_edit.playlist_name=form.data['playlist_name']
+
+        db.session.commit()
+        return playlist_edit.to_dict()
+    return {'errors': [form.errors]}, 401
+
+
 # DELETE SONG FROM PLAYLIST BASED ON PLAYLIST ID
 @playlist_routes.route('/<int:playlistId>/songs/<int:songId>', methods=["DELETE"])
 @login_required

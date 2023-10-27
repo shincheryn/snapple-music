@@ -12,6 +12,7 @@ import LandingPage from "./components/LandingPage";
 import MyPlaylistsPage from "./components/Playlists/index";
 import CreatePlaylistPage from "./components/Playlists/CreatePlaylist";
 import PlaylistDetailsPage from "./components/Playlists/PlaylistDetails";
+import UpdatePlaylist from "./components/Playlists/UpdatePlaylist";
 import Albums from "./components/album/index";
 import AlbumDetails from "./components/album/AlbumDetails";
 import PostAlbumModal from "./components/album/PostAlbumModal";
@@ -43,6 +44,9 @@ function App() {
           </ProtectedRoute>
           <Route path="/playlists/new">
             <CreatePlaylistPage />
+          </Route>
+          <Route path="/playlists/:id/edit">
+            <UpdatePlaylist />
           </Route>
           <Route path="/songs/:id/edit">
             <UpdateSong />

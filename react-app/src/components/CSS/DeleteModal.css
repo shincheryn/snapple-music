@@ -21,7 +21,7 @@
 /* Keep Button */
 .keep-button {
   display: grid;
-  justify-items: center;
+  justify-items: space-between;
   color: white;
   background-color: #007bff;
   border-radius: 5px;

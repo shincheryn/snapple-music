@@ -100,7 +100,7 @@
     display: flex;
     gap: 10px;
     margin-bottom: 1px;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .spacer {
