@@ -24,6 +24,14 @@ function PostAlbumModal() {
       errorMess.push('Release year must be a 4 digit number')
     }
 
+    if (album_name.length > 30) {
+      errorMess.push('album name length must less than 30 characters')
+    }
+
+    if (genre.length > 20) {
+      errorMess.push('genre length must less than 20 characters')
+    }
+
     if (description.length > 200) {
       errorMess.push('description length must less than 200 characters')
     }
@@ -72,7 +80,7 @@ function PostAlbumModal() {
           </ul>
           <div>
             <label className="label-create">
-              Album Name
+              Album Name (Maximum 30 characters)
               <input
                 className="input-create"
                 type="text"
@@ -84,7 +92,7 @@ function PostAlbumModal() {
           </div>
           <div>
             <label className="label-create">
-              Genre
+              Genre (Maximum 20 characters)
               <input
                 className="input-create"
                 type="text"
@@ -99,7 +107,7 @@ function PostAlbumModal() {
               Release Year
               <input
                 className="input-create"
-                type="text"
+                type="number"
                 value={release_year}
                 onChange={(e) => setRelease_year(e.target.value)}
                 required
@@ -108,7 +116,7 @@ function PostAlbumModal() {
           </div>
           <div>
             <label className="label-create">
-              Description
+              Description  (Maximum 200 characters)
               <input
                 className="input-create"
                 type="text"
