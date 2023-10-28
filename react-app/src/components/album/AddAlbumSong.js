@@ -63,7 +63,7 @@ function AddAlbumSong({ albumId }) {
           required
         >
           <option key="default" value="">
-            Select a Playlist
+            Select a Song
           </option>
           {songExist?.map((each, index) => (
             <option key={each.id} value={each.id}>
