@@ -78,7 +78,7 @@
     display: grid;
     justify-items: center !important;
     color:white;
-    background-color: red;
+    background-color: #007bff;
     cursor: pointer;
     border: none;
     border-radius: 4px;

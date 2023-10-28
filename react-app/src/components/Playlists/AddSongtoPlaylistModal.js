@@ -62,7 +62,7 @@ function AddSongToPlaylistModal({ songId }) {
           ))}
         </select>
       </label>
-      <button onClick={handleSubmit}>Add</button>
+      <button className="create-button" onClick={handleSubmit}>Add</button>
     </div>
   );
 }

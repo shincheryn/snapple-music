@@ -23,7 +23,7 @@ function DeleteModal({id}) {
             <div className="structure">
             <form className='form-delete' onSubmit={handleSubmit}>
                 <button className='create-button' type='submit'>Yes (Delete Song)</button>
-                <button className='keep-button delete-style' onClick={closeModal}>No (Keep Song)</button>
+                <button className='create-button' onClick={closeModal}>No (Keep Song)</button>
             </form>
             </div>
             </main>

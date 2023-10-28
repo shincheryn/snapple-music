@@ -32,7 +32,7 @@ function DeleteAlbum({albumId}) {
             <div className="structure">
             <form className='form-delete' onSubmit={handleSubmit}>
                 <button className='create-button' type='submit'>Yes (Delete Album)</button>
-                <button className='keep-button delete-style' onClick={closeModal}>No (Keep Album)</button>
+                <button className='create-button' onClick={closeModal}>No (Keep Album)</button>
             </form>
             </div>
             </main>
