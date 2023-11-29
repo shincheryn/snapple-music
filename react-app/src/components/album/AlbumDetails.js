@@ -7,6 +7,7 @@ import AddAlbumSong from "./AddAlbumSong";
 import DeleteAlbumSong from "./DeleteAlbumSong";
 import OpenModalButton from "../OpenModalButton";
 import noPicture from "./no_image.jpeg";
+import { Link } from 'react-router-dom';
 
 const AlbumDetails = () => {
   const dispatch = useDispatch();
@@ -99,10 +100,18 @@ const AlbumDetails = () => {
       <div>
         {currentAlbum?.Songs?.map((each, index) => (
           <div key={`${index}`}>
-            <div>{`${index + 1}`} {each?.song_name}</div>
+            <Link className='' to={`/songs/${each.id}`}>
+              <div>{`${index + 1}`} {each?.song_name}</div>
+              <img src={each?.image_url} alt='song prev' className='image' title={each?.song_name}/>
+            </Link>
+            <div className="apple-music-player div4">
+              <audio className='div4' controls>
+                <source src={each.song_url} type="audio/mpeg" />
+              </audio>
+            </div>
             <div className="">
               <OpenModalButton
-                buttonText="Delete"
+                buttonText="Delete Song from Album"
                 onItemClick={closeMenu}
                 modalComponent={<DeleteAlbumSong albumId={albumId} songId={each?.id} />}
               />

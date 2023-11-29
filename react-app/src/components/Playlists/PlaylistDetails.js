@@ -66,6 +66,11 @@ const PlaylistDetailsPage = () => {
                     <p>{song?.song_name}</p>
                   </div>
                 </Link>
+                <div className="apple-music-player div4">
+                        <audio className='div4'controls>
+                            <source src={song.song_url} type="audio/mpeg" />
+                        </audio>
+                    </div>
                 <div className="delete-button">
                   {user && (
                     <OpenModalButton
