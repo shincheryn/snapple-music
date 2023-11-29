@@ -11,20 +11,25 @@ function DeleteSongFromPlaylist({ playlistId, songId }) {
   const confirmButtonHandler = async (e) => {
     e.preventDefault();
     await dispatch(playlistActions.deleteSongsFromPlaylistThunk(playlistId, songId))
-        .then(() => {
-            closeModal();
-            history.push(`/playlists/${playlistId}`);
-            window.location.reload();
-        })
-    };
+      .then(() => {
+        closeModal();
+        history.push(`/playlists/${playlistId}`);
+        window.location.reload();
+      })
+  };
 
   return (
-    <div className="delete-song-from-playlist">
-      <h1>Confirm Delete</h1>
-      <h5>Are you sure you want to remove this song?</h5>
-      <button onClick={confirmButtonHandler}>Yes (Delete Song)</button>
-      <button onClick={closeModal}>No (Keep Song)</button>
-    </div>
+
+    <main className="main">
+      <h1 className="center-text title">Delete Song</h1>
+      <p className="center-text child">Are your sure you want to delete this song?</p>
+      <div className="structure">
+        <form className='form-delete' onSubmit={confirmButtonHandler}>
+          <button className='create-button' type='submit'>Yes (Delete Song)</button>
+          <button className='create-button' onClick={closeModal}>No (Keep Song)</button>
+        </form>
+      </div>
+    </main>
   )
 };
 
